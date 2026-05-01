@@ -192,6 +192,8 @@ The `reader.md` frontmatter controls the reader identity and card layout on the 
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |
 | `cover_image` | Filename of a cover image uploaded to the reader home media folder |
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
+| `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
+| `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |
 | `cards_per_row` | Number of section cards per row (1–3) |
 | `card_icon` | Default icon for all cards (Tabler icon path) |
 | `card_image_layout` | Card image position: `side` or `top` |
@@ -299,9 +301,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Admin Font Size | Large | Sets the Admin Panel font size: Default, Large, or Larger |
 | Show Site Logo Icon | Enabled | Show or hide the icon square next to the Logo Text in the header when no logo image is set |
 | Site Logo Icon | `tabler/notebook.svg` | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
-| Prev/Next Page Controls Position | Top and bottom | Where to display Prev/Next navigation on section pages: Top and bottom, Top only, or Bottom only |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
-| Show OER Attribution Block | Disabled | Display the CC license and attribution text in the footer, drawn from the reader home page frontmatter |
 | Show Repository Host Icon Link in Header | Enabled | Show a GitHub or Codeberg icon link to the reader repository in the site header (requires GitHub Integration enabled in the Helios theme) |
 | Git Link Icon | `tabler/file-text.svg` | Tabler icon path for the Git link icon shown in the page footer |
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |

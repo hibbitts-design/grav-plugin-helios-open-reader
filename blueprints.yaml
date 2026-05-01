@@ -1,7 +1,7 @@
 name: Helios Open Reader
 type: plugin
 version: 0.9.0
-description: Adds open reader structure, sequential navigation, learning objectives, OER attribution, and rich media shortcodes to the Helios Grav Premium theme.
+description: Give open textbooks and readers a modern, open home on the web – requires the Helios Grav Premium theme. Includes the Helios Open Reader plugin, demo reader content, and Admin Panel.
 icon: book-open
 author:
   name: HibbittsDesign.org
@@ -88,21 +88,6 @@ form:
       help: 'Tabler icon path for the site logo icon square (e.g. tabler/notebook.svg). Only applies when Show Site Logo Icon is enabled. Leave empty to use the default icon.'
       placeholder: 'tabler/notebook.svg'
 
-    navigation_section:
-      type: section
-      title: 'Navigation'
-      underline: true
-
-    prev_next_position:
-      type: select
-      label: 'Prev/Next Page Controls Position'
-      help: 'Where to display the Previous/Next page navigation on section pages.'
-      default: both
-      options:
-        both: 'Top and bottom'
-        top: 'Top only'
-        bottom: 'Bottom only'
-
     footer_section:
       type: section
       title: 'Footer'
@@ -114,18 +99,6 @@ form:
       help: 'Show the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer.'
       highlight: 1
       default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    show_oer_attribution:
-      type: toggle
-      label: 'Show OER Attribution Block'
-      help: 'Display the CC license and attribution text in the footer, drawn from the reader home page frontmatter.'
-      highlight: 1
-      default: 0
       options:
         1: PLUGIN_ADMIN.ENABLED
         0: PLUGIN_ADMIN.DISABLED

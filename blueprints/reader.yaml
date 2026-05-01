@@ -47,6 +47,15 @@ form:
               default: 'Start Reading'
               placeholder: 'e.g. Start Reading, Browse Projects, View Guides'
               help: 'Text for the button linking to the first section. Leave empty to hide the button.'
+            header.prev_next_position:
+              type: select
+              label: 'Prev/Next Page Controls Position'
+              default: both
+              options:
+                both: 'Top and bottom'
+                top: 'Top only'
+                bottom: 'Bottom only'
+              help: 'Where to display the Previous/Next page navigation on section pages.'
             header.section_label:
               type: text
               size: medium
@@ -90,6 +99,17 @@ form:
           type: tab
           title: OER Attribution
           fields:
+            header.show_oer_attribution:
+              type: toggle
+              label: 'Show OER Attribution Block'
+              highlight: 1
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+              help: 'Display the CC license and attribution text in the footer of every page.'
             header.license:
               type: select
               label: License

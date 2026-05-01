@@ -238,14 +238,13 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['toc_url_param'] = ($tocParam !== null && $tocParam !== false) ? $tocParam : null;
         $twig->twig_vars['hide_git_link'] = $uri->query('edit_link') === 'false' || $uri->query('hidegitlink') === 'true';
 
-        // OER attribution toggle
-        $twig->twig_vars['show_oer_attribution'] = $this->config->get('plugins.helios-open-reader.show_oer_attribution', false);
-
         // Section label (configurable; falls back to language default)
         $twig->twig_vars['section_label'] = $this->getSectionLabel();
 
-        // Prev/Next position: top | bottom | both
-        $twig->twig_vars['hor_prev_next_position'] = $this->config->get('plugins.helios-open-reader.prev_next_position', 'both');
+        // OER attribution and Prev/Next position default to off/both;
+        // overridden below from reader home frontmatter once the page is found.
+        $twig->twig_vars['show_oer_attribution']   = false;
+        $twig->twig_vars['hor_prev_next_position'] = 'both';
 
         // Find the reader home page to pull attribution fields, logo URL, and favicon.
         // Sections are top-level siblings of the reader home (same structure as
@@ -283,6 +282,10 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['reader_license']     = $readerHome->header()->license ?? '';
             $twig->twig_vars['reader_license_url'] = $readerHome->header()->license_url ?? '';
             $twig->twig_vars['reader_attribution'] = $readerHome->header()->attribution_text ?? '';
+
+            // OER attribution and Prev/Next position — controlled from reader home frontmatter
+            $twig->twig_vars['show_oer_attribution']   = (bool) ($readerHome->header()->show_oer_attribution ?? false);
+            $twig->twig_vars['hor_prev_next_position'] = (string) ($readerHome->header()->prev_next_position ?? 'both');
 
             // Section label: reader home page frontmatter overrides the language default
             $pageLabel = trim((string) ($readerHome->header()->section_label ?? ''));
