@@ -74,11 +74,11 @@ To use the demo content, copy the contents of `_demo/pages/` into your Grav `use
 > [!NOTE]
 > This section is only needed when installing the plugin manually. The [Grav Helios Open Reader Skeleton](https://github.com/hibbitts-design/grav-skeleton-helios-open-reader) includes all of the following configuration automatically.
 
-Add the following to `user/config/themes/helios.yaml` to configure the reader structure and search. The `version_pattern` detects `section-N` folder names automatically.
+Add the following to `user/config/themes/helios.yaml` to configure the reader structure and search. The `version_pattern` detects both `section-N` and `part-N-section-M` folder names automatically.
 
 ```yaml
 versioning:
-  version_pattern: '/^section-?\d+/i'
+  version_pattern: '/^(section-?\d+|part-\d+-section-\d+)/i'
   labels:
     section-1: 'Introduction to the Subject'
     section-2: 'Core Concepts'
@@ -111,6 +111,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
+- **Optional parts grouping** — rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** — section pages automatically display their section number and configurable label in the page header (e.g. `Chapter 1`, `Project 2`, `Unit 3`); inherits correctly for all sub-pages within a section. Set via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
 - Reader home page with cover image, title, subtitle, authors, edition, and CC license badge
@@ -180,6 +181,32 @@ Add a `labels` entry in `user/config/themes/helios.yaml` for each section folder
 > [!TIP]
 > After adding, renaming, or removing a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel.
 
+### Grouping Sections into Parts
+
+To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
+
+```
+00.reader/
+01.part-1-section-1/    ← Part 1, Section 1 (section-page.md)
+02.part-1-section-2/    ← Part 1, Section 2 (section-page.md)
+03.part-2-section-1/    ← Part 2, Section 1 (section-page.md)
+04.part-2-section-2/    ← Part 2, Section 2 (section-page.md)
+```
+
+Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only. Update `versioning.labels` in `user/config/themes/helios.yaml` to use the new folder names as keys.
+
+Also update `version_pattern` in `user/config/themes/helios.yaml` to detect both naming conventions:
+
+```yaml
+versioning:
+  version_pattern: '/^(section-?\d+|part-\d+-section-\d+)/i'
+  labels:
+    part-1-section-1: 'Introduction'
+    part-1-section-2: 'Core Concepts'
+    part-2-section-1: 'Advanced Topics'
+    part-2-section-2: 'Publishing & Sharing'
+```
+
 ### Reader Home Settings
 
 The `reader.md` frontmatter controls the reader identity and card layout on the home page.
@@ -197,6 +224,8 @@ The `reader.md` frontmatter controls the reader identity and card layout on the 
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
 | `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
 | `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |
+| `section_label` | Label used for sections throughout the reader (e.g. `Chapter`, `Unit`). Leave empty to use the language default (`Section`). |
+| `part_label` | Label used for part headings on the reader home page when using the `part-N-section-M` folder naming pattern (e.g. `Volume`, `Unit`). Leave empty to use the default (`Part`). |
 | `cards_per_row` | Number of section cards per row (1–3) |
 | `card_icon` | Default icon for all cards (Tabler icon path) |
 | `card_image_layout` | Card image position: `side` or `top` |
@@ -242,6 +271,12 @@ learning_objectives: |
   - Identify the 5Rs of open educational resources
 ---
 ```
+
+### Section Label and Part Label
+
+The **Section Label** (default: `Section`) can be customized via **Admin → Pages → Reader Home → Section Label**. Examples: `Chapter`, `Project`, `Unit`, `Module`. For multi-language sites, the per-language default is set via `SECTION_LABEL` in `user/plugins/helios-open-reader/languages.yaml`.
+
+The **Part Label** (default: `Part`) can be customized via **Admin → Pages → Reader Home → Part Label** when sections are grouped using the `part-N-section-M` folder naming pattern. Examples: `Volume`, `Unit`, `Module`.
 
 ## Templates
 

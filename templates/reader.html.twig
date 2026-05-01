@@ -78,28 +78,64 @@
         2: 'sm:grid-cols-2',
         3: 'sm:grid-cols-2 lg:grid-cols-3'
     } %}
-    <div class="section-card-grid grid gap-4 mb-8 {{ colClass[page.header.cards_per_row|default(1)] ?? 'grid-cols-1' }} {{ page.header.cards_per_row|default(1) == 2 ? 'section-card-grid--cols-2' : (page.header.cards_per_row|default(1) == 3 ? 'section-card-grid--cols-3' : '') }}">
-        {% for version in helios_version_info.versions %}
-            {% set card_page = pages.find('/' ~ version.id) %}
-            {% if card_page %}
-                {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}
-                {% include 'partials/section-card.html.twig' with {
-                    title: version.label,
-                    link: card_page.url,
-                    icon: card_page.header.icon|default(page.header.card_icon),
-                    section_number: card_page.header.section_number|default(loop.index),
-                    section_label: section_label,
-                    description: card_page.header.description|default(null),
-                    author: card_page.header.author|default(null),
-                    badge_label: card_page.header.badge_label|default(null),
-                    badge_color: card_page.header.badge_color|default('default'),
-                    image: card_image,
-                    image_layout: (page.header.cards_per_row|default(1) == 3) ? 'top' : page.header.card_image_layout|default('side'),
-                    card_description_lines: page.header.card_description_lines|default(3)
-                } only %}
+    {% set gridClasses = 'section-card-grid grid gap-4 mb-8 ' ~ (colClass[page.header.cards_per_row|default(1)] ?? 'grid-cols-1') ~ ' ' ~ (page.header.cards_per_row|default(1) == 2 ? 'section-card-grid--cols-2' : (page.header.cards_per_row|default(1) == 3 ? 'section-card-grid--cols-3' : '')) %}
+
+    {% if has_parts %}
+        {# Parts mode — render a labelled heading + card grid for each part #}
+        {% for part_key, part_versions in part_groups %}
+            {% if part_key != '__ungrouped__' %}
+            <div class="hor-part-heading">
+                <h2>{{ part_labels[part_key] ?? (part_key|replace({'-': ' '})|title) }}</h2>
+            </div>
             {% endif %}
+            <div class="{{ gridClasses }}">
+                {% for version in part_versions %}
+                    {% set card_page = pages.find('/' ~ version.id) %}
+                    {% if card_page %}
+                        {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}
+                        {% include 'partials/section-card.html.twig' with {
+                            title: version.label,
+                            link: card_page.url,
+                            icon: card_page.header.icon|default(page.header.card_icon),
+                            section_number: card_page.header.section_number|default(loop.index),
+                            section_label: section_label,
+                            description: card_page.header.description|default(null),
+                            author: card_page.header.author|default(null),
+                            badge_label: card_page.header.badge_label|default(null),
+                            badge_color: card_page.header.badge_color|default('default'),
+                            image: card_image,
+                            image_layout: (page.header.cards_per_row|default(1) == 3) ? 'top' : page.header.card_image_layout|default('side'),
+                            card_description_lines: page.header.card_description_lines|default(3)
+                        } only %}
+                    {% endif %}
+                {% endfor %}
+            </div>
         {% endfor %}
-    </div>
+    {% else %}
+        {# Flat mode — single grid for all sections (original behaviour) #}
+        <div class="{{ gridClasses }}">
+            {% for version in helios_version_info.versions %}
+                {% set card_page = pages.find('/' ~ version.id) %}
+                {% if card_page %}
+                    {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}
+                    {% include 'partials/section-card.html.twig' with {
+                        title: version.label,
+                        link: card_page.url,
+                        icon: card_page.header.icon|default(page.header.card_icon),
+                        section_number: card_page.header.section_number|default(loop.index),
+                        section_label: section_label,
+                        description: card_page.header.description|default(null),
+                        author: card_page.header.author|default(null),
+                        badge_label: card_page.header.badge_label|default(null),
+                        badge_color: card_page.header.badge_color|default('default'),
+                        image: card_image,
+                        image_layout: (page.header.cards_per_row|default(1) == 3) ? 'top' : page.header.card_image_layout|default('side'),
+                        card_description_lines: page.header.card_description_lines|default(3)
+                    } only %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
     {# Start Reading button — links directly to first section #}
     {% set btn_text = page.header.start_button_text ?? 'Start Reading' %}

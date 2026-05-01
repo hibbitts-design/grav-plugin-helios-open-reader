@@ -345,6 +345,53 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['helios_version_info'] = $versionInfo;
         }
 
+        // Parts detection — optional feature using part-N-section-M folder naming.
+        // If any version IDs use the pattern, group them by part and expose part_groups,
+        // part_labels, and has_parts to Twig. When no part prefixes are found, has_parts
+        // is false and the reader home renders the standard flat card grid.
+        $hasParts   = false;
+        $partGroups = [];
+        $partLabels = [];
+
+        if (isset($twig->twig_vars['helios_version_info'])) {
+            $versionsForParts = $twig->twig_vars['helios_version_info']['versions'];
+
+            foreach ($versionsForParts as $v) {
+                $vid = is_array($v) ? ($v['id'] ?? '') : ($v->id ?? '');
+                if ($this->extractPartPrefix($vid) !== null) {
+                    $hasParts = true;
+                    break;
+                }
+            }
+
+            if ($hasParts) {
+                // Part label word: reader home frontmatter overrides the default "Part"
+                $rawPartLabel  = trim((string) ($readerHome ? ($readerHome->header()->part_label ?? '') : ''));
+                $partLabelWord = ($rawPartLabel !== '') ? ucfirst($rawPartLabel) : 'Part';
+
+                foreach ($versionsForParts as $v) {
+                    $vid        = is_array($v) ? ($v['id'] ?? '') : ($v->id ?? '');
+                    $partPrefix = $this->extractPartPrefix($vid);
+                    $key        = $partPrefix ?? '__ungrouped__';
+
+                    if (!isset($partGroups[$key])) {
+                        $partGroups[$key] = [];
+                        if ($partPrefix) {
+                            // Auto-label: "part-1" → "<PartLabel> 1" (e.g. "Part 1", "Volume 1")
+                            preg_match('/^part-(\d+)$/i', $partPrefix, $nm);
+                            $partNumber = $nm[1] ?? '';
+                            $partLabels[$partPrefix] = $partLabelWord . ($partNumber !== '' ? ' ' . $partNumber : '');
+                        }
+                    }
+                    $partGroups[$key][] = $v;
+                }
+            }
+        }
+
+        $twig->twig_vars['has_parts']   = $hasParts;
+        $twig->twig_vars['part_groups'] = $partGroups;
+        $twig->twig_vars['part_labels'] = $partLabels;
+
         // Section sidebar image — shown as a banner above the nav when show_sidebar_image is set.
         // section_home_url — always the section root URL, used for the sidebar label link.
         // (helios_version_info version.url is the version-switcher URL, not the root URL.)
@@ -426,14 +473,22 @@ class HeliosOpenReaderPlugin extends Plugin
 
         $pages = $this->grav['pages'];
 
+        $currentPartPrefix = $this->extractPartPrefix($currentSectionId);
+
         // --- Next: last sub-page of a section → next section root page ---
+        // Part boundary check: only cross into the next section when it belongs to
+        // the same part (or when neither section uses part prefixes).
         if ($twig->twig_vars['helios_next'] === null && $currentIndex < count($versionIds) - 1) {
-            $nextSection = $pages->find('/' . $versionIds[$currentIndex + 1]);
-            if ($nextSection) {
-                $twig->twig_vars['helios_next'] = [
-                    'title' => $nextSection->title(),
-                    'url'   => $nextSection->url(),
-                ];
+            $nextSectionId     = $versionIds[$currentIndex + 1];
+            $nextPartPrefix    = $this->extractPartPrefix($nextSectionId);
+            if ($currentPartPrefix === $nextPartPrefix) {
+                $nextSection = $pages->find('/' . $nextSectionId);
+                if ($nextSection) {
+                    $twig->twig_vars['helios_next'] = [
+                        'title' => $nextSection->title(),
+                        'url'   => $nextSection->url(),
+                    ];
+                }
             }
         }
 
@@ -445,16 +500,20 @@ class HeliosOpenReaderPlugin extends Plugin
         $pageIsSectionRoot = count($routeSegments) === 1;
 
         if ($twig->twig_vars['helios_prev'] === null && $pageIsSectionRoot && $currentIndex > 0) {
-            $prevSection = $pages->find('/' . $versionIds[$currentIndex - 1]);
-            if ($prevSection) {
-                $flatList = [];
-                $this->collectPagesDepthFirst($prevSection, $flatList);
-                if (!empty($flatList)) {
-                    $lastPage = end($flatList);
-                    $twig->twig_vars['helios_prev'] = [
-                        'title' => $lastPage->title(),
-                        'url'   => $lastPage->url(),
-                    ];
+            $prevSectionId  = $versionIds[$currentIndex - 1];
+            $prevPartPrefix = $this->extractPartPrefix($prevSectionId);
+            if ($currentPartPrefix === $prevPartPrefix) {
+                $prevSection = $pages->find('/' . $prevSectionId);
+                if ($prevSection) {
+                    $flatList = [];
+                    $this->collectPagesDepthFirst($prevSection, $flatList);
+                    if (!empty($flatList)) {
+                        $lastPage = end($flatList);
+                        $twig->twig_vars['helios_prev'] = [
+                            'title' => $lastPage->title(),
+                            'url'   => $lastPage->url(),
+                        ];
+                    }
                 }
             }
         }
@@ -476,16 +535,20 @@ class HeliosOpenReaderPlugin extends Plugin
             && $parentPage->url() === $prevUrl
             && $currentIndex > 0
         ) {
-            $prevSection = $pages->find('/' . $versionIds[$currentIndex - 1]);
-            if ($prevSection) {
-                $flatList = [];
-                $this->collectPagesDepthFirst($prevSection, $flatList);
-                if (!empty($flatList)) {
-                    $lastPage = end($flatList);
-                    $twig->twig_vars['helios_prev'] = [
-                        'title' => $lastPage->title(),
-                        'url'   => $lastPage->url(),
-                    ];
+            $prevSectionId  = $versionIds[$currentIndex - 1];
+            $prevPartPrefix = $this->extractPartPrefix($prevSectionId);
+            if ($currentPartPrefix === $prevPartPrefix) {
+                $prevSection = $pages->find('/' . $prevSectionId);
+                if ($prevSection) {
+                    $flatList = [];
+                    $this->collectPagesDepthFirst($prevSection, $flatList);
+                    if (!empty($flatList)) {
+                        $lastPage = end($flatList);
+                        $twig->twig_vars['helios_prev'] = [
+                            'title' => $lastPage->title(),
+                            'url'   => $lastPage->url(),
+                        ];
+                    }
                 }
             }
         }
@@ -493,7 +556,8 @@ class HeliosOpenReaderPlugin extends Plugin
 
     /**
      * Inject section_progress_current and section_progress_total Twig vars.
-     * Counts all visible, routable section-page templates across all parts.
+     * When parts are active, counts only section-page templates within the current part.
+     * Without parts, counts across all sections (original behaviour).
      */
     protected function injectSectionProgress($twig, $page): void
     {
@@ -501,9 +565,34 @@ class HeliosOpenReaderPlugin extends Plugin
             return;
         }
 
+        // When parts are active, scope the progress counter to the current part only.
+        $hasParts = $twig->twig_vars['has_parts'] ?? false;
+        $routeSegments    = explode('/', trim($page->route(), '/'));
+        $currentSectionId = $routeSegments[0] ?? '';
+        $currentPartPrefix = $this->extractPartPrefix($currentSectionId);
+
+        $scopedSectionIds = null;
+        if ($hasParts && $currentPartPrefix !== null) {
+            $versionInfo = $twig->twig_vars['helios_version_info'] ?? null;
+            if ($versionInfo) {
+                $scopedSectionIds = [];
+                foreach ($versionInfo['versions'] as $v) {
+                    $vid = is_array($v) ? ($v['id'] ?? '') : ($v->id ?? '');
+                    if ($this->extractPartPrefix($vid) === $currentPartPrefix) {
+                        $scopedSectionIds[] = $vid;
+                    }
+                }
+            }
+        }
+
         $allPages = [];
         $root = $this->grav['pages']->root();
         foreach ($root->children()->visible() as $topLevel) {
+            if ($scopedSectionIds !== null
+                && !in_array(trim($topLevel->route(), '/'), $scopedSectionIds, true)
+            ) {
+                continue;
+            }
             $this->collectPagesDepthFirst($topLevel, $allPages);
         }
 
@@ -531,6 +620,18 @@ class HeliosOpenReaderPlugin extends Plugin
 
         $twig->twig_vars['section_progress_current'] = $currentIndex + 1;
         $twig->twig_vars['section_progress_total']   = count($sections);
+    }
+
+    /**
+     * Extract the "part-N" prefix from a version ID, or return null if not part-scoped.
+     * e.g. "part-1-section-2" → "part-1"; "section-3" → null
+     */
+    protected function extractPartPrefix(string $versionId): ?string
+    {
+        if (preg_match('/^(part-\d+)-section-\d+$/i', $versionId, $m)) {
+            return strtolower($m[1]);
+        }
+        return null;
     }
 
     /**

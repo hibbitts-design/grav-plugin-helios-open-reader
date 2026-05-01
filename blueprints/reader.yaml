@@ -63,6 +63,13 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label used for sections throughout the reader (in page headers, cards, and the sidebar). Leave empty to use the language default (e.g. "Section" in English).'
+            header.part_label:
+              type: text
+              size: medium
+              label: 'Part Label'
+              toggleable: true
+              placeholder: 'e.g. Volume, Unit, Module'
+              help: 'Label used for part headings on the reader home page when sections are grouped using the part-N-section-M folder naming pattern. Leave empty to use the default ("Part").'
             header.cards_per_row:
               type: select
               label: Cards Per Row
