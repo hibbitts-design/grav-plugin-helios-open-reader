@@ -124,6 +124,9 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **Reflection** — `[reflection]...[/reflection]` (green)
 - **Case Study** — `[case-study]...[/case-study]` (red)
 - **Announcement** — `[announcement]...[/announcement]` (purple by default; configurable type)
+- **Project Brief** — `[project-brief]...[/project-brief]` (amber); frames the assignment or challenge prompt
+- **Feedback Requested** — `[feedback-requested]...[/feedback-requested]` (purple); flags content awaiting review — useful in student projects and draft OER alike
+- **Process Note** — `[process-note]...[/process-note]` (blue); documents iterations, decisions, or pivots during a project
 - All callouts accept an optional `title="..."` parameter and support Markdown content
 - Five built-in GitHub-style callouts via the github-markdown-alerts plugin: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
@@ -274,6 +277,9 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - `[case-study]...[/case-study]` – Case Study block (red)
 - `[announcement]...[/announcement]` – Announcement notice (purple by default), supports Markdown
 - `[announcement title="..." type="..."]...[/announcement]` – With optional custom title and type (`note`, `tip`, `important`, `warning`, `caution`)
+- `[project-brief]...[/project-brief]` – Project Brief block (amber); frames the assignment or challenge prompt
+- `[feedback-requested]...[/feedback-requested]` – Feedback Requested block (purple); flags content awaiting review — useful in student projects and draft OER alike
+- `[process-note]...[/process-note]` – Process Note block (blue); documents iterations, decisions, or pivots during a project
 
 > [!TIP]
 > For simple notices, the standard Markdown callout `> [!IMPORTANT]` is a zero-friction alternative to the `[announcement]` shortcode.
