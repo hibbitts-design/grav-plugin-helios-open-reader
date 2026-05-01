@@ -7,6 +7,7 @@ learning_objectives: "- Set up Git Page Link to invite reader contributions\n- D
 image: natalia-y-YqeS71-42c4-unsplash.jpg
 sitemap:
     lastmod: '29-04-2026 14:32'
+show_sidebar_image: '1'
 ---
 
 Open authoring closes the loop between publishing content openly and actively inviting others to improve it. The goal isn't just making content readable — it's making it editable.

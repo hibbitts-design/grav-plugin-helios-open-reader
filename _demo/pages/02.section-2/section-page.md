@@ -6,6 +6,7 @@ description: 'Practical tools for creating Git-backed, LMS-embeddable open cours
 image: vitaly-gariev-tnikNZcsQjk-unsplash.jpg
 sitemap:
     lastmod: '29-04-2026 14:32'
+show_sidebar_image: '1'
 ---
 
 [objectives title="By the end of this section you will be able to"]

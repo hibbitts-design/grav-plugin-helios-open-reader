@@ -7,7 +7,7 @@ learning_objectives: "- Define open education and explain its core principles\n-
 image: kevin-grieve-B8ciJlFvaBQ-unsplash.jpg
 sitemap:
     lastmod: '29-04-2026 14:31'
-show_sidebar_image: '0'
+show_sidebar_image: '1'
 ---
 
 Open education is built on a simple idea: learning materials should be as accessible and adaptable as the knowledge they contain.
