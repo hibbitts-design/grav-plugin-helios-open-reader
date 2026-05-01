@@ -1,0 +1,183 @@
+name: Helios Open Reader
+type: plugin
+version: 0.9.0
+description: Adds open reader structure, sequential navigation, learning objectives, OER attribution, and rich media shortcodes to the Helios Grav Premium theme.
+icon: book-open
+author:
+  name: HibbittsDesign.org
+  email: paul@hibbittsdesign.org
+  url: https://hibbittsdesign.org
+homepage: https://github.com/hibbitts-design/grav-plugin-helios-open-reader
+keywords: grav, helios, reader, oer, open education
+bugs: https://github.com/hibbitts-design/grav-plugin-helios-open-reader/issues
+license: MIT
+compatibility:
+  grav: ['1.7', '2.0']
+
+dependencies:
+  - { name: grav, version: '>=1.7.0' }
+  - { name: shortcode-core, version: '>=5.0.0' }
+  - { name: github-markdown-alerts, version: '>=1.0.0' }
+  - { name: external_links, version: '>=1.6.3' }
+  - { name: page-toc, version: '>=3.2.5' }
+  - { name: simplesearch, version: '>=2.3.0' }
+
+form:
+  validation: loose
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    admin_panel_section:
+      type: section
+      title: 'Admin Panel'
+      underline: true
+
+    admin_styling_enhancements:
+      type: toggle
+      label: 'Helios-inspired Admin Styling (1.7 only)'
+      help: 'Apply Helios-inspired styling enhancements to the Admin Panel 1.7 (rounded corners, transitions, shadows, focus rings, table row hover, sidebar accent).'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    admin_font_size:
+      type: select
+      label: 'Admin Font Size'
+      help: 'Adjust the Admin Panel font size for improved readability.'
+      default: 'large'
+      options:
+        default: 'Default (no changes)'
+        large: 'Large'
+        larger: 'Larger'
+
+    header_section:
+      type: section
+      title: 'Header'
+      underline: true
+
+    show_site_icon:
+      type: toggle
+      label: 'Show Site Logo Icon'
+      help: 'Show the icon square next to the Logo Text when no logo image is set.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    site_icon:
+      type: text
+      size: medium
+      label: 'Site Logo Icon'
+      help: 'Tabler icon path for the site logo icon square (e.g. tabler/notebook.svg). Only applies when Show Site Logo Icon is enabled. Leave empty to use the default icon.'
+      placeholder: 'tabler/notebook.svg'
+
+    navigation_section:
+      type: section
+      title: 'Navigation'
+      underline: true
+
+    prev_next_position:
+      type: select
+      label: 'Prev/Next Page Controls Position'
+      help: 'Where to display the Previous/Next page navigation on section pages.'
+      default: both
+      options:
+        both: 'Top and bottom'
+        top: 'Top only'
+        bottom: 'Bottom only'
+
+    footer_section:
+      type: section
+      title: 'Footer'
+      underline: true
+
+    show_plugin_credits:
+      type: toggle
+      label: 'Show Plugin Credits'
+      help: 'Show the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    show_oer_attribution:
+      type: toggle
+      label: 'Show OER Attribution Block'
+      help: 'Display the CC license and attribution text in the footer, drawn from the reader home page frontmatter.'
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    integrations_section:
+      type: section
+      title: 'Integrations'
+      underline: true
+
+    show_github_header_icon:
+      type: toggle
+      label: 'Show Repository Host Icon Link in Header'
+      help: 'Show a GitHub or Codeberg icon link to the reader repository in the site header. Only applies when GitHub Integration is enabled in the Helios theme settings.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    github_link_icon:
+      type: text
+      size: medium
+      label: 'Git Link Icon'
+      help: 'Tabler icon path for the Git link icon (e.g. tabler/file-text.svg). Only applies when GitHub Integration is enabled in the Helios theme settings.'
+      placeholder: 'tabler/file-text.svg'
+
+    github_link_mode:
+      type: select
+      label: 'Git Link Mode'
+      help: 'The Helios theme''s "Edit this Page" option defaults to viewing the file. Switch to "Edit file" to restore direct editing. Only applies when GitHub Integration is enabled in the Helios theme settings.'
+      default: 'view'
+      options:
+        view: 'View file (default)'
+        edit: 'Edit file'
+
+    github_server:
+      type: radio
+      label: 'Repository Host for Helios GitHub Integration'
+      default: 'github.com'
+      help: 'Only required when GitHub Integration is enabled in the Helios theme settings.'
+      options:
+        'github.com': GitHub
+        'codeberg.org': Codeberg
+
+    h5pembedrootpath:
+      type: text
+      size: long
+      label: 'H5P Content Embed Source URL'
+      default: 'https://h5p.org/h5p/embed/'
+      description: 'H5P embed source URL path up to, but not including, the Content ID. For example, ''https://h5p.org/h5p/embed/'' or ''https://yourorganization.h5p.com/content/''.'
+      validate:
+        type: url

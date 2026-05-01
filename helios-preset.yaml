@@ -1,0 +1,36 @@
+- name: Helios
+  accents:
+    primary-accent: button
+    secondary-accent: notice
+    tertiary-accent: critical
+  colors:
+    logo-bg: '#18181B'
+    logo-link: '#FFFFFF'
+    nav-bg: '#27272A'
+    nav-text: '#9CA3AF'
+    nav-link: '#F9FAFB'
+    nav-selected-bg: '#18181B'
+    nav-selected-link: '#FFFFFF'
+    nav-hover-bg: '#3F3F46'
+    nav-hover-link: '#FFFFFF'
+    toolbar-bg: '#FFFFFF'
+    toolbar-text: '#1F2937'
+    page-bg: '#F4F4F5'
+    page-text: '#374151'
+    page-link: '#2563EB'
+    content-bg: '#FAFAFA'
+    content-text: '#374151'
+    content-link: '#2563EB'
+    content-link2: '#7845CC'
+    content-header: '#111827'
+    content-tabs-bg: '#E5E7EB'
+    content-tabs-text: '#4B5563'
+    content-highlight: '#ffffd7'
+    button-bg: '#2563EB'
+    button-text: '#FFFFFF'
+    notice-bg: '#059669'
+    notice-text: '#FFFFFF'
+    update-bg: '#7845CC'
+    update-text: '#FFFFFF'
+    critical-bg: '#DC2626'
+    critical-text: '#FFFFFF'

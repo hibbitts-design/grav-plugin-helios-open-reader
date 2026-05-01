@@ -1,0 +1,55 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+    {# Save My Place — read by helios.js to persist last-visited section page #}
+    <div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}" hidden></div>
+
+    {# Prev/Next navigation — top (shown when hor_prev_next_position is 'top' or 'both') #}
+    {% if hor_prev_next_position|default('both') in ['top', 'both'] %}
+        {% include 'partials/prev-next-top.html.twig' %}
+    {% endif %}
+
+    {# Section number + title header.
+       Prefer the parent page's section_number so all sub-pages within a section
+       show the same "Section N" label (e.g. "Section 1" on every page of Section 1).
+       Falls back to the page's own section_number for section landing pages, which
+       have no parent with a section_number. #}
+    {% set display_section_number = page.parent.header.section_number ?? page.header.section_number ?? null %}
+    {% set page_icon = page.header.icon ?? null %}
+    <header class="mb-6">
+        {% if display_section_number and not chromeless %}
+        <p class="text-sm font-medium text-primary uppercase tracking-wider mb-1">
+            {{ section_label }} {{ display_section_number }}
+        </p>
+        {% endif %}
+        <div class="{{ page_icon ? 'flex items-center gap-3' : '' }}">
+            {% if page_icon %}
+            <span class="doc-card-icon hor-h1-icon flex-shrink-0 inline-flex items-center justify-center p-2 rounded-xl bg-primary/15 text-primary" aria-hidden="true">
+                {{ svg_icon(page_icon, 'w-6 h-6')|raw }}
+            </span>
+            {% endif %}
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {{ page.title }}
+            </h1>
+        </div>
+    </header>
+
+    {# Learning objectives block — from frontmatter, rendered above body content #}
+    {% if page.header.learning_objectives %}
+    <div class="md-alert md-alert--tip hor-objectives mb-6" dir="auto">
+        <p class="md-alert-title">
+            {% set iconUri = 'plugin://github-markdown-alerts/assets/icons/octicon-tip.svg' %}
+            {{ svg_image(iconUri)|raw }}
+            Learning Objectives
+        </p>
+        <div class="md-alert-body prose dark:prose-invert max-w-none">
+            {{ page.header.learning_objectives|markdown }}
+        </div>
+    </div>
+    {% endif %}
+
+    {# Main page content #}
+    <article class="prose prose-lg dark:prose-invert max-w-none">
+        {{ page.content|raw }}
+    </article>
+{% endblock %}

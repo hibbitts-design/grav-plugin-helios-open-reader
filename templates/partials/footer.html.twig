@@ -1,0 +1,52 @@
+{#
+ # Plugin override of partials/footer.html.twig (helios theme)
+ # Changes from theme original:
+ #   1. git_path_prefix uses github_server plugin variable to support GitHub and Codeberg view/edit links (search: PLUGIN CHANGE 1)
+ #   2. OER attribution block displayed when show_oer_attribution is enabled (search: PLUGIN CHANGE 2)
+ #   3. Footer attribution text includes Helios Open Reader link, toggled by show_plugin_credits (search: PLUGIN CHANGE 3)
+ #   4. Git edit link suppressed via ?edit_link=false or ?hidegitlink=true URL params (search: PLUGIN CHANGE 4)
+ #}
+<footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
+
+    {# View/Edit on GitHub/Codeberg link #}
+    {% if theme_config.github.enabled and theme_config.github.edit_link and not hide_git_link %}{# PLUGIN CHANGE 4 #}
+    {% set file_path = page.filePathClean %}
+    {% set prefix = theme_config.github.path_prefix %}
+    {% if prefix and file_path starts with prefix %}
+        {% set file_path = file_path[prefix|length:] %}
+    {% endif %}
+    {% set git_path_prefix = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}{# PLUGIN CHANGE 1 #}
+    <div class="mb-4 text-center">
+        <a href="https://{{ github_server }}/{{ theme_config.github.repo }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="edit-page-link inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary">
+            <span aria-hidden="true">{{ svg_icon(github_link_icon ?: 'tabler/file-text.svg', 'w-4 h-4')|raw }}</span>
+            {{ theme_config.github.edit_text ?: 'THEME_HELIOS.EDIT_PAGE'|t }}<span class="sr-only"> (opens in new tab)</span>
+        </a>
+    </div>
+    {% endif %}
+
+    {# OER attribution block #}{# PLUGIN CHANGE 2 #}
+    {% if show_oer_attribution and reader_attribution and not chromeless %}
+    <div class="hor-attribution mt-4 mb-4 pt-4 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p>{{ reader_attribution|raw }}</p>
+        {% if reader_license %}
+        <p class="mt-2">
+            {% if reader_license_url %}
+            <a href="{{ reader_license_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                {{ reader_license }}<span class="sr-only"> (opens in new tab)</span>
+            </a>
+            {% else %}
+            {{ reader_license }}
+            {% endif %}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {# Plugin credits #}{# PLUGIN CHANGE 3 #}
+    {% if show_plugin_credits and not chromeless %}
+    <p class="text-center text-sm text-gray-500 dark:text-gray-400">Built with <a href="https://getgrav.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav<span class="sr-only"> (opens in new tab)</span></a> · <a href="https://getgrav.org/premium/helios" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav Premium Helios<span class="sr-only"> (opens in new tab)</span></a> theme · <a href="https://github.com/hibbitts-design/grav-plugin-helios-open-reader" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Helios Open Reader<span class="sr-only"> (opens in new tab)</span></a> by <a href="https://hibbittsdesign.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">hibbittsdesign.org<span class="sr-only"> (opens in new tab)</span></a></p>
+    {% endif %}
+</footer>

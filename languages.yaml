@@ -1,0 +1,15 @@
+en:
+  PLUGIN_HELIOS_OPEN_READER:
+    OBJECTIVES_TITLE: "Learning Objectives"
+    START_READING: "Start Reading"
+    ATTRIBUTION_LABEL: "License"
+    SECTION_LABEL: "Section"
+    SECTION_LATEST_LABEL: "latest"
+
+fr:
+  PLUGIN_HELIOS_OPEN_READER:
+    OBJECTIVES_TITLE: "Objectifs d'apprentissage"
+    START_READING: "Commencer la lecture"
+    ATTRIBUTION_LABEL: "Licence"
+    SECTION_LABEL: "Chapitre"
+    SECTION_LATEST_LABEL: "dernière"

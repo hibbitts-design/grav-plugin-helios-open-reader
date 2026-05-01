@@ -1,0 +1,48 @@
+# Fallback frontend strings for when the Helios theme is not yet installed.
+# The Helios theme's own languages/en.yaml takes precedence when present.
+# Keep in sync with: user/themes/helios/languages/en.yaml (frontend section only)
+THEME_HELIOS:
+  SEARCH: Search
+  SEARCH_DOCS: Search documentation...
+  NO_RESULTS: No results found
+  SEARCHING: Searching...
+  TRY_DIFFERENT: Try a different search term
+  DID_YOU_MEAN: "Did you mean:"
+  TYPE_MORE: Type at least %d characters to search
+  TO_NAVIGATE: to navigate
+  TO_SELECT: to select
+  TO_CLOSE: to close
+  COPY: Copy
+  COPIED: Copied!
+  EDIT_PAGE: Edit this page
+  ON_THIS_PAGE: On this page
+  PREVIOUS: Previous
+  NEXT: Next
+  VERSION: Version
+  VERSION_LATEST: latest
+  LIGHT_MODE: Light
+  DARK_MODE: Dark
+  SYSTEM_MODE: System
+  COPYRIGHT: "&copy; {{year}} {{name}}. All rights reserved."
+  GO_BACK: Go Back
+  BACK_TO_HOME: Back to Home
+  TRY_SEARCHING: "Try searching: press"
+  POWERED_BY_YETISEARCH: Powered by <a href="https://getgrav.org/premium/yetisearch" target="_blank" rel="noopener">YetiSearch Pro</a>
+  POWERED_BY_GRAV: Powered by <a href="https://getgrav.org" class="text-primary hover:underline" target="_blank" rel="noopener">Grav</a>
+  PARAMETERS: Parameters
+  NAME: Name
+  TYPE: Type
+  DESCRIPTION: Description
+  REQUIRED: required
+  OPTIONAL: optional
+  DEFAULT: "Default:"
+  REQUEST: Request
+  RESPONSE: Response
+  RESPONSE_CODES: Response Codes
+  API_ENDPOINTS_IN_GROUP: Endpoints in this group
+  CONTACT_HEADING: "Let's Start a Conversation"
+  CONTACT_DESCRIPTION: Have a question, suggestion, or just want to say hello? We'd love to hear from you. Fill out the form and we'll respond as soon as possible.
+  CONTACT_EMAIL_LABEL: Email Us
+  CONTACT_EMAIL_VALUE: hello@example.com
+  CONTACT_RESPONSE_LABEL: Response Time
+  CONTACT_RESPONSE_VALUE: Within 24-48 hours

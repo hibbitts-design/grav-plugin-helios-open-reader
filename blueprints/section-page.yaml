@@ -1,0 +1,85 @@
+title: Reader Page
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: PLUGIN_ADMIN.CONTENT
+          fields:
+            content:
+              ordering@: 100
+            header.media_order:
+              ordering@: 101
+            header.section_number:
+              type: text
+              label: Section Number
+              toggleable: true
+              placeholder: 'e.g. 1 or 1.2'
+              help: 'Optional section number displayed in the page header. Leave empty to omit.'
+            header.description:
+              type: textarea
+              label: Description
+              toggleable: true
+              rows: 3
+              placeholder: A short description for this section
+              help: 'Short description shown on the section card on the reader home page.'
+            header.icon:
+              type: text
+              label: Icon
+              toggleable: true
+              placeholder: 'tabler/book.svg'
+              help: 'Tabler icon path for this section (e.g. tabler/book.svg). Shown on the section card.'
+            header.image:
+              type: pagemediaselect
+              label: Card Image
+              toggleable: true
+              help: 'Image from this page''s media folder to display on the section card on the reader home page.'
+            header.show_sidebar_image:
+              type: toggle
+              label: 'Show Card Image in Section Sidebar'
+              highlight: 1
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Show the section card image in the sidebar when browsing within this section. Only applies when a Card Image is selected above.'
+            header.author:
+              type: text
+              label: Author(s)
+              toggleable: true
+              placeholder: 'e.g. Jane Smith'
+              help: 'Author name(s) shown on the section card on the reader home page.'
+            header.badge_label:
+              type: text
+              label: Badge Label
+              toggleable: true
+              placeholder: 'e.g. New, Updated, Draft'
+              help: 'Short status badge displayed on the section card. Leave empty to show no badge.'
+            header.badge_color:
+              type: select
+              label: Badge Color
+              toggleable: true
+              default: default
+              options:
+                default: Default
+                blue: Blue
+                green: Green
+                yellow: Yellow
+                red: Red
+                purple: Purple
+                plain: Plain
+              help: 'Badge color. Matches Helios doc-badge color options.'
+            header.learning_objectives:
+              type: textarea
+              label: Learning Objectives
+              toggleable: true
+              rows: 5
+              placeholder: "- Understand the key concepts\n- Apply the methods described\n- Evaluate the outcomes"
+              help: 'Learning objectives displayed at the top of this page as a styled block. Supports Markdown. Can also be added inline using the [objectives] shortcode.'

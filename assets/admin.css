@@ -1,0 +1,94 @@
+/* Helios-inspired Admin Panel styling enhancements */
+
+/* === Rounded corners and transitions === */
+
+/* Form inputs, textarea, select, selectize */
+form input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+form textarea,
+form select,
+form .selectize-input,
+form .form-select-wrapper {
+    border-radius: 6px;
+}
+
+form .selectize-dropdown {
+    border-radius: 0 0 6px 6px;
+}
+
+/* Buttons */
+.button,
+.button.secondary,
+.button.danger {
+    border-radius: 6px !important;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+/* Status labels and badges */
+.label {
+    border-radius: 4px;
+}
+
+.badge {
+    border-radius: 10px;
+}
+
+/* Tab bar — round top corners only */
+.tab-bar li a,
+.tab-bar li span {
+    border-radius: 6px 6px 0 0;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+    border-radius: 8px;
+}
+
+/* === Sidebar active state accent === */
+
+/* Left border accent on selected nav item via inset box-shadow — no layout shift */
+#admin-menu li.selected {
+    box-shadow: inset 3px 0 0 #3B82F6;
+}
+
+/* === Card/panel shadows === */
+
+/* Subtle elevation shadow on main content panels; dashboard items excluded */
+.admin-block {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* === Table row hover === */
+
+/* Subtle zinc highlight on table row hover */
+table tbody tr {
+    transition: background-color 0.1s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(39, 39, 42, 0.04);
+}
+
+/* === Login page astronaut === */
+
+/* Make astronaut silhouette visible against dark zinc background */
+#admin-login h1 svg path:first-child {
+    fill: rgba(255, 255, 255, 0.10);
+}
+
+/* === Focus rings === */
+
+/* Keyboard-only focus rings on inputs and buttons (:focus-visible, not :focus) */
+form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus-visible,
+form textarea:focus-visible,
+form select:focus-visible,
+form .selectize-input.focus {
+    outline: 2px solid rgba(37, 99, 235, 0.5);
+    outline-offset: 1px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.button:focus-visible {
+    outline: 2px solid rgba(37, 99, 235, 0.5);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}

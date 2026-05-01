@@ -1,0 +1,213 @@
+/* Helios Open Reader — Reader Stylesheet */
+
+/* -------------------------------------------------------------------------
+   Section page header icon — nudges the icon up so it aligns with the
+   visual cap-height of the large h1 rather than the box-centre.
+   ------------------------------------------------------------------------- */
+
+.hor-h1-icon {
+    margin-top: -6px;
+}
+
+/* -------------------------------------------------------------------------
+   Learning objectives block
+   Extends the existing md-alert--tip styles from github-markdown-alerts.
+   The hor-objectives class adds reader-specific spacing only.
+   ------------------------------------------------------------------------- */
+
+.hor-objectives {
+    margin-bottom: 1.5rem;
+}
+
+/* -------------------------------------------------------------------------
+   Key takeaways block
+   Extends the existing md-alert--note styles from github-markdown-alerts.
+   ------------------------------------------------------------------------- */
+
+.hor-key-takeaways {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* -------------------------------------------------------------------------
+   Pedagogical callout blocks
+   Each extends an existing md-alert--* type from github-markdown-alerts.
+   The hor-* class adds reader-specific spacing only.
+   ------------------------------------------------------------------------- */
+
+.hor-example,
+.hor-exercise,
+.hor-definition,
+.hor-reflection,
+.hor-case-study {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Use base prose size (1rem) for all callout body text so it reads
+   slightly smaller than the surrounding prose-lg (1.125rem) article text.
+   Covers both hor-* shortcode callouts and native [!NOTE]-style callouts. */
+.md-alert .md-alert-body {
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+/* -------------------------------------------------------------------------
+   OER attribution block (footer)
+   ------------------------------------------------------------------------- */
+
+.hor-attribution {
+    line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------
+   Section number badge on section-page
+   ------------------------------------------------------------------------- */
+
+.hor-section-number {
+    font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------------
+   Top prev/next navigation
+   Overrides Helios .prev-next-nav top-placement styles (mt-12, pt-8, border-t)
+   with bottom-placement equivalents so the nav reads as a lead-in to content.
+   ------------------------------------------------------------------------- */
+
+.prev-next-nav--top {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgb(229 231 235); /* gray-200 */
+}
+
+/* Helios uses class-based dark mode (.dark on <html>) — no media query needed */
+.dark .prev-next-nav--top {
+    border-bottom-color: rgb(31 41 55); /* gray-800 */
+}
+
+/* -------------------------------------------------------------------------
+   Resume Reading strip (reader home page)
+   ------------------------------------------------------------------------- */
+
+/* Ensure [hidden] is respected even though .hor-resume-strip sets display:flex.
+   Author CSS beats the UA stylesheet, so we need this explicit override. */
+#hor-resume-reading[hidden] {
+    display: none;
+}
+
+.hor-resume-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: rgb(249 250 251); /* gray-50 */
+    border: 1px solid rgb(229 231 235); /* gray-200 */
+}
+
+.dark .hor-resume-strip {
+    background-color: rgb(31 41 55); /* gray-800 */
+    border-color: rgb(55 65 81);     /* gray-700 */
+}
+
+.hor-resume-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    color: var(--color-primary, #3b82f6);
+}
+
+.hor-resume-text {
+    font-size: 0.875rem;
+    color: rgb(75 85 99); /* gray-600 */
+    flex: 1;
+    min-width: 0;
+}
+
+.dark .hor-resume-text {
+    color: rgb(156 163 175); /* gray-400 */
+}
+
+.hor-resume-text a {
+    font-weight: 500;
+    color: var(--color-primary, #3b82f6);
+}
+
+.hor-resume-text a:hover {
+    text-decoration: underline;
+}
+
+.hor-resume-dismiss {
+    background: none;
+    border: none;
+    padding: 0.125rem 0.25rem;
+    margin-left: auto;
+    font-size: 1rem;
+    line-height: 1;
+    color: rgb(156 163 175); /* gray-400 */
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hor-resume-dismiss:hover {
+    color: rgb(75 85 99); /* gray-600 */
+}
+
+.dark .hor-resume-dismiss:hover {
+    color: rgb(209 213 219); /* gray-300 */
+}
+
+/* -------------------------------------------------------------------------
+   Section reading progress indicator (bottom prev/next area)
+   ------------------------------------------------------------------------- */
+
+.hor-progress {
+    margin-top: 2rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.hor-progress-bar {
+    width: 100%;
+    max-width: 24rem;
+    height: 3px;
+    background-color: rgb(229 231 235); /* gray-200 */
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.dark .hor-progress-bar {
+    background-color: rgb(55 65 81); /* gray-700 */
+}
+
+.hor-progress-fill {
+    height: 100%;
+    background-color: var(--color-primary, #3b82f6);
+    border-radius: 9999px;
+}
+
+.hor-progress-text {
+    font-size: 0.875rem;
+    color: rgb(107 114 128); /* gray-500 — 4.6:1 contrast on white, passes WCAG AA */
+    margin: 0;
+    text-align: center;
+}
+
+.dark .hor-progress-text {
+    color: rgb(156 163 175); /* gray-400 — sufficient contrast on dark backgrounds */
+}
+
+/* Focus-visible styles — ensure keyboard users see clear focus rings */
+.hor-resume-text a:focus-visible,
+.hor-resume-dismiss:focus-visible {
+    outline: 2px solid var(--color-primary, #3b82f6);
+    outline-offset: 2px;
+    border-radius: 2px;
+}

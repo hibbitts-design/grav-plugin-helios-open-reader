@@ -1,0 +1,33 @@
+{# Top prev/next navigation — same as Helios prev-next.html.twig but with --top modifier #}
+{% set prev = helios_prev|default(null) %}
+{% set next = helios_next|default(null) %}
+
+{% if (prev or next) and not chromeless %}
+<nav class="prev-next-nav prev-next-nav--top" aria-label="Page navigation, top">
+    {% if prev %}
+    <a href="{{ prev.url }}" class="nav-button prev group">
+        <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        <div>
+            <span class="label">{{ 'THEME_HELIOS.PREVIOUS'|t }}</span>
+            <span class="title block">{{ prev.title }}</span>
+        </div>
+    </a>
+    {% else %}
+    <div></div>
+    {% endif %}
+
+    {% if next %}
+    <a href="{{ next.url }}" class="nav-button next group">
+        <div>
+            <span class="label">{{ 'THEME_HELIOS.NEXT'|t }}</span>
+            <span class="title block">{{ next.title }}</span>
+        </div>
+        <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
