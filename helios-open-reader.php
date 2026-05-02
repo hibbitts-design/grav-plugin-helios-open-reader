@@ -645,6 +645,13 @@ class HeliosOpenReaderPlugin extends Plugin
 
         $twig->twig_vars['section_progress_current'] = $currentIndex + 1;
         $twig->twig_vars['section_progress_total']   = count($sections);
+
+        // Expose the current part label so the progress indicator can show
+        // "Part 1 · Page 2 of 3" instead of just "Page 2 of 3" when parts are active.
+        if ($hasParts && $currentPartPrefix !== null) {
+            $partLabels = $twig->twig_vars['part_labels'] ?? [];
+            $twig->twig_vars['section_part_label'] = $partLabels[$currentPartPrefix] ?? null;
+        }
     }
 
     /**

@@ -7,6 +7,10 @@
 {% set next = helios_next|default(null) %}
 
 {% if section_progress_current is defined %}
+{% set progress_text = 'Page ' ~ section_progress_current ~ ' of ' ~ section_progress_total %}
+{% if section_part_label is defined and section_part_label %}
+    {% set progress_text = section_part_label ~ ' · ' ~ progress_text %}
+{% endif %}
 <div class="hor-progress">
     <div class="hor-progress-bar"
          role="progressbar"
@@ -14,10 +18,10 @@
          aria-valuenow="{{ section_progress_current }}"
          aria-valuemin="0"
          aria-valuemax="{{ section_progress_total }}"
-         aria-valuetext="Page {{ section_progress_current }} of {{ section_progress_total }}">
+         aria-valuetext="{{ progress_text }}">
         <div class="hor-progress-fill" aria-hidden="true" style="width: {{ ((section_progress_current / section_progress_total) * 100)|round }}%"></div>
     </div>
-    <p class="hor-progress-text" aria-hidden="true">Page {{ section_progress_current }} of {{ section_progress_total }}</p>
+    <p class="hor-progress-text" aria-hidden="true">{{ progress_text }}</p>
 </div>
 {% endif %}
 
