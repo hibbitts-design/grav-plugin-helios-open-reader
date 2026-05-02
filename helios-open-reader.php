@@ -369,6 +369,26 @@ class HeliosOpenReaderPlugin extends Plugin
                 $rawPartLabel  = trim((string) ($readerHome ? ($readerHome->header()->part_label ?? '') : ''));
                 $partLabelWord = ($rawPartLabel !== '') ? ucfirst($rawPartLabel) : 'Part';
 
+                // Custom per-part titles from frontmatter:
+                // parts:
+                //   - id: part-1
+                //     label: 'Foundations of Open Education'
+                //   - id: part-2
+                //     label: 'Applying Open Practices'
+                $customPartLabels = [];
+                if ($readerHome) {
+                    $partsHeader = $readerHome->header()->parts ?? [];
+                    if (is_array($partsHeader)) {
+                        foreach ($partsHeader as $item) {
+                            $pid  = isset($item['id'])    ? strtolower(trim($item['id']))    : null;
+                            $plbl = isset($item['label']) ? trim($item['label'])              : null;
+                            if ($pid && $plbl) {
+                                $customPartLabels[$pid] = $plbl;
+                            }
+                        }
+                    }
+                }
+
                 foreach ($versionsForParts as $v) {
                     $vid        = is_array($v) ? ($v['id'] ?? '') : ($v->id ?? '');
                     $partPrefix = $this->extractPartPrefix($vid);
@@ -377,10 +397,15 @@ class HeliosOpenReaderPlugin extends Plugin
                     if (!isset($partGroups[$key])) {
                         $partGroups[$key] = [];
                         if ($partPrefix) {
-                            // Auto-label: "part-1" → "<PartLabel> 1" (e.g. "Part 1", "Volume 1")
-                            preg_match('/^part-(\d+)$/i', $partPrefix, $nm);
-                            $partNumber = $nm[1] ?? '';
-                            $partLabels[$partPrefix] = $partLabelWord . ($partNumber !== '' ? ' ' . $partNumber : '');
+                            if (isset($customPartLabels[$partPrefix])) {
+                                // Use custom label from frontmatter if provided
+                                $partLabels[$partPrefix] = $customPartLabels[$partPrefix];
+                            } else {
+                                // Auto-label: "part-1" → "<PartLabel> 1" (e.g. "Part 1", "Theme 1")
+                                preg_match('/^part-(\d+)$/i', $partPrefix, $nm);
+                                $partNumber = $nm[1] ?? '';
+                                $partLabels[$partPrefix] = $partLabelWord . ($partNumber !== '' ? ' ' . $partNumber : '');
+                            }
                         }
                     }
                     $partGroups[$key][] = $v;

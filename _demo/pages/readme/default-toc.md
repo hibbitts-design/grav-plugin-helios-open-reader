@@ -21,7 +21,7 @@ Content pages are written in Markdown, with optional shortcodes for embedding an
 
 ## Why Helios Open Reader
 
-Helios Open Reader gives you a modern, open, and fully controlled web reading experience that works alone or embedded in any LMS — a dedicated home for open textbooks, course readers, and student projects that you control completely.
+Helios Open Reader gives you a modern, open, and fully controlled web reading experience that works alone or embedded in any LMS – a dedicated home for open textbooks, course readers, and student projects that you control completely.
 
 - Ready in minutes – a complete, pre-configured package with demo content included
 - Structured – supports sections with sub-pages, auto-detected from folder naming, with a configurable section label (Chapter, Project, Unit, Module, or any custom term)
@@ -35,32 +35,36 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 
 ## Features
 
-Helios Open Reader provides a ready-built site for open educational content — open textbooks, readers, and student projects — using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built site for open educational content – open textbooks, readers, and student projects – using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ### Reader Structure
-- **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as cards on the reader home
-- **Section N header** — section pages automatically display their section number and label in the page header; inherits correctly for all sub-pages within a section. The label is configurable (e.g. Chapter, Project, Unit, Module) via **Admin → Plugins → Helios Open Reader → Navigation → Section Label**
-- **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
+- **Sections structure** – top-level folders named `section-N` are auto-detected as sections and render as cards on the reader home
+- **Optional parts grouping** – rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
+- **Section N header** – section pages automatically display their section number and label in the page header; inherits correctly for all sub-pages within a section. The label is configurable (e.g. Chapter, Project, Unit, Module) via **Admin → Pages → Reader Home → Section Label**
+- **Section sub-pages** – sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
 - Reader home page with cover image, title, subtitle, authors, edition, and CC license badge
 
 ### Callout Blocks
-- **Learning Objectives** — `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
-- **Key Takeaways** — `[key-takeaways]...[/key-takeaways]` (blue)
-- **Example** — `[example]...[/example]` (purple)
-- **Exercise** — `[exercise]...[/exercise]` (amber)
-- **Definition** — `[definition]...[/definition]` (blue)
-- **Reflection** — `[reflection]...[/reflection]` (green)
-- **Case Study** — `[case-study]...[/case-study]` (red)
-- **Announcement** — `[announcement]...[/announcement]` (purple by default; configurable type)
+- **Learning Objectives** – `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
+- **Key Takeaways** – `[key-takeaways]...[/key-takeaways]` (blue)
+- **Example** – `[example]...[/example]` (purple)
+- **Exercise** – `[exercise]...[/exercise]` (amber)
+- **Definition** – `[definition]...[/definition]` (blue)
+- **Reflection** – `[reflection]...[/reflection]` (green)
+- **Case Study** – `[case-study]...[/case-study]` (red)
+- **Announcement** – `[announcement]...[/announcement]` (purple by default; configurable type)
+- **Project Brief** – `[project-brief]...[/project-brief]` (amber); frames the assignment or challenge prompt
+- **Feedback Requested** – `[feedback-requested]...[/feedback-requested]` (purple); flags content awaiting review — useful in student projects and draft OER alike
+- **Process Note** – `[process-note]...[/process-note]` (blue); documents iterations, decisions, or pivots during a project
 - All callouts accept an optional `title="..."` parameter and support Markdown content
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the reader home page on return
-- **Reading progress indicator** — shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
-- **Prev/Next navigation** — configurable position: top, bottom, or both
-- **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
-- **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
+- **Save My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the reader home page on return
+- **Reading progress indicator** – shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
+- **Prev/Next navigation** – configurable position: top, bottom, or both
+- **TOC scroll spy** – active heading highlighted in the Table of Contents as the reader scrolls
+- **Start button** – on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
 - Search across the full reader via the simplesearch plugin
 
 ### Embedding & Shortcodes
@@ -70,11 +74,11 @@ Helios Open Reader provides a ready-built site for open educational content — 
 
 ### LMS Embedding
 
-Append `?embedded=true` to any page URL to display only the page content — no sidebar, header, or pagination. Designed for embedding Helios Open Reader pages in an LMS iframe (Canvas, Moodle, Brightspace, etc.).
+Append `?embedded=true` to any page URL to display only the page content – no sidebar, header, or pagination. Designed for embedding Helios Open Reader pages in an LMS iframe (Canvas, Moodle, Brightspace, etc.).
 
 - All internal links automatically carry the `?embedded=true` parameter forward, so navigating between pages stays in embedded mode
 - `?chromeless=true` is also supported as an alternative parameter name
-- Works with HTMX navigation — links in dynamically loaded content are also rewritten
+- Works with HTMX navigation – links in dynamically loaded content are also rewritten
 - Combine with `?toc_position=hidden` to also hide the Table of Contents, useful for narrow iframe embeds
 - Combine with `?toc_position=left` or `?toc_position=right` to reposition the Table of Contents, useful for working with surrounding LMS navigation elements
 - Combine with `?edit_link=false` (or `?hidegitlink=true`) to hide the "Edit this Page" link on a per-page basis
@@ -82,13 +86,13 @@ Append `?embedded=true` to any page URL to display only the page content — no 
 **Example iframe:**
 
 ```html
-<iframe src="https://yoursite.com/section-1?embedded=true" width="100%" height="600" style="border:none;"></iframe>
+<iframe src="https://yoursite.com/section-1/introduction?embedded=true" width="100%" height="600" style="border:none;"></iframe>
 ```
 
 ### Authoring & Customization
 - Git Sync plugin included for syncing reader content with GitHub, Codeberg, or similar Git hosting
 - Automatic "Edit this Page" link via the Helios theme, defaulting to **View Page Markdown** for open access to reader content; optionally configurable to direct editing for contributors with repository access
-- OER attribution block — display a CC license statement in the footer, drawn from reader home page frontmatter
+- OER attribution block – display a CC license statement in the footer, drawn from reader home page frontmatter
 - Customize CSS and JavaScript via the bundled plugin assets
 - Print stylesheet with page break control, absolute link URLs displayed inline, and consistent page margins across browsers
 
@@ -112,18 +116,18 @@ The skeleton is a **complete package** – Grav CMS, the Helios Open Reader plug
 > [!TIP]
 > When copying the Grav Helios Open Reader folder to your web server, copy the **entire folder** – it contains hidden files (such as `.htaccess`) that are not selected by default. Omitting these hidden files can cause problems when running Grav.
 
-## Book Setup
+## Reader Setup
 
 All reader content lives within `user/pages/`. The skeleton ships with a reader home page and three pre-configured demo sections.
 
 ```
 user/pages/
 ├── 00.reader/              # Reader home page
-│   └── reader.md           # Book title, subtitle, authors, edition, license, cover image
+│   └── reader.md           # Reader title, subtitle, authors, edition, license, cover image
 ├── 01.section-1/           # Section 1 (published by default)
 │   ├── section-page.md     # Section settings (section_number, description, icon, learning_objectives)
-│   ├── 01.section-one/
-│   └── 02.section-two/
+│   ├── 01.section-one/     # Sub-page (also uses section-page.md)
+│   └── 02.section-two/     # Sub-page (also uses section-page.md)
 ├── 02.section-2/
 ├── 03.section-3/
 └── readme/
@@ -132,7 +136,7 @@ user/pages/
 Rename section folders to match your content, either in the Admin Panel or via FTP. The number prefix on each folder (e.g. `01.section-1/`) controls the order in the sidebar navigation.
 
 > [!TIP]
-> After adding, renaming, or removing a section folder, update `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) to add the new folder name as a key — this sets the section name shown in the sidebar and browser tab title.
+> After adding, renaming, or removing a section folder, update `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) to add the new folder name as a key – this sets the section name shown in the sidebar and browser tab title.
 
 ### Showing and Hiding Sections
 
@@ -152,11 +156,11 @@ To add a section, copy an existing section folder (e.g. `01.section-1/`) via FTP
 
 ## Reader Home Settings
 
-The `reader.md` frontmatter controls the book identity and card layout on the home page. These fields can be set in the Admin Panel by opening the reader home page.
+The `reader.md` frontmatter controls the reader identity and card layout on the home page. These fields can be set in the Admin Panel by opening the reader home page.
 
 | Field | Description |
 |-------|-------------|
-| `title` | Book title displayed in the header |
+| `title` | Reader title displayed in the header |
 | `subtitle` | Optional subtitle shown below the title in italics |
 | `authors` | Author name(s) shown below the subtitle |
 | `edition` | Optional edition line (e.g. `First Edition, 2025`) |
@@ -165,6 +169,11 @@ The `reader.md` frontmatter controls the book identity and card layout on the ho
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |
 | `cover_image` | Filename of a cover image uploaded to the reader home media folder |
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
+| `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
+| `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |
+| `section_label` | Label used for sections throughout the reader (e.g. `Chapter`, `Unit`). Leave empty to use the language default (`Section`). |
+| `part_label` | Label used for part headings on the reader home page when using the `part-N-section-M` folder naming pattern (e.g. `Theme`, `Project`). Leave empty to use the default (`Part`). |
+| `parts` | Optional list of custom part titles (see Part Label below) |
 | `cards_per_row` | Number of section cards per row (1–3) |
 | `card_icon` | Default icon for all cards (Tabler icon path) |
 | `card_image_layout` | Card image position: `side` or `top` |
@@ -190,20 +199,20 @@ The `section-page.md` frontmatter controls each section's landing page and card 
 | `description` | Description shown on the section card |
 | `icon` | Tabler icon path for the section card |
 | `image` | Filename of a card image uploaded to this page's media folder |
-| `instructor` | Author name(s) shown on the section card |
+| `author` | Author name(s) shown on the section card |
 | `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the page |
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
 
 ## Label Customization
 
-### Book or Reader Title
+### Reader Title
 
 The title displayed in the browser tab and header comes from the `title` field in `reader.md`. Edit it via **Admin → Pages → Reader Home**, or directly in `user/pages/00.reader/reader.md`.
 
 ### Section Label
 
-The label used for sections throughout the reader (in page headers, cards, and the sidebar) can be set via **Admin → Plugins → Helios Open Reader → Navigation → Section Label**. Leave it empty to use the language default (`Section` in English, `Chapitre` in French). Examples: `Chapter`, `Project`, `Unit`, `Module`.
+The label used for sections throughout the reader (in page headers, cards, and the sidebar) can be set via **Admin → Pages → Reader Home → Section Label**. Leave it empty to use the language default (`Section` in English, `Chapitre` in French). Examples: `Chapter`, `Project`, `Unit`, `Module`.
 
 For multi-language sites, the per-language default is set via `SECTION_LABEL` in `user/plugins/helios-open-reader/languages.yaml`. English and French are included:
 
@@ -219,9 +228,23 @@ fr:
     SECTION_LATEST_LABEL: dernière
 ```
 
+### Part Label
+
+When sections are grouped into parts using the `part-N-section-M` folder naming pattern, the part heading label (default: `Part`) can be customized via **Admin → Pages → Reader Home → Part Label**. Leave it empty to use the default. Examples: `Theme`, `Project`.
+
+To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `reader.md` frontmatter:
+
+```yaml
+parts:
+  - id: part-1
+    label: 'Foundations of Open Education'
+  - id: part-2
+    label: 'Applying Open Practices'
+```
+
 ### Section Names
 
-The individual section name shown in the sidebar, the section dropdown (when enabled), and as the middle segment of the browser tab title (`Page Title | Book Title | Site Title`) comes from the `versioning.labels` setting in the Helios Theme config. These can be edited via **Admin → Themes → Helios → Versioning tab → Version Labels**, or directly in `user/config/themes/helios.yaml`:
+The individual section name shown in the sidebar, the section dropdown (when enabled), and as the middle segment of the browser tab title (`Page Title | Reader Title | Site Title`) comes from the `versioning.labels` setting in the Helios Theme config. These can be edited via **Admin → Themes → Helios → Versioning tab → Version Labels**, or directly in `user/config/themes/helios.yaml`:
 
 ```yaml
 versioning:
@@ -235,9 +258,9 @@ versioning:
 
 The browser tab title is automatically formatted as:
 
-`Page Title | Book Title | Site Title`
+`Page Title | Reader Title | Site Title`
 
-The Book Title is drawn from the reader home page title. The Site Title comes from `site.title` in `user/config/site.yaml`. Set the Site Title to your institution or author name — it serves as the top-level identifier in the browser tab.
+The Reader Title is drawn from the reader home page title. The Site Title comes from `site.title` in `user/config/site.yaml`. Set the Site Title to your institution or author name – it serves as the top-level identifier in the browser tab.
 
 ## Git Sync & Open Editing
 
@@ -253,7 +276,7 @@ If you prefer not to write Markdown directly, the optional [Grav Premium Editor 
 Custom CSS, JavaScript, shortcodes, callout blocks, and Helios-inspired Admin Panel styling for the Helios Open Reader skeleton. If the Helios theme is not installed, the plugin automatically falls back to the Quark or Quark2 theme so the frontend site remains viewable, redirecting to the License Manager page in the Admin panel.
 
 ### Templates
-- **reader** – Reader home template displaying the book header, resume reading strip, and section card grid
+- **reader** – Reader home template displaying the reader header, resume reading strip, and section card grid
 - **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content
 - **default-toc** – Content page template with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
@@ -281,6 +304,9 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - [raw]`[case-study]...[/case-study]`[/raw] – Case Study block (red)
 - [raw]`[announcement]...[/announcement]`[/raw] – Announcement notice (purple by default), supports Markdown
 - [raw]`[announcement title="..." type="..."]...[/announcement]`[/raw] – With optional custom title and type (`note`, `tip`, `important`, `warning`, `caution`)
+- [raw]`[project-brief]...[/project-brief]`[/raw] – Project Brief block (amber); frames the assignment or challenge prompt
+- [raw]`[feedback-requested]...[/feedback-requested]`[/raw] – Feedback Requested block (purple); flags content awaiting review — useful in student projects and draft OER alike
+- [raw]`[process-note]...[/process-note]`[/raw] – Process Note block (blue); documents iterations, decisions, or pivots during a project
 - [raw]`[iframe url="..."]`[/raw] – Responsive iframe embed, 16:9 by default
 - [raw]`[googleslides url="..."]`[/raw] – Responsive Google Slides embed, 16:9 by default
 - [raw]`[pdf url="..."]`[/raw] – PDF viewer via Google Docs, 16:9 by default
@@ -302,10 +328,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Admin Font Size | Large | Sets the Admin Panel font size: Default, Large, or Larger |
 | Show Site Logo Icon | Enabled | Show or hide the icon square next to the Logo Text in the header when no logo image is set |
 | Site Logo Icon | [raw]`tabler/notebook.svg`[/raw] | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
-| Section Label | *(empty)* | Label used for sections throughout the reader (e.g. `Chapter`, `Project`, `Unit`, `Module`). Leave empty to use the language default. |
-| Prev/Next Page Controls Position | Top and bottom | Where to display Prev/Next navigation on section pages: Top and bottom, Top only, or Bottom only |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
-| Show OER Attribution Block | Disabled | Display the CC license and attribution text in the footer, drawn from the reader home page frontmatter |
 | Show Repository Host Icon Link in Header | Enabled | Show a GitHub or Codeberg icon link to the reader repository in the site header (requires GitHub Integration enabled in the Helios theme) |
 | Git Link Icon | [raw]`tabler/file-text.svg`[/raw] | Tabler icon path for the Git link icon shown in the page footer |
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
