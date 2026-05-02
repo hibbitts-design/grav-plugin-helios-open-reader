@@ -2,7 +2,7 @@
 title: 'Tools for Open Course Design'
 section_number: '2'
 icon: tabler/tools.svg
-description: 'Practical tools for creating Git-backed, LMS-embeddable open course content — from Grav to Docsify-This.'
+description: 'Practical tools for creating Git-backed, LMS-embeddable open course content – from Grav to Docsify-This.'
 image: vitaly-gariev-tnikNZcsQjk-unsplash.jpg
 sitemap:
     lastmod: '29-04-2026 14:32'
@@ -18,13 +18,13 @@ Building open course content doesn't require learning a new authoring system fro
 
 ## Grav CMS
 
-[Grav](https://getgrav.org) is a flat-file CMS — all content is stored as Markdown files, with no database required. Pair it with the Git Sync plugin and every save is automatically committed to a GitHub or Codeberg repository.
+[Grav](https://getgrav.org) is a flat-file CMS – all content is stored as Markdown files, with no database required. Pair it with the Git Sync plugin and every save is automatically committed to a GitHub or Codeberg repository.
 
 **Best for:** Educators who want a full-featured course or reader site with an Admin Panel, multi-contributor support, and rich theming.
 
 ## Docsify-This
 
-[Docsify-This](https://docsify-this.net) takes a different approach — paste the URL of any public Markdown file and get back a styled, shareable web page instantly. No account, no configuration, nothing to install.
+[Docsify-This](https://docsify-this.net) takes a different approach – paste the URL of any public Markdown file and get back a styled, shareable web page instantly. No account, no configuration, nothing to install.
 
 **Best for:** Sharing a single page or section instantly, or publishing a reading without setting up a full site.
 
@@ -36,7 +36,7 @@ Both Grav and Docsify support clean content-only views via a URL parameter:
 https://yoursite.com/reader/section-one?chromeless=true
 ```
 
-Adding `?chromeless=true` removes the header, sidebar, and footer — leaving only the content for embedding in an iFrame inside Canvas, Moodle, or Brightspace.
+Adding `?chromeless=true` removes the header, sidebar, and footer – leaving only the content for embedding in an iFrame inside Canvas, Moodle, or Brightspace.
 
 [announcement title="Tip for Canvas Users"]
 Use the **External Tool** option (not iFrame embed) for the best accessibility and mobile experience when embedding open content in Canvas.

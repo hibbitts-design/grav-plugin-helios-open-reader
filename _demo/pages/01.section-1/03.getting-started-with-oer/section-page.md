@@ -9,7 +9,7 @@ You don't need to build a complete open textbook to get started with OER. The mo
 
 **1. Adopt existing OER.** Before creating anything, check whether something already exists. Repositories like [OER Commons](https://www.oercommons.org), [MERLOT](https://www.merlot.org), and [OpenStax](https://openstax.org) contain peer-reviewed open materials across most disciplines.
 
-**2. Adapt existing OER.** Find an open resource that's close to what you need, then revise it for your context. This is often faster than creating from scratch and models good open practice — attributing the source and publishing your adaptation openly.
+**2. Adapt existing OER.** Find an open resource that's close to what you need, then revise it for your context. This is often faster than creating from scratch and models good open practice – attributing the source and publishing your adaptation openly.
 
 **3. Create and publish.** If nothing suitable exists, create it. Even a single openly licensed syllabus or lab guide is a contribution to the OER ecosystem.
 
@@ -29,4 +29,4 @@ A Grav-based reader with Git Sync satisfies all four criteria by default.
 
 ## Building the Habit
 
-The most effective habit is to write course materials in a format you own from the start — Markdown files in a Git repository — rather than migrating from a proprietary format later. Every piece of content you create in that format is one less conversion to make.
+The most effective habit is to write course materials in a format you own from the start – Markdown files in a Git repository – rather than migrating from a proprietary format later. Every piece of content you create in that format is one less conversion to make.

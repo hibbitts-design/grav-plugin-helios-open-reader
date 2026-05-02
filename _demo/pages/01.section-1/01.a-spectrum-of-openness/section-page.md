@@ -1,13 +1,13 @@
 ---
 title: A Spectrum of Openness
 section_number: 1.1
-description: Open education is not all-or-nothing — explore practical steps toward greater openness.
+description: Open education is not all-or-nothing – explore practical steps toward greater openness.
 ---
 
 Open education isn't all-or-nothing. You can start by making one module of your course openly accessible, or by publishing your syllabus as a public Markdown file. Every step toward openness makes your content more durable and more useful to others.
 
 [definition title="Open Educational Resource (OER)"]
-Any teaching, learning, or research material that is released under an open license permitting free use, adaptation, and redistribution. OER can be a single image, a lesson plan, a full textbook, or an entire course — what makes it open is the license, not the format or scope.
+Any teaching, learning, or research material that is released under an open license permitting free use, adaptation, and redistribution. OER can be a single image, a lesson plan, a full textbook, or an entire course – what makes it open is the license, not the format or scope.
 [/definition]
 
 ## Starting Small
@@ -18,7 +18,7 @@ The most common barrier to open education is the belief that going "open" means 
 - A lab manual published under a CC license
 - A course outline shared as a GitHub repository
 
-Each of these is a complete act of openness — no further steps required unless you choose to take them.
+Each of these is a complete act of openness – no further steps required unless you choose to take them.
 
 ## The 5Rs in Practice
 

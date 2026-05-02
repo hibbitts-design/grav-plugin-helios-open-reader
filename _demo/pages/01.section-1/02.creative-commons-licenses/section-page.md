@@ -3,11 +3,11 @@ title: Creative Commons Licenses
 description: An overview of the six Creative Commons licenses and how to choose the right one for your open content.
 ---
 
-Creative Commons licenses are the practical mechanism behind most open educational resources. They let you specify exactly which permissions you're granting — without requiring individual negotiations with each user.
+Creative Commons licenses are the practical mechanism behind most open educational resources. They let you specify exactly which permissions you're granting – without requiring individual negotiations with each user.
 
 ## The Six Licenses
 
-All CC licenses require attribution. The other conditions — NonCommercial, NoDerivatives, ShareAlike — combine to form six licenses:
+All CC licenses require attribution. The other conditions – NonCommercial, NoDerivatives, ShareAlike – combine to form six licenses:
 
 | License | Free to share | Free to adapt | Commercial use |
 |---------|:---:|:---:|:---:|
@@ -22,7 +22,7 @@ All CC licenses require attribution. The other conditions — NonCommercial, NoD
 
 For educational materials intended to be remixed and adapted by other educators, **CC BY** or **CC BY-SA** are the most open choices. CC BY places the fewest restrictions and is compatible with the widest range of other OER.
 
-If you want to ensure that adaptations are always shared under the same terms, **CC BY-SA** (ShareAlike) creates that expectation — similar to how open-source copyleft licenses work.
+If you want to ensure that adaptations are always shared under the same terms, **CC BY-SA** (ShareAlike) creates that expectation – similar to how open-source copyleft licenses work.
 
 > [!NOTE]
 > The NonCommercial condition is often misunderstood. "Commercial use" covers a wide range of activities, and its meaning is context-dependent. When in doubt, CC BY is simpler and more reusable.

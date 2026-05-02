@@ -4,7 +4,7 @@ section_number: 2.1
 description: How to embed open content pages directly into Canvas, Moodle, or Brightspace using a URL parameter.
 ---
 
-One of the practical advantages of web-first course content is the ability to embed it directly inside your LMS — without giving up ownership of the content or the URL.
+One of the practical advantages of web-first course content is the ability to embed it directly inside your LMS – without giving up ownership of the content or the URL.
 
 ## The Chromeless Parameter
 

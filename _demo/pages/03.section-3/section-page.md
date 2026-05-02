@@ -10,7 +10,7 @@ sitemap:
 show_sidebar_image: '1'
 ---
 
-Open authoring closes the loop between publishing content openly and actively inviting others to improve it. The goal isn't just making content readable — it's making it editable.
+Open authoring closes the loop between publishing content openly and actively inviting others to improve it. The goal isn't just making content readable – it's making it editable.
 
 ## The Git Page Link Plugin
 
@@ -29,7 +29,7 @@ A single link serves two audiences:
 | Codeberg | Shows file to everyone | Redirects unauthenticated users to login |
 | GitLab | Shows file to everyone | Redirects unauthenticated users to login |
 
-For publicly accessible readers, **view mode** is the safer default on all platforms. GitHub's edit mode is the exception — it handles unauthenticated visitors gracefully, making it well-suited for open authoring workflows.
+For publicly accessible readers, **view mode** is the safer default on all platforms. GitHub's edit mode is the exception – it handles unauthenticated visitors gracefully, making it well-suited for open authoring workflows.
 
 ## Inviting Contributions
 

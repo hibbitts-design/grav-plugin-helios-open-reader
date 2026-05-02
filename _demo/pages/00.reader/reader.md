@@ -15,7 +15,7 @@ sitemap:
 media_order: viktor-forgacs-click-LNwIJHUtED4-unsplash.jpg
 ---
 
-Welcome to **Open Education Essentials** — a short, practical guide to understanding and applying open education principles in your teaching practice.
+Welcome to **Open Education Essentials** – a short, practical guide to understanding and applying open education principles in your teaching practice.
 
 This reader covers the foundational ideas, practical tools, and real-world examples you need to get started with open educational resources (OER) and open course design.
 

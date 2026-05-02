@@ -1,5 +1,5 @@
 ---
-title: Git Sync — Version-Controlled Content
+title: Git Sync – Version-Controlled Content
 description: How to connect your Grav site to a GitHub or Codeberg repository for automatic two-way content sync.
 ---
 
@@ -15,7 +15,7 @@ The result: your content lives simultaneously on your web server and in your Git
 
 1. Create a repository on GitHub or Codeberg
 2. Install and enable the Git Sync plugin
-3. Run the Git Sync wizard — it generates the webhook URL and walks through the authentication setup
+3. Run the Git Sync wizard – it generates the webhook URL and walks through the authentication setup
 4. Set the sync folder to `pages` (the default)
 
 Once configured, any page you save in the Admin Panel appears in your repository within seconds.
@@ -23,9 +23,9 @@ Once configured, any page you save in the Admin Panel appears in your repository
 ## Why This Matters for OER
 
 A Git-backed reader is:
-- **Portable** — clone the repository to move to a new host
-- **Recoverable** — every version is preserved in history
-- **Collaborative** — contributors can fork and propose changes
-- **Citable** — specific versions can be tagged and linked permanently
+- **Portable** – clone the repository to move to a new host
+- **Recoverable** – every version is preserved in history
+- **Collaborative** – contributors can fork and propose changes
+- **Citable** – specific versions can be tagged and linked permanently
 
 The repository becomes the authoritative source. The Grav site is one way to render it.
