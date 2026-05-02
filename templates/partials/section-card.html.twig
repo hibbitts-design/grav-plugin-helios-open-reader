@@ -7,14 +7,14 @@
 <{{ tag }} {{ linkAttrs|raw }} class="doc-card group block rounded-lg border border-gray-200 dark:border-gray-700 {{ link ? (image ? 'cursor-pointer hover:!no-underline' : 'hover:border-primary dark:hover:border-primary cursor-pointer hover:!no-underline') : '' }} transition-colors {{ image ? 'section-card-has-image' : '' }} {{ layout == 'side' ? 'section-card-side-layout' : '' }}">
     {% if layout == 'top' %}
         <div class="section-card-image-container">
-            <img src="{{ image.url }}" alt="{{ title }}">
+            <img src="{{ image.url }}" alt="">
         </div>
         <div class="p-6">
             {% include 'partials/section-card-content.html.twig' %}
         </div>
     {% elseif layout == 'side' %}
         <div class="section-card-side-image-container">
-            <img src="{{ image.url }}" alt="{{ title }}">
+            <img src="{{ image.url }}" alt="">
         </div>
         <div class="p-6 section-card-side-content">
             {% include 'partials/section-card-content.html.twig' %}
