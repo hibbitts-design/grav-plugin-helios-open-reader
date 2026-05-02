@@ -64,7 +64,7 @@
   // -------------------------------------------------------------------------
 
   function horInitSavePlace(root) {
-    // Save current page when on a chapter-page
+    // Save current page when on a section-page
     var savePlaceEl = root.querySelector('[data-hor-save-page]');
     if (savePlaceEl) {
       try {
