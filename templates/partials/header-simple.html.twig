@@ -9,7 +9,7 @@
 {% set appearance = theme_config.appearance %}
 {% set shortcut_key = theme_config.search.shortcut_key|default('k') %}
 
-<header class="sticky top-0 z-20 flex items-center h-16 pl-4 pr-4 sm:pr-6 lg:pr-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+<header id="site-header" class="sticky top-0 z-20 flex items-center h-16 pl-4 pr-4 sm:pr-6 lg:pr-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur border-b border-gray-200 dark:border-gray-800">
 
     {# Logo/Home link #}
     <a href="{{ logo_url }}" class="flex items-center gap-3">{# PLUGIN CHANGE 2: logo_url links to first course page when single course #}

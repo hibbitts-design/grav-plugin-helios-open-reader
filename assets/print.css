@@ -7,11 +7,13 @@
 @media print {
     /* Hide navigation chrome */
     aside,
-    header,
+    #site-header,
     footer,
     .mobile-nav-overlay,
     .mobile-nav-panel,
     #htmx-prev-next,
+    .prev-next-nav--top,
+    #hor-resume-reading,
     #htmx-loading,
     #htmx-breadcrumbs,
     .hor-section-list {

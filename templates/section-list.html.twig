@@ -142,7 +142,7 @@
     {% if btn_text %}
         {% set start_page = pages.find('/' ~ first_version.id) %}
         {% if start_page %}
-        <div class="mb-8">
+        <div class="mb-8 no-print">
             <a href="{{ start_page.url }}" class="doc-btn doc-btn--primary">
                 {{ btn_text }}
                 <svg class="inline-block ml-2 w-4 h-4" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
