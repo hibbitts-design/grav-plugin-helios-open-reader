@@ -20,7 +20,7 @@ class H5PShortcode extends Shortcode
 
             if ($h5pid) {
                 $config  = Grav::instance()['config'];
-                $h5proot = $config->get('plugins.helios-course-hub.h5pembedrootpath');
+                $h5proot = $config->get('plugins.helios-open-reader.h5pembedrootpath');
 
                 $embedurl = (strpos($h5proot, 'h5p.com') !== false)
                     ? $h5proot . $h5pid . '/embed'
