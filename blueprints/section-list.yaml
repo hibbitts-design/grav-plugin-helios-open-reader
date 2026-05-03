@@ -63,13 +63,6 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label used for sections throughout the reader (in page headers, cards, and the sidebar). Leave empty to use the language default (e.g. "Section" in English).'
-            header.part_label:
-              type: text
-              size: medium
-              label: 'Part Label'
-              toggleable: true
-              placeholder: 'e.g. Theme, Project'
-              help: 'Label used for part headings on the reader home page when sections are grouped using the part-N-section-M folder naming pattern. Leave empty to use the default ("Part").'
             header.cards_per_row:
               type: select
               label: Cards Per Row
@@ -102,6 +95,36 @@ form:
                 2: '2 lines'
                 3: '3 lines'
               help: 'Maximum lines of description text shown on each section card before truncating.'
+        parts_tab:
+          type: tab
+          title: Parts
+          fields:
+            parts_info:
+              type: display
+              label: false
+              content: '<p>Optionally rename section folders to <code>part-N-section-M</code> (e.g. <code>part-1-section-1</code>) via the Admin Panel Pages list, then add each new folder name as a key in <strong>Helios Theme → Versioning → Version Labels</strong>. Part headings, Prev/Next navigation, and reading progress are then automatically scoped per part.</p>'
+            header.part_label:
+              type: text
+              size: medium
+              label: 'Part Label'
+              toggleable: true
+              placeholder: 'e.g. Theme, Project'
+              help: 'Label used for part headings on the reader home page when sections are grouped using the part-N-section-M folder naming pattern. Leave empty to use the default ("Part").'
+            header.parts:
+              type: list
+              label: 'Custom Part Titles'
+              help: 'Optional list of custom titles for each part. The id must match the part folder prefix (e.g. part-1, part-2). Leave empty to use auto-generated labels (e.g. "Part 1", "Part 2").'
+              fields:
+                .id:
+                  type: text
+                  label: 'Part ID'
+                  placeholder: 'e.g. part-1'
+                  help: 'Must match the part prefix used in folder names (e.g. part-1 for part-1-section-1 folders).'
+                .label:
+                  type: text
+                  label: 'Part Title'
+                  placeholder: 'e.g. Foundations of Open Education'
+                  help: 'Custom title displayed as the part heading on the reader home page.'
         oer_tab:
           type: tab
           title: OER Attribution
