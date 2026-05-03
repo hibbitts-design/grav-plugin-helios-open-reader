@@ -87,8 +87,15 @@
     {% endif %}
     {# END PLUGIN ADDITION 2 #}
 
-    {# Version switcher #}
-    {% if theme_config.versioning.enabled and theme_config.versioning.show_dropdown and helios_version_info is defined and helios_version_info.count > 1 %}
+    {# Version switcher — when parts are enabled, scope dropdown to sections in the current part only #}
+    {% set current_version_id = (helios_version_info.versions|filter(v => v.is_current)|first).id ?? '' %}
+    {% if has_parts and '-section-' in current_version_id %}
+        {% set current_part_key = current_version_id|split('-section-')|first %}
+        {% set dropdown_versions = helios_version_info.versions|filter(v => v.id starts with current_part_key ~ '-') %}
+    {% else %}
+        {% set dropdown_versions = helios_version_info.versions %}
+    {% endif %}
+    {% if theme_config.versioning.enabled and theme_config.versioning.show_dropdown and helios_version_info is defined and dropdown_versions|length > 1 %}
     <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
         <div x-data="{ open: false }" class="relative">
             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
@@ -120,7 +127,7 @@
                  class="absolute left-0 right-0 mt-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10 z-10 max-h-64 overflow-y-auto"
                  x-cloak>
                 <div class="py-1">
-                    {% for version in helios_version_info.versions %}
+                    {% for version in dropdown_versions %}
                     <a href="{{ version.url }}"
                        @click="mobileNavOpen = false"
                        class="flex items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
