@@ -54,7 +54,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - **Case Study** – `[case-study]...[/case-study]` (red)
 - **Announcement** – `[announcement]...[/announcement]` (purple by default; configurable type)
 - **Project Brief** – `[project-brief]...[/project-brief]` (amber); frames the assignment or challenge prompt
-- **Feedback Requested** – `[feedback-requested]...[/feedback-requested]` (purple); flags content awaiting review – useful in student projects and draft OER alike
+- **Feedback Requested** – `[feedback-requested]...[/feedback-requested]` (purple); flags content awaiting review — useful in student projects and draft OER alike
 - **Process Note** – `[process-note]...[/process-note]` (blue); documents iterations, decisions, or pivots during a project
 - All callouts accept an optional `title="..."` parameter and support Markdown content
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
@@ -305,7 +305,7 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - [raw]`[announcement]...[/announcement]`[/raw] – Announcement notice (purple by default), supports Markdown
 - [raw]`[announcement title="..." type="..."]...[/announcement]`[/raw] – With optional custom title and type (`note`, `tip`, `important`, `warning`, `caution`)
 - [raw]`[project-brief]...[/project-brief]`[/raw] – Project Brief block (amber); frames the assignment or challenge prompt
-- [raw]`[feedback-requested]...[/feedback-requested]`[/raw] – Feedback Requested block (purple); flags content awaiting review – useful in student projects and draft OER alike
+- [raw]`[feedback-requested]...[/feedback-requested]`[/raw] – Feedback Requested block (purple); flags content awaiting review — useful in student projects and draft OER alike
 - [raw]`[process-note]...[/process-note]`[/raw] – Process Note block (blue); documents iterations, decisions, or pivots during a project
 - [raw]`[iframe url="..."]`[/raw] – Responsive iframe embed, 16:9 by default
 - [raw]`[googleslides url="..."]`[/raw] – Responsive Google Slides embed, 16:9 by default
