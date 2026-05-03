@@ -39,7 +39,10 @@
 .hor-exercise,
 .hor-definition,
 .hor-reflection,
-.hor-case-study {
+.hor-case-study,
+.hor-feedback-requested,
+.hor-process-note,
+.hor-project-brief {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
 }
