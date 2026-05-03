@@ -122,8 +122,8 @@ All reader content lives within `user/pages/`. The skeleton ships with a reader 
 
 ```
 user/pages/
-├── 00.reader/              # Reader home page
-│   └── reader.md           # Reader title, subtitle, authors, edition, license, cover image
+├── 00.sections/              # Reader home page
+│   └── section-list.md           # Reader title, subtitle, authors, edition, license, cover image
 ├── 01.section-1/           # Section 1 (published by default)
 │   ├── section-page.md     # Section settings (section_number, description, icon, learning_objectives)
 │   ├── 01.section-one/     # Sub-page (also uses section-page.md)
@@ -156,7 +156,7 @@ To add a section, copy an existing section folder (e.g. `01.section-1/`) via FTP
 
 ## Reader Home Settings
 
-The `reader.md` frontmatter controls the reader identity and card layout on the home page. These fields can be set in the Admin Panel by opening the reader home page.
+The `section-list.md` frontmatter controls the reader identity and card layout on the home page. These fields can be set in the Admin Panel by opening the reader home page.
 
 | Field | Description |
 |-------|-------------|
@@ -179,7 +179,7 @@ The `reader.md` frontmatter controls the reader identity and card layout on the 
 | `card_image_layout` | Card image position: `side` or `top` |
 | `card_description_lines` | Maximum description lines per card (2, 3, or 0 for no limit) |
 
-Page content written in `reader.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
+Page content written in `section-list.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
 
 ```markdown
 This text appears above the section cards.
@@ -208,7 +208,7 @@ The `section-page.md` frontmatter controls each section's landing page and card 
 
 ### Reader Title
 
-The title displayed in the browser tab and header comes from the `title` field in `reader.md`. Edit it via **Admin → Pages → Reader Home**, or directly in `user/pages/00.reader/reader.md`.
+The title displayed in the browser tab and header comes from the `title` field in `section-list.md`. Edit it via **Admin → Pages → Reader Home**, or directly in `user/pages/00.sections/section-list.md`.
 
 ### Section Label
 
@@ -232,7 +232,7 @@ fr:
 
 When sections are grouped into parts using the `part-N-section-M` folder naming pattern, the part heading label (default: `Part`) can be customized via **Admin → Pages → Reader Home → Part Label**. Leave it empty to use the default. Examples: `Theme`, `Project`.
 
-To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `reader.md` frontmatter:
+To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `section-list.md` frontmatter:
 
 ```yaml
 parts:

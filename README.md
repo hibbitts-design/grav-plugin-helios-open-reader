@@ -61,7 +61,7 @@ Alternatively it can be installed via the [Admin Plugin](http://learn.getgrav.or
 
 The `_demo` folder in this plugin contains a default Helios Open Reader site that can be used as a starting point:
 
-- `00.reader/` – Reader home page (`reader.md` sets the book title, subtitle, authors, edition, license, and cover image)
+- `00.sections/` – Reader home page (`section-list.md` sets the book title, subtitle, authors, edition, license, and cover image)
 - `01.section-1/` – Section 1: What is Open Education? (with sub-pages)
 - `02.section-2/` – Section 2: Tools for Open Course Design (with sub-pages)
 - `03.section-3/` – Section 3: Getting Started with Open Authoring (with sub-pages)
@@ -168,7 +168,7 @@ If you prefer not to write Markdown directly, the optional [Grav Premium Editor 
 Place section folders directly under the site root alongside the reader home, named using the `section-N` convention:
 
 ```
-00.reader/          ← reader home (reader.md)
+00.sections/          ← reader home (section-list.md)
 01.section-1/       ← section 1 (section-page.md)
   01.section-one/   ← sub-page (section-page.md)
   02.section-two/   ← sub-page (section-page.md)
@@ -186,7 +186,7 @@ Add a `labels` entry in `user/config/themes/helios.yaml` for each section folder
 To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
 
 ```
-00.reader/
+00.sections/
 01.part-1-section-1/    ← Part 1, Section 1 (section-page.md)
 02.part-1-section-2/    ← Part 1, Section 2 (section-page.md)
 03.part-2-section-1/    ← Part 2, Section 1 (section-page.md)
@@ -195,7 +195,7 @@ To group sections into parts on the reader home page, use the `part-N-section-M`
 
 Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only. Update `versioning.labels` in `user/config/themes/helios.yaml` to use the new folder names as keys.
 
-To use custom part titles instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `reader.md`:
+To use custom part titles instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `section-list.md`:
 
 ```yaml
 parts:
@@ -219,7 +219,7 @@ versioning:
 
 ### Reader Home Settings
 
-The `reader.md` frontmatter controls the reader identity and card layout on the home page.
+The `section-list.md` frontmatter controls the reader identity and card layout on the home page.
 
 | Field | Description |
 |-------|-------------|
@@ -242,7 +242,7 @@ The `reader.md` frontmatter controls the reader identity and card layout on the 
 | `card_image_layout` | Card image position: `side` or `top` |
 | `card_description_lines` | Maximum description lines per card (2, 3, or 0 for no limit) |
 
-Page content written in `reader.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
+Page content written in `section-list.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
 
 ```markdown
 This text appears above the section cards.
@@ -291,7 +291,7 @@ The **Part Label** (default: `Part`) can be customized via **Admin → Pages →
 
 ## Templates
 
-- **reader** – Reader home template displaying the book header, resume reading strip, and section card grid
+- **section-list** – Reader home template displaying the book header, resume reading strip, and section card grid
 - **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content; extends the full Helios base with sidebar and Prev/Next navigation
 - **default-toc** – Content page with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 

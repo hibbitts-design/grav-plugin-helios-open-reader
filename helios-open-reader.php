@@ -212,7 +212,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $path   = 'plugin://helios-open-reader/assets';
 
         $assets->addCss("$path/helios.css");
-        $assets->addCss("$path/reader.css");
+        $assets->addCss("$path/section-list.css");
         $assets->addCss("$path/print.css", ['media' => 'print']);
         $assets->addJs("$path/helios.js", ['group' => 'bottom', 'loading' => 'defer']);
 
@@ -250,14 +250,14 @@ class HeliosOpenReaderPlugin extends Plugin
         // Sections are top-level siblings of the reader home (same structure as
         // Course Hub courses), so ancestor walking alone won't reach it from section pages.
         // Strategy: walk up first (handles the reader home page itself), then fall back to
-        // scanning root-level children for the first page using the 'reader' template.
+        // scanning root-level children for the first page using the 'section-list' template.
         $page       = $this->grav['page'];
         $readerHome = null;
 
         // Pass 1 — ancestor walk (catches the reader home page viewing itself)
         $candidate = $page;
         while ($candidate) {
-            if ($candidate->template() === 'reader') {
+            if ($candidate->template() === 'section-list') {
                 $readerHome = $candidate;
                 break;
             }
@@ -268,7 +268,7 @@ class HeliosOpenReaderPlugin extends Plugin
         if (!$readerHome) {
             $root = $this->grav['pages']->root();
             foreach ($root->children() as $child) {
-                if ($child->template() === 'reader') {
+                if ($child->template() === 'section-list') {
                     $readerHome = $child;
                     break;
                 }
@@ -302,7 +302,7 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['logo_url'] = $readerHome->url();
 
             // Build "Reader Title | Page Title | Site Title" for non-home pages
-            if ($page->template() !== 'reader') {
+            if ($page->template() !== 'section-list') {
                 $readerTitle = $readerHome->title();
                 $pageTitle = $page->title();
                 $siteTitle = $this->grav['config']->get('site.title', '');
