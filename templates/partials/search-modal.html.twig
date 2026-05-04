@@ -2,12 +2,18 @@
  # Plugin override of partials/search-modal.html.twig (helios theme)
  # Changes from theme original:
  #   1. processSimpleSearchResults: re-groups results by breadcrumb instead of server-side grouped data,
- #      skipping the top-level container page (e.g. "Pages") so groups show as "Cpt-363-2" and
- #      "Cpt-363-2 Modules" rather than "Modules" alone; groups sorted alphabetically so related
- #      course groups appear together (search: PLUGIN CHANGE 1)
+ #      skipping the top-level container page (e.g. "Pages") so groups show as section names rather
+ #      than a generic container; groups sorted by relevance — see PLUGIN CHANGE 4 (PLUGIN CHANGE 1)
  #   2. processSimpleSearchResults: section landing pages (direct children of root) have a single-segment
  #      breadcrumb of "Pages" — fall back to the result title as the group name so they don't all
  #      appear under a generic "Pages" group header (search: PLUGIN CHANGE 2)
+ #   3. processSimpleSearchResults: when parts are active, extract the part-N prefix from result.url
+ #      (breadcrumbs use page titles not folder slugs) and use the human-readable part label as the
+ #      group name; section detail remains visible in each result's breadcrumb (PLUGIN CHANGE 3)
+ #      To roll back PLUGIN CHANGE 3 only: remove the hasParts/partLabels JS vars and the
+ #      "if (hasParts)" block in processSimpleSearchResults; rename rawGroup back to group
+ #   4. processSimpleSearchResults: sort groups by relevance (position of each group's top result in
+ #      the SimpleSearch results array) rather than alphabetically (search: PLUGIN CHANGE 4)
  #}
 {% set theme_config = config.themes.helios %}
 {% set search_config = theme_config.search %}
@@ -163,6 +169,9 @@ function searchComponent() {
     const baseUrl = '{{ base_url }}';
     const currentVersion = '{{ helios_version ?: "" }}';
     const versioningEnabled = {{ (helios.versioning.enabled ?? false) ? 'true' : 'false' }};
+    // PLUGIN CHANGE 3: part label mapping for search result group headers
+    const hasParts = {{ has_parts is defined and has_parts ? 'true' : 'false' }};
+    const partLabels = {{ has_parts is defined and has_parts and part_labels is defined ? part_labels|json_encode|raw : '{}' }};
 
     return {
         query: '',
@@ -260,14 +269,30 @@ function searchComponent() {
                     // PLUGIN CHANGE 2: section landing pages have a single-segment breadcrumb of "Pages";
                     // fall back to the result title so they don't group under a generic "Pages" header
                     const isRootOnly = groupParts.length === 1 && groupParts[0] === 'Pages';
-                    const group = (groupParts.length > 0 && !isRootOnly)
+                    const rawGroup = (groupParts.length > 0 && !isRootOnly)
                         ? groupParts.join(' ')
                         : (result.title || result.parent || 'Documentation');
+                    // PLUGIN CHANGE 3: if parts are active, extract the part-N prefix from the result URL
+                    // (breadcrumb uses page titles, not folder slugs, so URL is the reliable signal)
+                    // and use the human-readable part label as the group name; section detail is
+                    // still visible in each result's breadcrumb, avoiding redundancy with the group header
+                    // e.g. result in /part-1-section-2/my-page → group "Foundations of Open Education"
+                    // To roll back: remove this block and rename rawGroup back to group above/below
+                    let group = rawGroup;
+                    if (hasParts) {
+                        const urlMatch = result.url ? result.url.match(/\/(part-\d+)-section-/i) : null;
+                        if (urlMatch && partLabels[urlMatch[1]]) {
+                            group = partLabels[urlMatch[1]];
+                        }
+                    }
                     if (!this.grouped[group]) this.grouped[group] = [];
                     this.grouped[group].push(result);
                 }
-                // Sort groups alphabetically so related course groups appear together
-                this.grouped = Object.fromEntries(Object.entries(this.grouped).sort(([a], [b]) => a.localeCompare(b)));
+                // PLUGIN CHANGE 4: Sort groups by relevance (position of each group's top result in the
+                // SimpleSearch relevance-ranked results array) so the most relevant section surfaces first
+                this.grouped = Object.fromEntries(Object.entries(this.grouped).sort(([, a], [, b]) => {
+                    return this.results.indexOf(a[0]) - this.results.indexOf(b[0]);
+                }));
             } else if (Array.isArray(data)) {
                 this.results = data;
                 this.grouped = { 'Results': data };
