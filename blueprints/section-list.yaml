@@ -62,7 +62,7 @@ form:
               label: 'Section Label'
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
-              help: 'Label used for sections throughout the reader (in page headers, cards, and the sidebar). Leave empty to use the language default (e.g. "Section" in English).'
+              help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
             header.cards_per_row:
               type: select
               label: Cards Per Row
@@ -109,11 +109,11 @@ form:
               label: 'Part Label'
               toggleable: true
               placeholder: 'e.g. Theme, Project'
-              help: 'Label used for part headings on the reader home page when sections are grouped using the part-N-section-M folder naming pattern. Leave empty to use the default ("Part").'
+              help: 'Heading label for parts when using part-N-section-M folder naming. Leave empty to use the default ("Part").'
             header.parts:
               type: list
               label: 'Custom Part Titles'
-              help: 'Optional list of custom titles for each part. The id must match the part folder prefix (e.g. part-1, part-2). Leave empty to use auto-generated labels (e.g. "Part 1", "Part 2").'
+              help: 'Custom titles per part. ID must match the part folder prefix (e.g. part-1). Leave empty for auto-generated labels.'
               fields:
                 .id:
                   type: text
