@@ -1,8 +1,19 @@
 {% extends 'partials/base.html.twig' %}
 
 {% block content %}
-    {# Save My Place — read by helios.js to persist last-visited section page #}
-    <div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}" hidden></div>
+    {# Save My Place — read by helios.js to persist last-visited section page.
+       Also pre-builds the git URL for this page so helios.js can update the footer
+       edit link on HTMX navigation (footer renders with the section landing page's path
+       and cannot update itself; JS reads data-hor-git-url and patches the link). #}
+    {% if theme_config.github.enabled and theme_config.github.edit_link and not hide_git_link %}
+        {% set _fp = page.filePathClean %}
+        {% set _pfx = theme_config.github.path_prefix %}
+        {% if _pfx and _fp starts with _pfx %}{% set _fp = _fp[_pfx|length:] %}{% endif %}
+        {% if _fp starts with 'user/' %}{% set _fp = _fp[5:] %}{% endif %}
+        {% set _gpp = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}
+        {% set _git_url = 'https://' ~ github_server ~ '/' ~ theme_config.github.repo ~ '/' ~ _gpp ~ '/' ~ theme_config.github.branch ~ '/' ~ _fp %}
+    {% endif %}
+    <div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}"{% if _git_url is defined and _git_url %} data-hor-git-url="{{ _git_url }}"{% endif %} hidden></div>
 
     {# Prev/Next navigation — top (shown when hor_prev_next_position is 'top' or 'both') #}
     {% if hor_prev_next_position|default('both') in ['top', 'both'] %}

@@ -73,6 +73,14 @@
           title: savePlaceEl.dataset.horTitle
         }));
       } catch (e) {}
+
+      // Update footer git link — footer is rendered from the section landing page and
+      // cannot update itself on HTMX navigation; use the pre-built URL from section-page.html.twig
+      var gitUrl = savePlaceEl.dataset.horGitUrl;
+      if (gitUrl) {
+        var gitLink = document.querySelector('.edit-page-link');
+        if (gitLink) gitLink.href = gitUrl;
+      }
     }
 
     // Populate and show the resume strip when on the reader home page

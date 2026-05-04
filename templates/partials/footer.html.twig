@@ -5,6 +5,8 @@
  #   2. OER attribution block displayed when show_oer_attribution is enabled (search: PLUGIN CHANGE 2)
  #   3. Footer attribution text includes Helios Open Reader link, toggled by show_plugin_credits (search: PLUGIN CHANGE 3)
  #   4. Git edit link suppressed via ?edit_link=false or ?hidegitlink=true URL params (search: PLUGIN CHANGE 4)
+ #   5. Strip leading user/ from file_path after prefix removal — skeleton repos have pages/ at root,
+ #      not user/pages/; JS in helios.js updates this link on HTMX navigation (PLUGIN CHANGE 5)
  #}
 <footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
 
@@ -15,6 +17,7 @@
     {% if prefix and file_path starts with prefix %}
         {% set file_path = file_path[prefix|length:] %}
     {% endif %}
+    {% if file_path starts with 'user/' %}{% set file_path = file_path[5:] %}{% endif %}{# PLUGIN CHANGE 5 #}
     {% set git_path_prefix = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}{# PLUGIN CHANGE 1 #}
     <div class="mb-4 text-center">
         <a href="https://{{ github_server }}/{{ theme_config.github.repo }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
