@@ -14,6 +14,9 @@
  #      "if (hasParts)" block in processSimpleSearchResults; rename rawGroup back to group
  #   4. processSimpleSearchResults: sort groups by relevance (position of each group's top result in
  #      the SimpleSearch results array) rather than alphabetically (search: PLUGIN CHANGE 4)
+ #   5. versioningEnabled forced to false and fetch uses referrerPolicy: 'no-referrer' to prevent the
+ #      Helios theme's onSimpleSearchCollection from scoping results to the current section; search
+ #      must always be site-wide in the Open Reader (PLUGIN CHANGE 5)
  #}
 {% set theme_config = config.themes.helios %}
 {% set search_config = theme_config.search %}
@@ -168,7 +171,9 @@ function searchComponent() {
     const provider = '{{ search_provider }}';
     const baseUrl = '{{ base_url }}';
     const currentVersion = '{{ helios_version ?: "" }}';
-    const versioningEnabled = {{ (helios.versioning.enabled ?? false) ? 'true' : 'false' }};
+    // Open Reader: search is always site-wide regardless of current section position;
+    // versioning is used internally for section routing but should not scope search results
+    const versioningEnabled = false;
     // PLUGIN CHANGE 3: part label mapping for search result group headers
     const hasParts = {{ has_parts is defined and has_parts ? 'true' : 'false' }};
     const partLabels = {{ has_parts is defined and has_parts and part_labels is defined ? part_labels|json_encode|raw : '{}' }};
@@ -219,7 +224,9 @@ function searchComponent() {
                     }
                 }
 
-                const response = await fetch(url, { signal: this.abortController.signal });
+                // PLUGIN CHANGE 5: suppress Referer header so the Helios theme's onSimpleSearchCollection
+                // handler cannot detect the current section and scope results — search must be site-wide
+                const response = await fetch(url, { signal: this.abortController.signal, referrerPolicy: 'no-referrer' });
 
                 // Check for server errors
                 if (!response.ok) {
