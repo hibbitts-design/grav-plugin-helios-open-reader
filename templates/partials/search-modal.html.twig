@@ -5,6 +5,9 @@
  #      skipping the top-level container page (e.g. "Pages") so groups show as "Cpt-363-2" and
  #      "Cpt-363-2 Modules" rather than "Modules" alone; groups sorted alphabetically so related
  #      course groups appear together (search: PLUGIN CHANGE 1)
+ #   2. processSimpleSearchResults: section landing pages (direct children of root) have a single-segment
+ #      breadcrumb of "Pages" — fall back to the result title as the group name so they don't all
+ #      appear under a generic "Pages" group header (search: PLUGIN CHANGE 2)
  #}
 {% set theme_config = config.themes.helios %}
 {% set search_config = theme_config.search %}
@@ -254,7 +257,12 @@ function searchComponent() {
                 for (const result of this.results) {
                     const parts = result.breadcrumb ? result.breadcrumb.split(/\s+>\s+/) : [];
                     const groupParts = parts.length > 1 ? parts.slice(1) : parts;
-                    const group = groupParts.length > 0 ? groupParts.join(' ') : (result.parent || 'Documentation');
+                    // PLUGIN CHANGE 2: section landing pages have a single-segment breadcrumb of "Pages";
+                    // fall back to the result title so they don't group under a generic "Pages" header
+                    const isRootOnly = groupParts.length === 1 && groupParts[0] === 'Pages';
+                    const group = (groupParts.length > 0 && !isRootOnly)
+                        ? groupParts.join(' ')
+                        : (result.title || result.parent || 'Documentation');
                     if (!this.grouped[group]) this.grouped[group] = [];
                     this.grouped[group].push(result);
                 }
