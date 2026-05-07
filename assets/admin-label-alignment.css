@@ -1,0 +1,4 @@
+/* Align labels with the first line of text within their fields in Admin 2 */
+.lg\:pt-2\.5 {
+    padding-top: 7px !important;
+}

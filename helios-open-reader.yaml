@@ -1,6 +1,7 @@
 enabled: true
 admin_styling_enhancements: true
 admin_font_size: large
+admin_label_alignment: true
 show_site_icon: true
 site_icon: tabler/notebook.svg
 show_plugin_credits: true
