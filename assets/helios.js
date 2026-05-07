@@ -63,12 +63,15 @@
   // Runs on initial load and re-runs on each HTMX content swap.
   // -------------------------------------------------------------------------
 
+  // Namespace the key by origin so different sites don't share resume state
+  var horLastPageKey = 'hor-last-page|' + window.location.origin;
+
   function horInitSavePlace(root) {
     // Save current page when on a section-page
     var savePlaceEl = root.querySelector('[data-hor-save-page]');
     if (savePlaceEl) {
       try {
-        localStorage.setItem('hor-last-page', JSON.stringify({
+        localStorage.setItem(horLastPageKey, JSON.stringify({
           url: savePlaceEl.dataset.horUrl,
           title: savePlaceEl.dataset.horTitle
         }));
@@ -87,7 +90,7 @@
     var resumeStrip = root.querySelector('#hor-resume-reading');
     if (resumeStrip) {
       try {
-        var saved = localStorage.getItem('hor-last-page');
+        var saved = localStorage.getItem(horLastPageKey);
         if (saved) {
           var pageData = JSON.parse(saved);
           var resumeBtn   = root.querySelector('#hor-resume-btn');
@@ -99,7 +102,7 @@
           var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');
           if (dismissBtn) {
             dismissBtn.addEventListener('click', function () {
-              try { localStorage.removeItem('hor-last-page'); } catch (e) {}
+              try { localStorage.removeItem(horLastPageKey); } catch (e) {}
               resumeStrip.setAttribute('hidden', '');
             });
           }
