@@ -33,5 +33,11 @@ form input, form select, form textarea, form button, form .selectize-input {
 /* Admin 2.0 (SvelteKit/Tailwind) — zoom scales hardcoded px values */
 body:has([data-theme="grav"]),
 [data-theme="grav"] body {
-    zoom: 1.2;
+    zoom: 1.1;
+}
+
+/* Prevent button text from wrapping after zoom */
+body:has([data-theme="grav"]) button,
+[data-theme="grav"] body button {
+    white-space: nowrap;
 }
