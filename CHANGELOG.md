@@ -1,5 +1,5 @@
 # v0.9.3
-## XX/XX/2026
+## 05/13/2026
 
 1. [](#new)
    * Add opt-in plain text version endpoints (llms.txt / llms-full.txt) with documentation
