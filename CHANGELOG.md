@@ -1,6 +1,9 @@
 # v0.9.3
 ## XX/XX/2026
 
+1. [](#new)
+   * Add opt-in plain text version endpoints (llms.txt / llms-full.txt) with documentation
+
 1. [](#improved)
    * Reduce Admin2 zoom and prevent button text wrapping in large font size modes
 
