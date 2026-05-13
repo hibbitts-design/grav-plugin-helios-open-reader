@@ -158,6 +158,7 @@ Append `?embedded=true` (or `?chromeless=true`) to any page URL to display only 
 - Git Sync plugin for syncing reader content with GitHub, Codeberg, or similar Git hosting
 - Automatic "Edit this Page" link via the Helios theme, defaulting to **View Page Markdown** for open access to reader content; optionally configurable to direct editing for contributors with repository access
 - OER attribution block — display a CC license statement in the footer, drawn from reader home page frontmatter
+- Plain text version (disabled by default) — optionally generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools; a "Plain text version" footer link is included
 - Customize CSS and JavaScript via the bundled plugin assets
 - Print stylesheet with page break control, absolute link URLs displayed inline, and consistent page margins across browsers
 
@@ -366,6 +367,10 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
 | Repository Host | `github.com` | Repository hosting service for the Helios GitHub Integration (`github.com` or `codeberg.org`) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with `[h5p id="..."]`) |
+| Enable Plain Text Version | Disabled | Generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints containing all reader content in plain text |
+| Show Plain Text Version Link in Footer | Enabled | Show a link to `/llms-full.txt` in the page footer. Only applies when Enable Plain Text Version is enabled |
+| Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
+| Include Page Templates | `section-page` | Only pages using these templates appear in the plain text version |
 
 > **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**. When using the skeleton, this preset is pre-configured automatically. Also compatible with the new Admin 2 panel, where larger font sizes improve readability without applying Helios-inspired theming.
 

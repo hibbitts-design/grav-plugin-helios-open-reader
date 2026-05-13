@@ -62,6 +62,12 @@ class HeliosOpenReaderPlugin extends Plugin
             'onOutputGenerated'   => ['onOutputGenerated', 0],
             'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
         ]);
+
+        if ($this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false)) {
+            $this->enable([
+                'onPagesInitialized' => ['onLlmsRoute', 0],
+            ]);
+        }
     }
 
     protected function getSectionLabel(): string
@@ -236,6 +242,9 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['github_link_mode']        = $this->config->get('plugins.helios-open-reader.github_link_mode', 'view');
         $twig->twig_vars['show_github_header_icon'] = $this->config->get('plugins.helios-open-reader.show_github_header_icon', true);
         $twig->twig_vars['show_site_icon']          = $this->config->get('plugins.helios-open-reader.show_site_icon', true);
+        $twig->twig_vars['plain_text_export_enabled'] = $this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false);
+        $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', true);
+        $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version');
         $twig->twig_vars['site_icon']               = $this->config->get('plugins.helios-open-reader.site_icon', '');
         $twig->twig_vars['show_plugin_credits']     = $this->config->get('plugins.helios-open-reader.show_plugin_credits', true);
         $twig->twig_vars['helios_base_simple']      = 'partials/base-simple.html.twig';
@@ -688,6 +697,71 @@ class HeliosOpenReaderPlugin extends Plugin
         }
         foreach ($page->children()->visible() as $child) {
             $this->collectPagesDepthFirst($child, $list);
+        }
+    }
+
+    public function onLlmsRoute(): void
+    {
+        $path = $this->grav['uri']->route();
+        if ($path === '/llms') {
+            $this->outputLlms(false);
+        } elseif ($path === '/llms-full') {
+            $this->outputLlms(true);
+        }
+    }
+
+    private function outputLlms(bool $full): void
+    {
+        $config    = $this->grav['config'];
+        $title     = $config->get('site.title', 'Open Reader');
+        $desc      = $config->get('site.metadata.description', '');
+        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
+
+        $lines = [];
+        $lines[] = '# ' . $title;
+        if ($desc) {
+            $lines[] = '> ' . $desc;
+        }
+        $lines[] = '';
+
+        foreach ($this->grav['pages']->root()->children()->published()->visible() as $child) {
+            $this->walkPages($child, [], $lines, $full, $templates);
+        }
+
+        header('Content-Type: text/plain; charset=utf-8');
+        echo implode("\n", $lines);
+        exit();
+    }
+
+    private function walkPages($page, array $crumbs, array &$lines, bool $full, array $templates): void
+    {
+        if (!$page->published() || !$page->visible()) {
+            return;
+        }
+
+        $template = $page->template();
+
+        if (in_array($template, $templates, true)) {
+            $crumbs[]    = $page->title();
+            $prefix      = implode(' > ', $crumbs);
+            $description = $page->header()->description ?? '';
+
+            $lines[] = '## ' . $prefix;
+            $lines[] = '- [' . $page->title() . '](' . $page->url(true) . ')'
+                       . ($description ? ' — ' . $description : '');
+
+            if ($full) {
+                $lines[] = '';
+                $lines[] = trim($page->rawMarkdown());
+            }
+
+            $lines[] = '';
+        } else {
+            $crumbs[] = $page->title();
+        }
+
+        foreach ($page->children()->published()->visible() as $child) {
+            $this->walkPages($child, $crumbs, $lines, $full, $templates);
         }
     }
 

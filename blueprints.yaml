@@ -155,3 +155,52 @@ form:
       description: 'H5P embed source URL path up to, but not including, the Content ID. For example, ''https://h5p.org/h5p/embed/'' or ''https://yourorganization.h5p.com/content/''.'
       validate:
         type: url
+
+    plain_text_section:
+      type: section
+      title: 'Plain Text Version'
+      underline: true
+
+    plain_text_export_enabled:
+      type: toggle
+      label: 'Enable Plain Text Version'
+      help: 'Publish reader content as structured plain text for open access in a portable, format-neutral form — useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. Once enabled, visit /llms.txt (index) and /llms-full.txt (full content) from your site root.'
+      highlight: 0
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    show_plain_text_link:
+      type: toggle
+      label: 'Show Plain Text Version Link in Footer'
+      help: 'Show a "Plain text version" link in the page footer linking to /llms-full.txt. Only applies when Enable Plain Text Version is enabled.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    plain_text_link_label:
+      type: text
+      size: medium
+      label: 'Plain Text Version Link Label'
+      help: 'The label for the plain text version link shown in the footer.'
+      placeholder: 'Plain text version'
+
+    plain_text_templates:
+      type: selectize
+      label: 'Include Page Templates'
+      help: 'Only pages using these templates will appear in the plain text version.'
+      default:
+        - section-page
+      options:
+        section-page: 'Section Page'
+        default: 'Default'
+        default-toc: 'Default with TOC'
+      validate:
+        type: commalist

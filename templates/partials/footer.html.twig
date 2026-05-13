@@ -7,6 +7,7 @@
  #   4. Git edit link suppressed via ?edit_link=false or ?hidegitlink=true URL params (search: PLUGIN CHANGE 4)
  #   5. Strip leading user/ from file_path after prefix removal — skeleton repos have pages/ at root,
  #      not user/pages/; JS in helios.js updates this link on HTMX navigation (PLUGIN CHANGE 5)
+ #   6. Plain text version link shown when plain_text_export_enabled is true (PLUGIN ADDITION)
  #}
 <footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
 
@@ -28,6 +29,14 @@
             {{ theme_config.github.edit_text ?: 'THEME_HELIOS.EDIT_PAGE'|t }}<span class="sr-only"> (opens in new tab)</span>
         </a>
     </div>
+    {% endif %}
+
+    {# Plain text version link #}{# PLUGIN ADDITION #}
+    {% if plain_text_export_enabled and show_plain_text_link and not chromeless %}
+    {% set show_oer = show_oer_attribution and reader_attribution %}
+    <p class="mt-4 {{ not show_oer ? 'mb-4' : '' }} text-center text-sm text-gray-500 dark:text-gray-400">
+        <a href="{{ base_url_absolute }}/llms-full.txt" class="hover:underline">{{ plain_text_link_label }}</a>
+    </p>
     {% endif %}
 
     {# OER attribution block #}{# PLUGIN CHANGE 2 #}
