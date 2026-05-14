@@ -1,3 +1,9 @@
+# v0.9.4
+## XX/XX/2026
+
+1. [](#improved)
+   * Fix llms.txt output to use colon separator per spec
+
 # v0.9.3
 ## 05/13/2026
 
