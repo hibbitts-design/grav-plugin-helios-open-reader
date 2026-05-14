@@ -3,6 +3,7 @@
 
 1. [](#improved)
    * Fix llms.txt output to use colon separator per spec
+   * Add configurable icon to plain text version footer link
 
 # v0.9.3
 ## 05/13/2026
