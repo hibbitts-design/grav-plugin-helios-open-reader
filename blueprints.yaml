@@ -192,6 +192,13 @@ form:
       help: 'The label for the plain text version link shown in the footer.'
       placeholder: 'Plain text version'
 
+    plain_text_link_icon:
+      type: text
+      size: medium
+      label: 'Plain Text Version Link Icon'
+      help: 'Tabler icon path shown before the plain text version link label (e.g. tabler/file-type-txt.svg). Leave empty to show no icon.'
+      placeholder: 'tabler/book.svg'
+
     plain_text_templates:
       type: selectize
       label: 'Include Page Templates'

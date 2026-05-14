@@ -373,6 +373,12 @@ footer .edit-page-link svg {
     --text-sm: var(--text-base);
 }
 
+/* Plain text version footer link icon alignment */
+footer .plain-text-link svg {
+    position: relative;
+    top: -1px;
+}
+
 /* TEMP FIX: .doc-step li marker renders in left padding area alongside circle; remove if theme fixes .doc-step list-style */
 .doc-step {
     list-style: none;
