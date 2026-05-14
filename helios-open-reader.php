@@ -748,7 +748,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
             $lines[] = '## ' . $prefix;
             $lines[] = '- [' . $page->title() . '](' . $page->url(true) . ')'
-                       . ($description ? ' — ' . $description : '');
+                       . ($description ? ': ' . $description : '');
 
             if ($full) {
                 $lines[] = '';
