@@ -11,7 +11,7 @@
         {% if _pfx and _fp starts with _pfx %}{% set _fp = _fp[_pfx|length:] %}{% endif %}
         {% if _fp starts with 'user/' %}{% set _fp = _fp[5:] %}{% endif %}
         {% set _gpp = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}
-        {% set _git_url = 'https://' ~ github_server ~ '/' ~ theme_config.github.repo ~ '/' ~ _gpp ~ '/' ~ theme_config.github.branch ~ '/' ~ _fp %}
+        {% set _git_url = 'https://' ~ github_server ~ '/' ~ (theme_config.github.repo|trim('/')) ~ '/' ~ _gpp ~ '/' ~ theme_config.github.branch ~ '/' ~ _fp %}
     {% endif %}
     <div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}"{% if _git_url is defined and _git_url %} data-hor-git-url="{{ _git_url }}"{% endif %} hidden></div>
 

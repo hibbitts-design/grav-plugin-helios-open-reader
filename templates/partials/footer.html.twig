@@ -21,7 +21,7 @@
     {% if file_path starts with 'user/' %}{% set file_path = file_path[5:] %}{% endif %}{# PLUGIN CHANGE 5 #}
     {% set git_path_prefix = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}{# PLUGIN CHANGE 1 #}
     <div class="mb-4 text-center">
-        <a href="https://{{ github_server }}/{{ theme_config.github.repo }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
+        <a href="https://{{ github_server }}/{{ theme_config.github.repo|trim('/') }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
            target="_blank"
            rel="noopener noreferrer"
            class="edit-page-link inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary">
