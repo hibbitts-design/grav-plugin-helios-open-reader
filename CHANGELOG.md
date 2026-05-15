@@ -1,9 +1,10 @@
 # v0.9.5
-## XX/XX/2026
+## 05/15/2026
 
 1. [](#improved)
    * Trim trailing slash from repo value in footer git link URL
    * Add absolute URL resolution for images in llms-full.txt output
+   * Add configurable image URL handling (absolute, suppress, relative) for plain text version
 
 # v0.9.4
 ## 05/14/2026
