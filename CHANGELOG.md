@@ -1,3 +1,9 @@
+# v0.9.5
+## XX/XX/2026
+
+1. [](#improved)
+   * Trim trailing slash from repo value in footer git link URL
+
 # v0.9.4
 ## 05/14/2026
 
