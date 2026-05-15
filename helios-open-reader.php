@@ -740,7 +740,7 @@ class HeliosOpenReaderPlugin extends Plugin
      */
     private function resolveImageUrls(string $markdown, $page): string
     {
-        $pageDir  = rtrim(dirname($page->url(true)), '/') . '/';
+        $pageDir  = rtrim($page->url(true), '/') . '/';
         $siteBase = rtrim($this->grav['base_url_absolute'], '/');
 
         return preg_replace_callback(
