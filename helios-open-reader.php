@@ -734,6 +734,34 @@ class HeliosOpenReaderPlugin extends Plugin
         exit();
     }
 
+    /**
+     * Rewrite relative image paths in markdown to absolute URLs so LLMs can fetch them.
+     * Already-absolute URLs (http/https/protocol-relative/data URIs) are left unchanged.
+     */
+    private function resolveImageUrls(string $markdown, $page): string
+    {
+        $pageDir  = rtrim(dirname($page->url(true)), '/') . '/';
+        $siteBase = rtrim($this->grav['base_url_absolute'], '/');
+
+        return preg_replace_callback(
+            '/!\[([^\]]*)\]\(([^)]+)\)/',
+            function ($m) use ($pageDir, $siteBase) {
+                $url = $m[2];
+                // Skip already-absolute URLs and data URIs
+                if (preg_match('/^(https?:\/\/|\/\/|data:)/', $url)) {
+                    return $m[0];
+                }
+                // Root-relative paths — prepend scheme+host only
+                if ($url[0] === '/') {
+                    return '![' . $m[1] . '](' . $siteBase . $url . ')';
+                }
+                // Relative paths — prepend the page's directory URL
+                return '![' . $m[1] . '](' . $pageDir . $url . ')';
+            },
+            $markdown
+        );
+    }
+
     private function walkPages($page, array $crumbs, array &$lines, bool $full, array $templates): void
     {
         if (!$page->published() || !$page->visible()) {
@@ -753,7 +781,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
             if ($full) {
                 $lines[] = '';
-                $lines[] = trim($page->rawMarkdown());
+                $lines[] = $this->resolveImageUrls(trim($page->rawMarkdown()), $page);
             }
 
             $lines[] = '';
