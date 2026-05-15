@@ -713,10 +713,11 @@ class HeliosOpenReaderPlugin extends Plugin
 
     private function outputLlms(bool $full): void
     {
-        $config    = $this->grav['config'];
-        $title     = $config->get('site.title', 'Open Reader');
-        $desc      = $config->get('site.metadata.description', '');
-        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
+        $config     = $this->grav['config'];
+        $title      = $config->get('site.title', 'Open Reader');
+        $desc       = $config->get('site.metadata.description', '');
+        $templates  = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
+        $imageMode  = $this->config->get('plugins.helios-open-reader.plain_text_images', 'absolute');
 
         $lines = [];
         $lines[] = '# ' . $title;
@@ -726,7 +727,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $lines[] = '';
 
         foreach ($this->grav['pages']->root()->children()->published()->visible() as $child) {
-            $this->walkPages($child, [], $lines, $full, $templates);
+            $this->walkPages($child, [], $lines, $full, $templates, $imageMode);
         }
 
         header('Content-Type: text/plain; charset=utf-8');
@@ -735,11 +736,21 @@ class HeliosOpenReaderPlugin extends Plugin
     }
 
     /**
-     * Rewrite relative image paths in markdown to absolute URLs so LLMs can fetch them.
-     * Already-absolute URLs (http/https/protocol-relative/data URIs) are left unchanged.
+     * Process image references in markdown according to the configured mode:
+     *   absolute  — rewrite relative paths to absolute URLs (default; best for LLM access)
+     *   suppress  — remove all image markdown (text-only output)
+     *   relative  — leave image paths unchanged
      */
-    private function resolveImageUrls(string $markdown, $page): string
+    private function resolveImageUrls(string $markdown, $page, string $mode): string
     {
+        if ($mode === 'suppress') {
+            return preg_replace('/!\[[^\]]*\]\([^)]+\)\n?/', '', $markdown);
+        }
+
+        if ($mode !== 'absolute') {
+            return $markdown;
+        }
+
         $pageDir  = rtrim($page->url(true), '/') . '/';
         $siteBase = rtrim($this->grav['base_url_absolute'], '/');
 
@@ -762,7 +773,7 @@ class HeliosOpenReaderPlugin extends Plugin
         );
     }
 
-    private function walkPages($page, array $crumbs, array &$lines, bool $full, array $templates): void
+    private function walkPages($page, array $crumbs, array &$lines, bool $full, array $templates, string $imageMode = 'absolute'): void
     {
         if (!$page->published() || !$page->visible()) {
             return;
@@ -781,7 +792,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
             if ($full) {
                 $lines[] = '';
-                $lines[] = $this->resolveImageUrls(trim($page->rawMarkdown()), $page);
+                $lines[] = $this->resolveImageUrls(trim($page->rawMarkdown()), $page, $imageMode);
             }
 
             $lines[] = '';
@@ -790,7 +801,7 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         foreach ($page->children()->published()->visible() as $child) {
-            $this->walkPages($child, $crumbs, $lines, $full, $templates);
+            $this->walkPages($child, $crumbs, $lines, $full, $templates, $imageMode);
         }
     }
 

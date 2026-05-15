@@ -341,6 +341,8 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Enable Plain Text Version | Disabled | Generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints containing all reader content in plain text |
 | Show Plain Text Version Link in Footer | Enabled | Show a link to `/llms-full.txt` in the page footer. Only applies when Enable Plain Text Version is enabled |
 | Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
+| Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
+| Image URLs in Plain Text Version | `Absolute URLs` | Controls how images appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to AI tools), **Suppress images** (text-only output), or **Relative paths** (not recommended for remote LLM use) |
 | Include Page Templates | [raw]`section-page`[/raw] | Only pages using these templates appear in the plain text version |
 
 > **Note:** The Helios-inspired Admin Panel 1.7 colour scheme (zinc nav, accessible blue links, muted purple accents) is pre-configured in this skeleton. Also compatible with the new Admin 2 panel, where larger font sizes improve readability without applying Helios-inspired theming.
