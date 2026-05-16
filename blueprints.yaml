@@ -37,33 +37,6 @@ form:
       validate:
         type: bool
 
-    admin_panel_section:
-      type: section
-      title: 'Admin Panel'
-      underline: true
-
-    admin_styling_enhancements:
-      type: toggle
-      label: 'Helios-inspired Admin Styling (1.7 only)'
-      help: 'Apply Helios-inspired styling enhancements to the Admin Panel 1.7 (rounded corners, transitions, shadows, focus rings, table row hover, sidebar accent).'
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    admin_font_size:
-      type: select
-      label: 'Admin Font Size'
-      help: 'Adjust the Admin Panel font size for improved readability.'
-      default: 'large'
-      options:
-        default: 'Default (no changes)'
-        large: 'Large'
-        larger: 'Larger'
-
     header_section:
       type: section
       title: 'Header'
@@ -221,3 +194,30 @@ form:
         default-toc: 'Default with TOC'
       validate:
         type: commalist
+
+    admin_panel_section:
+      type: section
+      title: 'Admin Panel 1.7'
+      underline: true
+
+    admin_styling_enhancements:
+      type: toggle
+      label: 'Helios-inspired Admin Styling'
+      help: 'Apply Helios-inspired styling enhancements to the Admin Panel 1.7 (rounded corners, transitions, shadows, focus rings, table row hover, sidebar accent).'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    admin_font_size:
+      type: select
+      label: 'Admin Font Size'
+      help: 'Adjust the Admin 1.7 font size for improved readability.'
+      default: 'large'
+      options:
+        default: 'Default (no changes)'
+        large: 'Large'
+        larger: 'Larger'

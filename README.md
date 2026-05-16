@@ -358,7 +358,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Setting | Default | Description |
 |---------|---------|-------------|
 | Helios-inspired Admin Styling | Enabled | Apply Helios-inspired styling enhancements to the Admin Panel (rounded corners, transitions, improved typography) |
-| Admin Font Size | Large | Sets the Admin Panel font size: Default, Large, or Larger |
+| Admin Font Size (Admin 1.7 only) | Large | Sets the Admin Panel font size: Default, Large, or Larger |
 | Show Site Logo Icon | Enabled | Show or hide the icon square next to the Logo Text in the header when no logo image is set |
 | Site Logo Icon | `tabler/notebook.svg` | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
@@ -374,8 +374,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Include Page Templates | `section-page` | Only pages using these templates appear in the plain text version |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how image references appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to LLMs and AI tools), **Suppress images** (removes all image markdown for text-only output), or **Relative paths** (leaves paths unchanged; not recommended for remote LLM use) |
 
-> **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**. When using the skeleton, this preset is pre-configured automatically. Also compatible with the new Admin 2 panel, where larger font sizes improve readability without applying Helios-inspired theming.
-
+> **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**. When using the skeleton, this preset is pre-configured automatically.
 ## Requirements
 
 - PHP >= 8.0
