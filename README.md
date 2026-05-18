@@ -14,7 +14,7 @@ A free, open-source plugin that transforms the [Grav Premium Helios theme](https
 
 ## What Sets It Apart
 
-- **Built for open education from the ground up** — CC license display, OER attribution footer, callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises), and a section structure designed for course reading — not repurposed from a software documentation tool.
+- **Built for open education from the ground up** — CC license display, OER attribution footer, callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises), and a section structure designed for open textbooks, course readers, and OER.
 - **Readers never lose their place** — Save My Place records the last page visited and surfaces a "Continue reading" strip on return. Most open textbook and reader platforms don't offer this at all.
 - **Content you own and can take anywhere** — everything lives as portable Markdown files on your server, fully independent of any platform or service. Switch tools, migrate hosts, or open a pull request — your content travels with you, not with the platform.
 - **Embeds cleanly into any LMS** — one URL parameter displays content only, without surrounding navigation; internal links carry it forward automatically. No LTI configuration or institutional integration required.
