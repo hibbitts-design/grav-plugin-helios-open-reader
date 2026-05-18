@@ -1,5 +1,5 @@
 # v0.9.6
-## XX/XX/2026
+## 05/18/2026
 
 1. [](#improved)
    * Removed no longer needed Admin2 font sizing
