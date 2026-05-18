@@ -31,7 +31,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - LMS-ready – embed any page cleanly in Canvas, Moodle, or Brightspace with a single URL parameter — no LTI configuration required
 - No build pipeline – edit in the browser and changes go live immediately; nothing to install locally
 - CMS and Git together – browser-based editing and automatic Git Sync; no need to choose between them
-- Content you own – your content lives as portable Markdown files, not locked in a platform's database
+- Content you own – your content lives as portable Markdown files, fully independent of any platform or service
 - Support open source – your Grav Premium Helios theme purchase directly supports ongoing development of the open-source Grav CMS
 
 ## Features
