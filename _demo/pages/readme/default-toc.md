@@ -26,11 +26,12 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - Ready in minutes – a complete, pre-configured package with demo content included
 - Structured – supports sections with sub-pages, auto-detected from folder naming, with a configurable section label (Chapter, Project, Unit, Module, or any custom term)
 - Callout blocks – Learning Objectives, Key Takeaways, Examples, Exercises, Definitions, Reflections, and Case Studies, all without coding
-- Save My Place – readers can return to where they left off across sessions
+- Save My Place – readers can return to where they left off — a feature most open textbook platforms don't offer
 - Reading progress – accessible progress indicator shows current page position (e.g. Page 4 of 22)
-- LMS-ready – embed any page cleanly in Canvas, Moodle, or Brightspace with `?embedded=true`
-- Open by design – optionally enable the built-in Git Sync and "View Page Markdown" link support
-- Flat-file simplicity – your content is just Markdown files you own and control
+- LMS-ready – embed any page cleanly in Canvas, Moodle, or Brightspace with a single URL parameter — no LTI configuration required
+- No build pipeline – edit in the browser and changes go live immediately; nothing to install locally
+- CMS and Git together – browser-based editing and automatic Git Sync; no need to choose between them
+- Content you own – your content lives as portable Markdown files, not locked in a platform's database
 - Support open source – your Grav Premium Helios theme purchase directly supports ongoing development of the open-source Grav CMS
 
 ## Features

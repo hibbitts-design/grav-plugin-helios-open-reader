@@ -12,18 +12,24 @@
 
 A free, open-source plugin that transforms the [Grav Premium Helios theme](https://getgrav.org/premium/helios) into a structured site for open educational content — open textbooks, readers, and student projects — built on [Grav CMS](https://getgrav.org) with Markdown file-based content, a built-in Admin panel, and no database required. Purchasing the Helios theme also directly supports Grav's open-source development.
 
+## What Sets It Apart
+
+- **Built for open education from the ground up** — CC license display, OER attribution footer, callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises), and a section structure designed for course reading — not repurposed from a software documentation tool.
+- **Readers never lose their place** — Save My Place records the last page visited and surfaces a "Continue reading" strip on return. Most open textbook and reader platforms don't offer this at all.
+- **Content you own and can take anywhere** — everything lives as portable Markdown files on your server, not locked in a platform's database like most established open textbook tools. Switch tools, migrate hosts, or open a pull request — your content travels with you, not with the platform.
+- **Embeds cleanly into any LMS** — one URL parameter displays content only, without surrounding navigation; internal links carry it forward automatically. No LTI configuration or institutional integration required.
+- **No build pipeline, ever** — edit in the browser-based Admin panel and changes go live immediately. Unlike static site generators for open textbooks, there's nothing to install locally and no commit → push → build → deploy cycle.
+- **A CMS and Git, not a choice between them** — most platforms give you one or the other: a browser editor that locks content in a database, or a Git workflow that requires technical setup. Helios Open Reader gives you both: browser-based editing and automatic Git Sync with GitHub or Codeberg.
+- **Plain text export for open access** — optionally publish all reader content as structured plain text, portable and format-neutral, ready for search indexing, ebook pipelines, and any tool that can read a URL.
+
 ## When is Grav Helios Open Reader a Good Candidate?
 
 Grav Helios Open Reader is a strong fit when you:
 
-- Want a web-first open textbook, course reader, student project collection, or collaboratively maintained living publication with a clean reading experience and proper CC licensing
-- Need a structured layout with sections and sub-pages, auto-detected from your folder naming, with a configurable section label (Chapter, Project, Unit, Module, or any custom term)
-- Want built-in callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises, Definitions, Reflections, Case Studies) without coding
+- Need a structured reader layout with sections and sub-pages, auto-detected from your folder naming, with a configurable section label (Chapter, Project, Unit, Module, or any custom term)
+- Want callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises, Definitions, Reflections, Case Studies) without coding
 - Need to embed reader pages directly into an LMS (Canvas, Moodle, Brightspace) as clean iframes, with flexible Table of Contents positioning
-- Want a Save My Place feature so readers can return to where they left off
-- Want collaborative open authoring — invite readers to view source and suggest improvements via GitHub or Codeberg
 - Need rich content embedding (H5P, iFrames, Google Slides, PDFs, Embedly) without coding
-- Value keeping content in portable Markdown files with full ownership and hosting control
 - Want dark mode, mobile-friendly design, and keyboard-accessible navigation out of the box
 
 Other publishing tools might be better candidates when you:
