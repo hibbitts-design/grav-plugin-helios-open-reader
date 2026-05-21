@@ -1,10 +1,10 @@
 {#
- # Plugin override of partials/base.html.twig (based on Helios theme v3.5.7)
+ # Plugin override of partials/base.html.twig (based on Helios theme v2.1.3)
  # Changes from theme (6) — numbered in file order:
  #   PLUGIN CHANGE 1 — suppress mobile nav overlay/panel when chromeless=true
  #   PLUGIN CHANGE 2 — suppress sidebar and remove left-padding offset when chromeless=true
  #   PLUGIN CHANGE 3 — suppress header when chromeless=true
- #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true
+ #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (in partials/swap-body.html.twig)
  #   PLUGIN CHANGE 5 — propagate chromeless/embedded param to all internal links (including post-HTMX-swap)
  #   PLUGIN CHANGE 6 — override TOC position/visibility via ?toc_position=hidden|left|right (or ?toc=) URL param
  #}
@@ -192,6 +192,23 @@
                 ? (toc_url_param in ['left', 'right'] ? toc_url_param : 'hidden')
                 : (hide_toc|default(false) ? 'hidden' : (page.header.navigation.toc_position|default(theme_config.navigation.toc_position|default('right')))) %}
 
+            {# Layout when TOC is hidden. In both modes the outer wrapper keeps its full width so the content's
+               left edge never shifts between pages with/without a TOC.
+                 'full'      — content expands to fill the space the TOC would occupy (no empty gutter)
+                 'contained' — content stays at its configured width, leaving a blank space where the TOC would be #}
+            {% set content_when_toc_hidden = page.header.navigation.content_when_toc_hidden|default(theme_config.navigation.content_when_toc_hidden|default('full')) %}
+
+            {# Pre-render the TOC partial so we know whether it'll produce any output. A page with no
+               qualifying headings should be laid out as if the TOC is hidden, matching what the HTMX
+               JS does after a swap (it inspects the swapped DOM for `.toc-nav`). #}
+            {% set toc_html = toc_pos != 'hidden' ? include('partials/toc.html.twig') : '' %}
+            {% set has_toc_content = toc_html|trim is not empty %}
+            {% set toc_visible = toc_pos != 'hidden' and has_toc_content %}
+
+            {# Expand the article into the TOC slot when the TOC isn't actually shown. Empty-TOC pages
+               always expand; explicitly hidden pages honor `content_when_toc_hidden`. #}
+            {% set expand_content = not toc_visible and (toc_pos == 'hidden' ? content_when_toc_hidden == 'full' : true) %}
+
             {# HTMX loading indicator #}
             {% if htmx_enabled %}
             <div id="htmx-loading" class="htmx-indicator fixed top-0 left-0 right-0 z-50 h-1">
@@ -208,67 +225,35 @@
                   hx-indicator="#htmx-loading"
                   {% endif %}>
 
-                {# Centered container for content + TOC #}
-                <div id="toc-layout" class="mx-auto flex gap-8
-                    {% if toc_pos == 'hidden' and not htmx_enabled %}
-                        max-w-[var(--helios-content-width)]
-                    {% else %}
-                        max-w-[calc(var(--helios-content-width)+var(--helios-toc-width)+2rem)]
-                    {% endif %}">
+                {# Centered container for content + TOC. The wrapper width equals --helios-content-width,
+                   which represents the total content area (article + TOC slot + gap). The article fills the
+                   leftover space, so removing the TOC lets the article expand into the freed-up width. #}
+                <div id="toc-layout" class="mx-auto w-full flex gap-8 max-w-[var(--helios-content-width)]">
 
-                    {# Content area #}
-                    <div class="flex-1 min-w-0 max-w-[var(--helios-content-width)] {% if toc_pos == 'left' %}order-2{% endif %}">
-                        {# HTMX swap target - this content gets replaced #}
+                    {# Content area — width logic lives alongside swap-body in one place. #}
+                    <div class="flex-1 min-w-0 {% if not expand_content %}max-w-[calc(var(--helios-content-width)-var(--helios-toc-width)-2rem)]{% endif %} {% if toc_pos == 'left' %}order-2{% endif %}">
+                        {# HTMX swap target — same partial used by the HTMX partial response. #}
                         <div id="htmx-swap-target">
-                            {# Breadcrumbs #}
-                            <div id="htmx-breadcrumbs">
-                                {% if theme_var('navigation.breadcrumbs', true) and helios_breadcrumbs is defined and helios_breadcrumbs|length > 1 %}
-                                    {% include 'partials/breadcrumbs.html.twig' %}
-                                {% endif %}
-                            </div>
-
-                            {# Page content #}
-                            <article id="htmx-article" class="prose dark:prose-invert max-w-none">
-                                {% block content %}{% endblock %}
-                            </article>
-
-                            {# Previous/Next navigation #}
-                            {# PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless #}
-                            <div id="htmx-prev-next">
-                                {% if theme_var('navigation.prev_next', true) and not chromeless %}
-                                    {% include 'partials/prev-next.html.twig' %}
-                                {% endif %}
-                            </div>
-
-                            {# TOC template for HTMX updates #}
-                            {% if htmx_enabled %}
-                            <div id="htmx-toc-template" style="display:none" x-ignore aria-hidden="true">
-                                {% include 'partials/toc.html.twig' %}
-                            </div>
-                            <script type="application/json" id="htmx-nav-state">
-                            {
-                                "route": "{{ page.route }}",
-                                "url": "{{ page.url }}",
-                                "title": "{{ page.title|e('js') }}",
-                                "siteTitle": "{{ site.title|e('js') }}",
-                                "appendSiteTitle": {{ (theme_config.append_site_title ?? true) ? 'true' : 'false' }},
-                                "toc_position": "{{ toc_pos }}"
-                            }
-                            </script>
-                            {% endif %}
+                            {% include 'partials/swap-body.html.twig' with {
+                                toc_pos: toc_pos,
+                                toc_html: toc_html,
+                                has_toc_content: has_toc_content,
+                                expand_content: expand_content,
+                                content_when_toc_hidden: content_when_toc_hidden
+                            } %}
                         </div>
 
                         {# Footer #}
                         {% include 'partials/footer.html.twig' %}
                     </div>
 
-                    {# TOC sidebar – always rendered when HTMX is enabled #}
+                    {# TOC sidebar – always rendered when HTMX is enabled so HTMX swaps can repopulate it. #}
                     {% if toc_pos != 'hidden' or htmx_enabled %}
                     <aside id="htmx-toc-container"
-                           class="{% if toc_pos != 'hidden' %}hidden lg:block{% else %}hidden{% endif %} shrink-0 w-[var(--helios-toc-width)] {% if toc_pos == 'left' %}order-1{% endif %}"
+                           class="{% if toc_visible %}hidden lg:block{% else %}hidden{% endif %} shrink-0 w-[var(--helios-toc-width)] {% if toc_pos == 'left' %}order-1{% endif %}"
                            data-toc-position="{{ toc_pos }}">
                         <div class="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)]">
-                            {% include 'partials/toc.html.twig' %}
+                            {{ toc_html|raw }}
                         </div>
                     </aside>
                     {% endif %}

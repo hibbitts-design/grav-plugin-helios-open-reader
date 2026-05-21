@@ -1,0 +1,105 @@
+{#
+ # Plugin override of partials/swap-body.html.twig (based on Helios theme v2.1.3)
+ # Changes from theme original:
+ #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (search: PLUGIN CHANGE 4)
+ #   PLUGIN ADDITION — section-page template dispatch to partials/content/section-page.html.twig
+ #}
+
+{# Shared swap-target body — rendered both by base.html.twig (full page) and
+   htmx-content.html.twig (HTMX partial response). Keeping this in one place
+   prevents drift between the two render paths.
+
+   Variables that may be passed in from a parent template:
+     - hide_toc          (bool)  per-template TOC kill switch
+     - toc_pos           (str)   precomputed TOC position, if base already derived it
+     - content_when_toc_hidden (str)
+     - toc_html          (str)   pre-rendered TOC HTML (reused below to skip re-rendering)
+     - has_toc_content   (bool)  whether toc_html actually produced markup
+     - expand_content    (bool)  whether the article should fill the freed-up TOC space
+#}
+
+{% set theme_config = theme_config|default(config.themes.helios) %}
+
+{# Some page templates always hide the TOC (e.g. error pages). Allow either an
+   explicit hide_toc flag from the parent or fall back to a per-template heuristic. #}
+{% set hide_toc = hide_toc|default(page.template == 'error') %}
+
+{% set toc_pos = toc_pos|default(
+    hide_toc
+        ? 'hidden'
+        : (page.header.navigation.toc_position|default(theme_config.navigation.toc_position|default('right')))
+) %}
+
+{% set content_when_toc_hidden = content_when_toc_hidden|default(
+    page.header.navigation.content_when_toc_hidden|default(theme_config.navigation.content_when_toc_hidden|default('full'))
+) %}
+
+{# Mirror base.html.twig's layout decision so HTMX partial responses publish the
+   same expand_content rule. When called from base, these are already set;
+   `is defined` checks preserve explicit `false` values that `|default` would clobber. #}
+{% if toc_html is not defined %}
+    {% set toc_html = toc_pos != 'hidden' ? include('partials/toc.html.twig') : '' %}
+{% endif %}
+{% if has_toc_content is not defined %}
+    {% set has_toc_content = toc_html|trim is not empty %}
+{% endif %}
+{% set toc_visible = toc_pos != 'hidden' and has_toc_content %}
+{% if expand_content is not defined %}
+    {% set expand_content = not toc_visible and (toc_pos == 'hidden' ? content_when_toc_hidden == 'full' : true) %}
+{% endif %}
+
+{# Breadcrumbs #}
+<div id="htmx-breadcrumbs">
+    {% if theme_var('navigation.breadcrumbs', true) and helios_breadcrumbs is defined and helios_breadcrumbs|length > 1 %}
+        {% include 'partials/breadcrumbs.html.twig' %}
+    {% endif %}
+</div>
+
+{# Page content — template-aware so HTMX swaps render the right body without
+   needing to re-extend per-template files. #}
+<article id="htmx-article" class="prose dark:prose-invert max-w-none">
+    {% if page.template == 'section-page' %}
+        {% include 'partials/content/section-page.html.twig' %}
+    {% elseif page.template == 'chapter' %}
+        {% include 'partials/content/chapter.html.twig' %}
+    {% elseif page.template == 'api-endpoint' %}
+        {% include 'partials/content/api-endpoint.html.twig' %}
+    {% elseif page.template == 'api-collection' %}
+        {% include 'partials/content/api-collection.html.twig' %}
+    {% elseif page.template == 'error' %}
+        {% include 'partials/content/error.html.twig' %}
+    {% else %}
+        {{ page.content|raw }}
+    {% endif %}
+</article>
+
+{# Previous/Next navigation #}
+{# PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless #}
+<div id="htmx-prev-next">
+    {% if theme_var('navigation.prev_next', true) and not chromeless %}
+        {% include 'partials/prev-next.html.twig' %}
+    {% endif %}
+</div>
+
+{# TOC content for client-side updates after an HTMX swap. Reuses the already-rendered
+   toc_html so we don't pay for the partial twice. #}
+{% if config.themes.helios.htmx.enabled|default(false) or is_htmx_request|default(false) %}
+<div id="htmx-toc-template" style="display:none" x-ignore aria-hidden="true">
+    {{ toc_html|raw }}
+</div>
+
+{# Navigation state for client-side updates — width logic stays in Twig and the JS
+   just reads the computed values. #}
+<script type="application/json" id="htmx-nav-state">
+{
+    "route": "{{ page.route }}",
+    "url": "{{ page.url }}",
+    "title": "{{ page.title|e('js') }}",
+    "siteTitle": "{{ site.title|e('js') }}",
+    "appendSiteTitle": {{ (theme_config.append_site_title ?? true) ? 'true' : 'false' }},
+    "toc_position": "{{ toc_pos }}",
+    "content_when_toc_hidden": "{{ content_when_toc_hidden }}",
+    "expand_content": {{ expand_content ? 'true' : 'false' }}
+}
+</script>
+{% endif %}
