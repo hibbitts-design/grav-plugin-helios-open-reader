@@ -1,8 +1,9 @@
 # v0.9.7
-## XX/XX/2026
+## 05/21/2026
 
 1. [](#improved)
    * Updated demo pages and ReadMe
+   * Updates for Helios theme v2.1.3: migrate base.html.twig to swap-body architecture and add missing TOC layout variables
 
 # v0.9.6
 ## 05/18/2026
