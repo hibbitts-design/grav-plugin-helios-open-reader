@@ -157,7 +157,7 @@
     {# Search modal - only use yetisearch-pro if plugin is actually enabled #}
     {% if theme_config.search.enabled %}
         {% if theme_config.search.provider == 'yetisearch-pro' and config.plugins['yetisearch-pro'].enabled %}
-            {% include 'partials/yetisearch-pro/modal.html.twig' %}
+            {% include 'partials/yetisearch-pro/modal.html.twig' ignore missing %}
         {% else %}
             {% include 'partials/search-modal.html.twig' %}
         {% endif %}
