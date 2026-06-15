@@ -4,6 +4,7 @@
 1. [](#bugfix)
    * Add ignore missing to yetisearch-pro include
    * Update plugin templates and PHP to use Helios v2.1.6 renamed Twig variables (helios_* → doc_*, nav_tree)
+   * Fix duplicate shortcode handler error on Grav v2.0 by guarding onShortcodeHandlers() against multiple firings
 
 # v0.9.7
 ## 05/21/2026
