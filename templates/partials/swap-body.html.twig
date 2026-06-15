@@ -50,7 +50,7 @@
 
 {# Breadcrumbs #}
 <div id="htmx-breadcrumbs">
-    {% if theme_var('navigation.breadcrumbs', true) and helios_breadcrumbs is defined and helios_breadcrumbs|length > 1 %}
+    {% if theme_var('navigation.breadcrumbs', true) and doc_breadcrumbs is defined and doc_breadcrumbs|length > 1 %}
         {% include 'partials/breadcrumbs.html.twig' %}
     {% endif %}
 </div>

@@ -170,7 +170,7 @@
 function searchComponent() {
     const provider = '{{ search_provider }}';
     const baseUrl = '{{ base_url }}';
-    const currentVersion = '{{ helios_version ?: "" }}';
+    const currentVersion = '{{ doc_version ?: "" }}';
     // Open Reader: search is always site-wide regardless of current section position;
     // versioning is used internally for section routing but should not scope search results
     const versioningEnabled = false;

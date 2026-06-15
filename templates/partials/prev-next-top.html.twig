@@ -1,6 +1,6 @@
 {# Top prev/next navigation — same as Helios prev-next.html.twig but with --top modifier #}
-{% set prev = helios_prev|default(null) %}
-{% set next = helios_next|default(null) %}
+{% set prev = doc_prev|default(null) %}
+{% set next = doc_next|default(null) %}
 
 {% if (prev or next) and not chromeless %}
 <nav class="prev-next-nav prev-next-nav--top" aria-label="Page navigation, top">

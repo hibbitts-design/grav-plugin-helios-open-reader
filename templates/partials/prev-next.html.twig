@@ -3,8 +3,8 @@
    On all other templates: always renders the nav (position setting is section-page-only).
    Suppressed entirely when embedded (?embedded=true or ?chromeless=true). #}
 {% if not chromeless and (hor_prev_next_position|default('both') in ['bottom', 'both'] or page.template != 'section-page') %}
-{% set prev = helios_prev|default(null) %}
-{% set next = helios_next|default(null) %}
+{% set prev = doc_prev|default(null) %}
+{% set next = doc_next|default(null) %}
 
 {% if section_progress_current is defined %}
 {% set progress_text = 'Page ' ~ section_progress_current ~ ' of ' ~ section_progress_total %}

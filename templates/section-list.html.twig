@@ -70,9 +70,9 @@
         <button type="button" class="hor-resume-dismiss" aria-label="Dismiss">&#x2715;</button>
     </div>
 
-    {# Section card grid — driven by helios_version_info #}
-    {% if helios_version_info is defined and helios_version_info.versions|length > 0 %}
-    {% set first_version = helios_version_info.versions|first %}
+    {# Section card grid — driven by doc_version_info #}
+    {% if doc_version_info is defined and doc_version_info.versions|length > 0 %}
+    {% set first_version = doc_version_info.versions|first %}
     {% set colClass = {
         1: 'grid-cols-1',
         2: 'sm:grid-cols-2',
@@ -114,7 +114,7 @@
     {% else %}
         {# Flat mode — single grid for all sections (original behaviour) #}
         <div class="{{ gridClasses }}">
-            {% for version in helios_version_info.versions %}
+            {% for version in doc_version_info.versions %}
                 {% set card_page = pages.find('/' ~ version.id) %}
                 {% if card_page %}
                     {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}

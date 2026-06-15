@@ -74,9 +74,9 @@
     {# END PLUGIN ADDITION 1 #}
 
     {# PLUGIN ADDITION 2: Section label — shown above nav when version dropdown is hidden #}
-    {% set show_version_dropdown = theme_config.versioning.enabled and theme_config.versioning.show_dropdown and helios_version_info is defined and helios_version_info.count > 1 %}
-    {% if not show_version_dropdown and helios_version_info is defined and helios_version_info.count >= 1 %}
-        {% set current_section = helios_version_info.versions|filter(v => v.is_current)|first %}
+    {% set show_version_dropdown = theme_config.versioning.enabled and theme_config.versioning.show_dropdown and doc_version_info is defined and doc_version_info.count > 1 %}
+    {% if not show_version_dropdown and doc_version_info is defined and doc_version_info.count >= 1 %}
+        {% set current_section = doc_version_info.versions|filter(v => v.is_current)|first %}
         {% if current_section %}
         <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
             <a href="{{ section_home_url ?: current_section.url }}" class="flex items-center py-1.5 text-base font-semibold text-gray-900 dark:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">{# section_home_url always points to section root; current_section.url is the version-switcher URL and varies by current page #}
@@ -88,14 +88,14 @@
     {# END PLUGIN ADDITION 2 #}
 
     {# Version switcher — when parts are enabled, scope dropdown to sections in the current part only #}
-    {% set current_version_id = (helios_version_info.versions|filter(v => v.is_current)|first).id ?? '' %}
+    {% set current_version_id = (doc_version_info.versions|default([])|filter(v => v.is_current)|first).id ?? '' %}
     {% if has_parts and '-section-' in current_version_id %}
         {% set current_part_key = current_version_id|split('-section-')|first %}
-        {% set dropdown_versions = helios_version_info.versions|filter(v => v.id starts with current_part_key ~ '-') %}
+        {% set dropdown_versions = doc_version_info.versions|default([])|filter(v => v.id starts with current_part_key ~ '-') %}
     {% else %}
-        {% set dropdown_versions = helios_version_info.versions %}
+        {% set dropdown_versions = doc_version_info.versions|default([]) %}
     {% endif %}
-    {% if theme_config.versioning.enabled and theme_config.versioning.show_dropdown and helios_version_info is defined and dropdown_versions|length > 1 %}
+    {% if theme_config.versioning.enabled and theme_config.versioning.show_dropdown and doc_version_info is defined and dropdown_versions|length > 1 %}
     <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
         <div x-data="{ open: false }" class="relative">
             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
@@ -106,8 +106,8 @@
                     :aria-expanded="open"
                     class="flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                 <span class="font-medium text-gray-900 dark:text-white">
-                    {% set current_version_data = helios_version_info.versions|filter(v => v.is_current)|first %}
-                    {{ current_version_data.label ?: helios_version }}
+                    {% set current_version_data = doc_version_info.versions|filter(v => v.is_current)|first %}
+                    {{ current_version_data.label ?: doc_version }}
                     {% if current_version_data.is_default %}
                         <span class="ml-1 text-xs text-green-600 dark:text-green-400">({{ 'THEME_HELIOS.VERSION_LATEST'|t }})</span>
                     {% endif %}
@@ -177,8 +177,8 @@
          }"
          @scroll.debounce.100ms="sessionStorage.setItem('sidebar_scroll', $el.scrollTop)">
         <div class="sidebar-nav">
-            {% if helios_nav is defined %}
-                {{ _self.nav_items(helios_nav, 0) }}
+            {% if nav_tree is defined %}
+                {{ _self.nav_items(nav_tree, 0) }}
             {% endif %}
         </div>
 

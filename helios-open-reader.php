@@ -333,11 +333,11 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['reader_attribution'] = '';
         }
 
-        // Filter helios_version_info to remove unpublished parts from the dropdown.
+        // Filter doc_version_info to remove unpublished parts from the dropdown.
         // Runs at priority -100 so the theme has already populated this variable.
-        if (isset($twig->twig_vars['helios_version_info'])) {
+        if (isset($twig->twig_vars['doc_version_info'])) {
             $pages       = $this->grav['pages'];
-            $versionInfo = $twig->twig_vars['helios_version_info'];
+            $versionInfo = $twig->twig_vars['doc_version_info'];
 
             $filteredVersions = array_values(array_filter(
                 $versionInfo['versions'],
@@ -356,7 +356,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
             $versionInfo['versions'] = $filteredVersions;
             $versionInfo['count']    = count($filteredVersions);
-            $twig->twig_vars['helios_version_info'] = $versionInfo;
+            $twig->twig_vars['doc_version_info'] = $versionInfo;
         }
 
         // Parts detection — optional feature using part-N-section-M folder naming.
@@ -367,8 +367,8 @@ class HeliosOpenReaderPlugin extends Plugin
         $partGroups = [];
         $partLabels = [];
 
-        if (isset($twig->twig_vars['helios_version_info'])) {
-            $versionsForParts = $twig->twig_vars['helios_version_info']['versions'];
+        if (isset($twig->twig_vars['doc_version_info'])) {
+            $versionsForParts = $twig->twig_vars['doc_version_info']['versions'];
 
             foreach ($versionsForParts as $v) {
                 $vid = is_array($v) ? ($v['id'] ?? '') : ($v->id ?? '');
@@ -433,12 +433,12 @@ class HeliosOpenReaderPlugin extends Plugin
 
         // Section sidebar image — shown as a banner above the nav when show_sidebar_image is set.
         // section_home_url — always the section root URL, used for the sidebar label link.
-        // (helios_version_info version.url is the version-switcher URL, not the root URL.)
+        // (doc_version_info version.url is the version-switcher URL, not the root URL.)
         $twig->twig_vars['section_sidebar_image']    = null;
         $twig->twig_vars['section_sidebar_image_url'] = null;
         $twig->twig_vars['section_home_url']          = null;
-        if (isset($twig->twig_vars['helios_version_info'])) {
-            foreach ($twig->twig_vars['helios_version_info']['versions'] as $version) {
+        if (isset($twig->twig_vars['doc_version_info'])) {
+            foreach ($twig->twig_vars['doc_version_info']['versions'] as $version) {
                 $isCurrent = is_array($version) ? ($version['is_current'] ?? false) : ($version->is_current ?? false);
                 if ($isCurrent) {
                     $versionId = is_array($version) ? ($version['id'] ?? null) : ($version->id ?? null);
@@ -464,7 +464,7 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         // Cross-section Prev/Next: bridge navigation across section boundaries.
-        // Runs after Helios has set helios_prev/helios_next (priority 0 vs -100).
+        // Runs after Helios has set doc_prev/doc_next (priority 0 vs -100).
         $this->injectCrossSectionNavigation($twig, $page);
 
         // Section reading progress (X of Y).
@@ -475,9 +475,9 @@ class HeliosOpenReaderPlugin extends Plugin
      * Fill in cross-section Prev/Next links for section-page templates.
      *
      * Three cases:
-     *   Next — helios_next is null (last sub-page of a section): set to the next section root page.
-     *   Prev A — helios_prev is null (section root page): set to last content page of previous section.
-     *   Prev B — helios_prev points to the parent section root (first sub-page): replace with last
+     *   Next — doc_next is null (last sub-page of a section): set to the next section root page.
+     *   Prev A — doc_prev is null (section root page): set to last content page of previous section.
+     *   Prev B — doc_prev points to the parent section root (first sub-page): replace with last
      *            content page of the previous section.
      */
     protected function injectCrossSectionNavigation($twig, $page): void
@@ -486,7 +486,7 @@ class HeliosOpenReaderPlugin extends Plugin
             return;
         }
 
-        $versionInfo = $twig->twig_vars['helios_version_info'] ?? null;
+        $versionInfo = $twig->twig_vars['doc_version_info'] ?? null;
         if (!$versionInfo) {
             return;
         }
@@ -517,13 +517,13 @@ class HeliosOpenReaderPlugin extends Plugin
         // --- Next: last sub-page of a section → next section root page ---
         // Part boundary check: only cross into the next section when it belongs to
         // the same part (or when neither section uses part prefixes).
-        if ($twig->twig_vars['helios_next'] === null && $currentIndex < count($versionIds) - 1) {
+        if ($twig->twig_vars['doc_next'] === null && $currentIndex < count($versionIds) - 1) {
             $nextSectionId     = $versionIds[$currentIndex + 1];
             $nextPartPrefix    = $this->extractPartPrefix($nextSectionId);
             if ($currentPartPrefix === $nextPartPrefix) {
                 $nextSection = $pages->find('/' . $nextSectionId);
                 if ($nextSection) {
-                    $twig->twig_vars['helios_next'] = [
+                    $twig->twig_vars['doc_next'] = [
                         'title' => $nextSection->title(),
                         'url'   => $nextSection->url(),
                     ];
@@ -532,13 +532,13 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         // --- Prev: section root page → last content page of previous section ---
-        // Helios scopes prev/next within the current version, so helios_prev is null
+        // Helios scopes prev/next within the current version, so doc_prev is null
         // on every section root page. A single-segment route (e.g. /section-2) means
         // this IS the section root. ($currentIndex !== false already confirms it's a version.)
         $parentPage = $page->parent();
         $pageIsSectionRoot = count($routeSegments) === 1;
 
-        if ($twig->twig_vars['helios_prev'] === null && $pageIsSectionRoot && $currentIndex > 0) {
+        if ($twig->twig_vars['doc_prev'] === null && $pageIsSectionRoot && $currentIndex > 0) {
             $prevSectionId  = $versionIds[$currentIndex - 1];
             $prevPartPrefix = $this->extractPartPrefix($prevSectionId);
             if ($currentPartPrefix === $prevPartPrefix) {
@@ -548,7 +548,7 @@ class HeliosOpenReaderPlugin extends Plugin
                     $this->collectPagesDepthFirst($prevSection, $flatList);
                     if (!empty($flatList)) {
                         $lastPage = end($flatList);
-                        $twig->twig_vars['helios_prev'] = [
+                        $twig->twig_vars['doc_prev'] = [
                             'title' => $lastPage->title(),
                             'url'   => $lastPage->url(),
                         ];
@@ -558,9 +558,9 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         // --- Prev: first sub-page of a section → last content page of previous section ---
-        // Triggered when helios_prev points to the parent section root page, which happens
+        // Triggered when doc_prev points to the parent section root page, which happens
         // for the first direct child of a top-level section.
-        $prevData = $twig->twig_vars['helios_prev'];
+        $prevData = $twig->twig_vars['doc_prev'];
         $prevUrl  = is_array($prevData) ? ($prevData['url'] ?? null) : null;
 
         // Parent is a top-level section page when its own route is one of the version IDs.
@@ -583,7 +583,7 @@ class HeliosOpenReaderPlugin extends Plugin
                     $this->collectPagesDepthFirst($prevSection, $flatList);
                     if (!empty($flatList)) {
                         $lastPage = end($flatList);
-                        $twig->twig_vars['helios_prev'] = [
+                        $twig->twig_vars['doc_prev'] = [
                             'title' => $lastPage->title(),
                             'url'   => $lastPage->url(),
                         ];
@@ -612,7 +612,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
         $scopedSectionIds = null;
         if ($hasParts && $currentPartPrefix !== null) {
-            $versionInfo = $twig->twig_vars['helios_version_info'] ?? null;
+            $versionInfo = $twig->twig_vars['doc_version_info'] ?? null;
             if ($versionInfo) {
                 $scopedSectionIds = [];
                 foreach ($versionInfo['versions'] as $v) {

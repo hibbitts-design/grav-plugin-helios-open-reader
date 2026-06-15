@@ -24,9 +24,9 @@
 
     {# Breadcrumbs (mobile) - show on smaller screens #}
     <div class="lg:hidden flex-1 min-w-0">
-        {% if helios_breadcrumbs is defined and helios_breadcrumbs|length > 0 %}
+        {% if doc_breadcrumbs is defined and doc_breadcrumbs|length > 0 %}
             <span class="text-sm font-medium text-gray-900 dark:text-white truncate">
-                {{ helios_breadcrumbs|last.title }}
+                {{ doc_breadcrumbs|last.title }}
             </span>
         {% endif %}
     </div>
@@ -34,11 +34,11 @@
     {# Page title area (desktop) - version badge on left #}
     <div class="hidden lg:flex lg:items-center flex-1">
         {# Version badge #}
-        {% if theme_config.versioning.enabled and theme_config.versioning.show_badge and helios_version %}
-            {% set version_data = helios_version_info.versions|filter(v => v.is_current)|first %}
+        {% if theme_config.versioning.enabled and theme_config.versioning.show_badge and doc_version %}
+            {% set version_data = doc_version_info.versions|default([])|filter(v => v.is_current)|first %}
             <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium
                          {{ version_data.is_default ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-primary/10 text-primary' }}">
-                {{ version_data.label ?: helios_version }}
+                {{ version_data.label ?: doc_version }}
                 {% if version_data.is_default %}
                     <span class="hidden sm:inline">- {{ 'THEME_HELIOS.VERSION_LATEST'|t }}</span>
                 {% endif %}
