@@ -1,3 +1,10 @@
+# v0.9.8
+## 06/15/2026
+
+1. [](#bugfix)
+   * Add ignore missing to yetisearch-pro include
+   * Update plugin templates and PHP to use Helios v2.1.6 renamed Twig variables (helios_* → doc_*, nav_tree)
+
 # v0.9.7
 ## 05/21/2026
 
