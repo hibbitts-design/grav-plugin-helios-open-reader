@@ -11,6 +11,9 @@ class HeliosOpenReaderPlugin extends Plugin
     /** @var bool Whether the Helios theme is missing or inactive */
     protected $themeMissing = false;
 
+    /** @var bool Guard against onShortcodeHandlers firing more than once */
+    protected $shortcodesRegistered = false;
+
     /** @var string|null Computed "Reader Title | Page Title | Site Title" browser title */
     protected $browserTitle = null;
 
@@ -200,6 +203,11 @@ class HeliosOpenReaderPlugin extends Plugin
 
     public function onShortcodeHandlers()
     {
+        if ($this->shortcodesRegistered) {
+            return;
+        }
+        $this->shortcodesRegistered = true;
+
         $shortcodes = $this->grav['shortcode'];
         $dir        = __DIR__ . '/shortcodes';
 
