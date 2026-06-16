@@ -1,0 +1,185 @@
+title: Publications List
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+        content:
+          type: tab
+          title: PLUGIN_ADMIN.CONTENT
+          fields:
+            content:
+              ordering@: 100
+            header.media_order:
+              ordering@: 101
+            header.subtitle:
+              type: text
+              label: Subtitle
+              toggleable: true
+              placeholder: 'e.g. A Collection of Open Publications and Guides'
+              help: 'Optional subtitle displayed below the publications list title on the home page.'
+            header.authors:
+              type: text
+              label: Author(s)
+              toggleable: true
+              placeholder: 'e.g. Jane Smith or Jane Smith & John Doe'
+              help: 'Author name(s) displayed on the publications home page and used in the OER attribution block.'
+            header.edition:
+              type: text
+              label: Edition
+              toggleable: true
+              placeholder: 'e.g. First Edition, 2025'
+              help: 'Edition or version label displayed on the publications home page.'
+            header.cover_image:
+              type: pagemediaselect
+              label: Cover Image
+              toggleable: true
+              help: 'Optional cover image displayed on the publications home page.'
+            header.prev_next_position:
+              type: select
+              label: 'Prev/Next Page Controls Position'
+              default: both
+              options:
+                both: 'Top and bottom'
+                top: 'Top only'
+                bottom: 'Bottom only'
+              help: 'Where to display the Previous/Next page navigation on section pages.'
+            header.section_label:
+              type: text
+              size: medium
+              label: 'Section Label'
+              toggleable: true
+              placeholder: 'e.g. Chapter, Project, Unit, Module'
+              help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
+            header.cards_per_row:
+              type: select
+              label: Cards Per Row
+              default: 1
+              options:
+                1: '1 (full width)'
+                2: '2 per row'
+                3: '3 per row'
+              help: 'Number of publication cards displayed per row on the publications home page.'
+            header.card_icon:
+              type: text
+              label: Default Card Icon
+              toggleable: true
+              placeholder: 'tabler/book.svg'
+              help: 'Tabler icon path used as the default for publication cards that don''t have their own icon set.'
+            header.card_image_layout:
+              type: select
+              label: Card Image Layout
+              default: side
+              options:
+                side: 'Side (left of content)'
+                top: 'Top (above content)'
+              help: 'How card images are positioned. Overridden to "top" automatically when 3 cards per row is selected.'
+            header.card_description_lines:
+              type: select
+              label: Description Line Limit
+              default: 3
+              options:
+                0: 'No limit'
+                2: '2 lines'
+                3: '3 lines'
+              help: 'Maximum lines of description text shown on each publication card before truncating.'
+        publications_tab:
+          type: tab
+          title: Publications
+          fields:
+            publications_info:
+              type: display
+              label: false
+              content: '<p>Name section folders using <code>part-N-section-M</code> (e.g. <code>part-1-section-1</code>) and add each folder name as a key in <strong>Helios Theme → Versioning → Version Labels</strong>. Then add one entry per publication below with its ID, title, description, and optional cover image.</p>'
+            header.parts:
+              type: list
+              label: 'Publications / Guides'
+              help: 'Per-publication metadata for the publications list cards. ID must match the part folder prefix (e.g. part-1).'
+              fields:
+                .id:
+                  type: text
+                  label: 'Part ID'
+                  placeholder: 'e.g. part-1'
+                  help: 'Must match the part prefix used in folder names (e.g. part-1 for part-1-section-1 folders).'
+                .label:
+                  type: text
+                  label: 'Title'
+                  placeholder: 'e.g. Foundations of Open Education'
+                  help: 'Publication title displayed on the publications list card.'
+                .description:
+                  type: textarea
+                  label: 'Description'
+                  rows: 2
+                  help: 'Short description displayed on the publications list card.'
+                .cover_image:
+                  type: pagemediaselect
+                  label: 'Cover Image'
+                  help: 'Optional cover image for this publication. Place the image file in the parts/ folder.'
+                .icon:
+                  type: text
+                  label: 'Icon'
+                  placeholder: 'tabler/book.svg'
+                  help: 'Optional Tabler icon path for this publication card.'
+                .badge_label:
+                  type: text
+                  label: 'Badge Label'
+                  placeholder: 'e.g. New, Draft'
+                  help: 'Optional badge text shown on the card.'
+                .badge_color:
+                  type: select
+                  label: 'Badge Color'
+                  default: default
+                  options:
+                    default: Default
+                    blue: Blue
+                    green: Green
+                    yellow: Yellow
+                    red: Red
+                    purple: Purple
+        oer_tab:
+          type: tab
+          title: OER Attribution
+          fields:
+            header.show_oer_attribution:
+              type: toggle
+              label: 'Show OER Attribution Block'
+              highlight: 1
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+              help: 'Display the CC license and attribution text in the footer of every page.'
+            header.license:
+              type: select
+              label: License
+              toggleable: true
+              default: ''
+              options:
+                '': 'Not specified'
+                'CC BY 4.0': 'CC BY 4.0 — Attribution'
+                'CC BY-SA 4.0': 'CC BY-SA 4.0 — Attribution-ShareAlike'
+                'CC BY-NC 4.0': 'CC BY-NC 4.0 — Attribution-NonCommercial'
+                'CC BY-NC-SA 4.0': 'CC BY-NC-SA 4.0 — Attribution-NonCommercial-ShareAlike'
+                'CC BY-ND 4.0': 'CC BY-ND 4.0 — Attribution-NoDerivatives'
+                'CC BY-NC-ND 4.0': 'CC BY-NC-ND 4.0 — Attribution-NonCommercial-NoDerivatives'
+              help: 'Creative Commons license for this publications list. Displayed in the footer when OER Attribution is enabled.'
+            header.license_url:
+              type: text
+              label: License URL
+              toggleable: true
+              placeholder: 'e.g. https://creativecommons.org/licenses/by/4.0/'
+              help: 'URL to the full license text. Leave empty to omit the license link.'
+            header.attribution_text:
+              type: textarea
+              label: Attribution Text
+              toggleable: true
+              rows: 3
+              placeholder: 'e.g. This work by Jane Smith is licensed under CC BY 4.0.'
+              help: 'Full attribution statement displayed in the footer when OER Attribution is enabled. Supports basic HTML.'

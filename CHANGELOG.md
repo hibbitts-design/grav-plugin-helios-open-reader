@@ -1,3 +1,9 @@
+# v0.9.10
+## XX/XX/2026
+
+1. [](#new)
+   * Add multi-publication mode with per-publication home pages, scoped search, and Save My Place support
+
 # v0.9.9
 ## 06/16/2026
 

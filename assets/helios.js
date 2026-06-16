@@ -73,7 +73,8 @@
       try {
         localStorage.setItem(horLastPageKey, JSON.stringify({
           url: savePlaceEl.dataset.horUrl,
-          title: savePlaceEl.dataset.horTitle
+          title: savePlaceEl.dataset.horTitle,
+          publicationPath: savePlaceEl.dataset.horPublicationPath || ''
         }));
       } catch (e) {}
 
@@ -93,18 +94,22 @@
         var saved = localStorage.getItem(horLastPageKey);
         if (saved) {
           var pageData = JSON.parse(saved);
-          var resumeBtn   = root.querySelector('#hor-resume-btn');
-          var resumeTitle = root.querySelector('#hor-resume-title');
-          if (resumeBtn)   resumeBtn.href = pageData.url;
-          if (resumeTitle) resumeTitle.textContent = pageData.title;
-          resumeStrip.removeAttribute('hidden');
+          var stripPath = resumeStrip.dataset.horPublicationPath || '';
+          var savedPath = pageData.publicationPath || '';
+          if (stripPath === savedPath) {
+            var resumeBtn   = root.querySelector('#hor-resume-btn');
+            var resumeTitle = root.querySelector('#hor-resume-title');
+            if (resumeBtn)   resumeBtn.href = pageData.url;
+            if (resumeTitle) resumeTitle.textContent = pageData.title;
+            resumeStrip.removeAttribute('hidden');
 
-          var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');
-          if (dismissBtn) {
-            dismissBtn.addEventListener('click', function () {
-              try { localStorage.removeItem(horLastPageKey); } catch (e) {}
-              resumeStrip.setAttribute('hidden', '');
-            });
+            var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');
+            if (dismissBtn) {
+              dismissBtn.addEventListener('click', function () {
+                try { localStorage.removeItem(horLastPageKey); } catch (e) {}
+                resumeStrip.setAttribute('hidden', '');
+              });
+            }
           }
         }
       } catch (e) {}

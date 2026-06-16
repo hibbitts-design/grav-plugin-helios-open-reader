@@ -13,7 +13,7 @@
     {% set _gpp = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}
     {% set _git_url = 'https://' ~ github_server ~ '/' ~ (theme_config.github.repo|trim('/')) ~ '/' ~ _gpp ~ '/' ~ theme_config.github.branch ~ '/' ~ _fp %}
 {% endif %}
-<div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}"{% if _git_url is defined and _git_url %} data-hor-git-url="{{ _git_url }}"{% endif %} hidden></div>
+<div data-hor-save-page data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}" data-hor-publication-path="{{ publication_base_path is defined ? publication_base_path : '' }}"{% if _git_url is defined and _git_url %} data-hor-git-url="{{ _git_url }}"{% endif %} hidden></div>
 
 {# Prev/Next navigation — top (shown when hor_prev_next_position is 'top' or 'both') #}
 {% if hor_prev_next_position|default('both') in ['top', 'both'] %}

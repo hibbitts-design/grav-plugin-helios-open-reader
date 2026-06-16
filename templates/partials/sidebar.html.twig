@@ -6,6 +6,8 @@
  #   3. Logo link uses logo_url to navigate to reader home page (search: PLUGIN CHANGE 3)
  #   4. Section sidebar image banner shown below logo header (search: PLUGIN ADDITION 1)
  #   5. Section label shown above nav when version dropdown is hidden (search: PLUGIN ADDITION 2)
+ #   6. Back to Publications list link shown above nav in multi-publication mode — uses publication_list_url (search: PLUGIN ADDITION 3)
+ #   7. Back to Publication Home link shown above nav when in a section page — uses publication_home_url (search: PLUGIN ADDITION 4)
  #}
 {% set theme_config = config.themes.helios %}
 {% set logo = theme_config.logo %}
@@ -80,7 +82,7 @@
         {% if current_section %}
         <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
             <a href="{{ section_home_url ?: current_section.url }}" class="flex items-center py-1.5 text-base font-semibold text-gray-900 dark:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">{# section_home_url always points to section root; current_section.url is the version-switcher URL and varies by current page #}
-                {{ current_section.label }}
+                {{ section_home_title is defined and section_home_title ? section_home_title : current_section.label }}
             </a>
         </div>
         {% endif %}
@@ -150,6 +152,32 @@
         </div>
     </div>
     {% endif %}
+
+    {# PLUGIN ADDITION 3: Back to Publications list link — shown in multi-publication mode #}
+    {% if is_multi_publication is defined and is_multi_publication and publication_list_url and not (publication_home_url is defined and publication_home_url) %}
+    <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
+        <a href="{{ publication_list_url }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            </svg>
+            {{ reader_title ?: 'Publications' }}
+        </a>
+    </div>
+    {% endif %}
+    {# END PLUGIN ADDITION 3 #}
+
+    {# PLUGIN ADDITION 4: Back to Publication Home link — shown on section pages in multi-publication mode #}
+    {% if publication_home_url is defined and publication_home_url %}
+    <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
+        <a href="{{ publication_home_url }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            </svg>
+            {{ publication_home_title ?? 'Publication Home' }}
+        </a>
+    </div>
+    {% endif %}
+    {# END PLUGIN ADDITION 4 #}
 
     {# Navigation #}
     {% set htmx_enabled = theme_config.htmx.enabled|default(false) %}

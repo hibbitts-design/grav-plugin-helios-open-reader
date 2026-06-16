@@ -68,7 +68,7 @@ Alternatively it can be installed via the [Admin Plugin](http://learn.getgrav.or
 
 The `_demo` folder in this plugin contains a default Helios Open Reader site that can be used as a starting point:
 
-- `00.sections/` – Reader home page (`section-list.md` sets the book title, subtitle, authors, edition, license, and cover image)
+- `00.sections/` – Reader home page (`section-list.md` sets the reader title, subtitle, authors, edition, license, and cover image)
 - `01.section-1/` – Section 1: What is Open Education? (with sub-pages)
 - `02.section-2/` – Section 2: Tools for Open Course Design (with sub-pages)
 - `03.section-3/` – Section 3: Getting Started with Open Authoring (with sub-pages)
@@ -114,10 +114,11 @@ search:
 
 ## Features
 
-Helios Open Reader provides a ready-built site for open educational content — open textbooks, readers, and student projects — using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built site for open educational content — open textbooks, readers, and student projects — using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
+- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single publications home page; each publication has its own cover image, metadata, and section card grid; `publication-home` folders at root level are auto-detected; the sidebar shows links back to the publications list and the current publication home
 - **Optional parts grouping** — rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** — section pages automatically display their section number and configurable label in the page header (e.g. `Chapter 1`, `Project 2`, `Unit 3`); inherits correctly for all sub-pages within a section. Set via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
@@ -173,21 +174,44 @@ If you prefer not to write Markdown directly, the optional [Grav Premium Editor 
 
 ## Reader Setup
 
-Place section folders directly under the site root alongside the reader home, named using the `section-N` convention:
+A **publication** is a titled reader with its own home page, authors, sections, and optional parts.
+
+### Single-Publication Setup (Default)
+
+The skeleton ships pre-configured as a single-publication reader. A `section-list.md` at root is the reader home, with section folders alongside it:
 
 ```
 00.sections/          ← reader home (section-list.md)
-01.section-1/       ← section 1 (section-page.md)
-  01.section-one/   ← sub-page (section-page.md)
-  02.section-two/   ← sub-page (section-page.md)
-02.section-2/       ← section 2 (section-page.md)
-03.section-3/       ← section 3 (section-page.md)
+01.section-1/         ← section 1 (section-page.md)
+  01.intro/           ← sub-page (section-page.md)
+02.section-2/         ← section 2 (section-page.md)
+03.section-3/         ← section 3 (section-page.md)
 ```
 
 Add a `labels` entry in `user/config/themes/helios.yaml` for each section folder.
 
 > [!TIP]
 > After adding, renaming, or removing a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel.
+
+### Multi-Publication Setup
+
+To host multiple publications within a single Helios Open Reader site, switch to multi-publication mode. A `publication-list.md` at root is the publications home; each publication lives in its own folder with a `publication-home.md` and its section folders nested inside:
+
+```
+00.publications/         ← publications home (publication-list.md)
+01.my-publication/       ← publication folder
+  publication-home.md    ← publication home
+  01.section-1/          ← section 1 (section-page.md)
+    01.intro/            ← sub-page (section-page.md)
+  02.section-2/          ← section 2 (section-page.md)
+02.another-publication/
+  publication-home.md
+  01.section-1/
+```
+
+In multi-publication mode, section names in the sidebar are drawn from each section page's `title` field — no `versioning.labels` configuration is needed.
+
+Update `home.alias` in `user/config/system.yaml` to `/publications`.
 
 ### Grouping Sections into Parts
 
@@ -227,6 +251,47 @@ versioning:
     part-2-section-1: 'Advanced Topics'
     part-2-section-2: 'Publishing & Sharing'
 ```
+
+### Multi-Publication Settings
+
+#### Publications List (`publication-list.md`)
+
+Global settings for section label, Prev/Next position, and OER attribution are set here and apply to all publications; individual publications can override them in their own `publication-home.md`.
+
+| Field | Description |
+|-------|-------------|
+| `title` | Publications list title displayed in the header |
+| `subtitle` | Optional subtitle |
+| `cover_image` | Filename of a cover image |
+| `prev_next_position` | Prev/Next position on section pages: `both` (default), `top`, or `bottom` |
+| `show_oer_attribution` | Show CC license footer on all pages |
+| `section_label` | Section label for all publications (e.g. `Chapter`). Overridable per publication. |
+| `license` | CC license label |
+| `license_url` | License URL |
+| `attribution_text` | Full attribution statement |
+| `cards_per_row` | Publication cards per row (1–3) |
+| `card_icon` | Default icon for publication cards |
+| `card_image_layout` | Card image position: `side` or `top` |
+| `card_description_lines` | Max description lines per card |
+
+#### Publication Home (`publication-home.md`)
+
+| Field | Description |
+|-------|-------------|
+| `title` | Publication title |
+| `subtitle` | Optional subtitle shown below the title |
+| `cover_image` | Cover image filename for this publication |
+| `authors` | Author name(s) |
+| `edition` | Optional edition label |
+| `license` | CC license badge |
+| `start_button_text` | Start Reading button label. Leave empty to hide. |
+| `section_label` | Override the section label for this publication only |
+| `prev_next_position` | Override Prev/Next position for this publication |
+| `show_oer_attribution` | Override OER attribution display for this publication |
+| `cards_per_row` | Section cards per row (1–3) |
+| `card_icon` | Default icon for section cards |
+| `card_image_layout` | Card image position: `side` or `top` |
+| `card_description_lines` | Max description lines per card |
 
 ### Reader Home Settings
 
@@ -302,7 +367,9 @@ The **Part Label** (default: `Part`) can be customized via **Admin → Pages →
 
 ## Templates
 
-- **section-list** – Reader home template displaying the book header, resume reading strip, and section card grid
+- **publication-list** – Publications home template displaying a card grid of all publications (multi-publication mode)
+- **publication-home** – Publication home template displaying publication metadata and a card grid of its sections (multi-publication mode)
+- **section-list** – Reader home template for single-publication mode; displays the reader header, resume reading strip, and section card grid
 - **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content; extends the full Helios base with sidebar and Prev/Next navigation
 - **default-toc** – Content page with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 

@@ -1,0 +1,125 @@
+title: 'Publication Home'
+extends@: default
+
+form:
+  fields:
+    tabs:
+      type: tabs
+      active: 1
+      fields:
+
+        content:
+          type: tab
+          title: Content
+          fields:
+
+            header.title:
+              type: text
+              label: 'Publication Title'
+              validate:
+                required: true
+
+            header.subtitle:
+              type: text
+              label: Subtitle
+
+            header.cover_image:
+              type: filepicker
+              label: 'Cover Image'
+              preview_images: true
+              accept:
+                - image/*
+
+            header.authors:
+              type: text
+              label: Authors
+
+            header.edition:
+              type: text
+              label: Edition
+
+            header.part_key:
+              type: text
+              label: 'Part Key'
+              help: 'The part identifier this publication home represents (e.g. part-1, part-2)'
+              validate:
+                required: true
+
+            header.prev_next_position:
+              type: select
+              label: 'Prev/Next Position'
+              options:
+                both: Both
+                top: 'Top only'
+                bottom: 'Bottom only'
+                hidden: Hidden
+
+            header.section_label:
+              type: text
+              label: 'Section Label'
+              help: 'Override the default "Section" label (e.g. Chapter, Module)'
+
+            header.cards_per_row:
+              type: select
+              label: 'Cards Per Row'
+              options:
+                1: '1'
+                2: '2'
+                3: '3'
+
+            header.card_icon:
+              type: text
+              label: 'Default Card Icon'
+
+            header.card_image_layout:
+              type: select
+              label: 'Card Image Layout'
+              options:
+                side: Side
+                top: Top
+
+            header.card_description_lines:
+              type: select
+              label: 'Card Description Lines'
+              options:
+                2: '2'
+                3: '3'
+                4: '4'
+
+            header.start_button_text:
+              type: text
+              label: 'Start Button Text'
+              help: 'Leave empty to hide the Start Reading button'
+              placeholder: 'Start Reading'
+
+            content:
+              type: markdown
+              label: Content
+              validate:
+                required: false
+
+        oer_attribution:
+          type: tab
+          title: 'OER Attribution'
+          fields:
+
+            header.show_oer_attribution:
+              type: toggle
+              label: 'Show OER Attribution'
+              highlight: 1
+              options:
+                1: 'Yes'
+                0: 'No'
+
+            header.license:
+              type: text
+              label: License
+
+            header.license_url:
+              type: text
+              label: 'License URL'
+
+            header.attribution_text:
+              type: editor
+              label: 'Attribution Text'
+              help: 'HTML allowed'

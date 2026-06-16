@@ -15,8 +15,9 @@
  #   4. processSimpleSearchResults: sort groups by relevance (position of each group's top result in
  #      the SimpleSearch results array) rather than alphabetically (search: PLUGIN CHANGE 4)
  #   5. versioningEnabled forced to false and fetch uses referrerPolicy: 'no-referrer' to prevent the
- #      Helios theme's onSimpleSearchCollection from scoping results to the current section; search
- #      must always be site-wide in the Open Reader (PLUGIN CHANGE 5)
+ #      Helios theme's onSimpleSearchCollection from scoping results to the current section (PLUGIN CHANGE 5)
+ #   6. When in a specific publication (multi-publication mode), results are filtered client-side to only pages
+ #      whose URL contains the current publication's path or part prefix; placeholder updated to name the publication (PLUGIN CHANGE 6)
  #}
 {% set theme_config = config.themes.helios %}
 {% set search_config = theme_config.search %}
@@ -53,7 +54,7 @@
                    x-ref="searchInput"
                    x-model="query"
                    @input.debounce.150ms="search()"
-                   placeholder="{{ search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t }}"
+                   placeholder="{{ current_publication_part is defined and current_publication_part ? 'Search ' ~ (publication_home_title ?? 'this guide') ~ '...' : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
                    autocomplete="off"
                    autocorrect="off"
                    autocapitalize="off"
@@ -177,6 +178,11 @@ function searchComponent() {
     // PLUGIN CHANGE 3: part label mapping for search result group headers
     const hasParts = {{ has_parts is defined and has_parts ? 'true' : 'false' }};
     const partLabels = {{ has_parts is defined and has_parts and part_labels is defined ? part_labels|json_encode|raw : '{}' }};
+    // PLUGIN CHANGE 6: publication scope for result filtering (empty = show all)
+    // Nested mode: filter by publication folder path. Flat mode: filter by part-N prefix in URL.
+    const publicationBasePath    = '{{ publication_base_path is defined ? publication_base_path : "" }}';
+    const currentPublicationPart = '{{ current_publication_part is defined and current_publication_part ? current_publication_part : "" }}';
+    const isMultiPublication     = {{ is_multi_publication is defined and is_multi_publication ? 'true' : 'false' }};
 
     return {
         query: '',
@@ -265,19 +271,37 @@ function searchComponent() {
                 this.results = data.results;
                 this.resultCount = data.count || data.results.length;
 
+                // PLUGIN CHANGE 6: filter to current publication when in multi-publication mode
+                if (publicationBasePath) {
+                    // Nested mode: match results whose URL starts with the publication folder path.
+                    this.results = this.results.filter(r => r.url && r.url.includes(publicationBasePath + '/'));
+                    this.resultCount = this.results.length;
+                } else if (currentPublicationPart) {
+                    // Flat mode: match results whose URL contains the part prefix pattern.
+                    const partPattern = '/' + currentPublicationPart + '-section-';
+                    this.results = this.results.filter(r => r.url && r.url.includes(partPattern));
+                    this.resultCount = this.results.length;
+                }
+
                 // PLUGIN CHANGE 1: Re-group using breadcrumb, skipping the top-level container (e.g. "Pages")
+                // When scoped to a publication (publicationBasePath set), skip one extra level so the
+                // publication title doesn't appear in group headers — user is already inside that publication.
+                // On the publications list page (isMultiPublication, no scope), group by publication name only
+                // so results cluster per publication; section detail remains visible in each result's breadcrumb.
                 // Decode HTML entities in breadcrumb for display (Twig auto-escapes > to &gt;)
                 const decodeEntities = str => str ? str.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&') : '';
                 this.results.forEach(r => { r.breadcrumb = decodeEntities(r.breadcrumb); });
+                const onPublicationListPage = isMultiPublication && !publicationBasePath && !currentPublicationPart;
                 this.grouped = {};
                 for (const result of this.results) {
                     const parts = result.breadcrumb ? result.breadcrumb.split(/\s+>\s+/) : [];
-                    const groupParts = parts.length > 1 ? parts.slice(1) : parts;
+                    const skipCount = publicationBasePath ? 2 : 1;
+                    const groupParts = parts.length > skipCount ? parts.slice(skipCount) : (parts.length > 1 ? parts.slice(1) : parts);
                     // PLUGIN CHANGE 2: section landing pages have a single-segment breadcrumb of "Pages";
                     // fall back to the result title so they don't group under a generic "Pages" header
                     const isRootOnly = groupParts.length === 1 && groupParts[0] === 'Pages';
                     const rawGroup = (groupParts.length > 0 && !isRootOnly)
-                        ? groupParts.join(' ')
+                        ? (onPublicationListPage ? groupParts[0] : groupParts.join(' > '))
                         : (result.title || result.parent || 'Documentation');
                     // PLUGIN CHANGE 3: if parts are active, extract the part-N prefix from the result URL
                     // (breadcrumb uses page titles, not folder slugs, so URL is the reliable signal)
