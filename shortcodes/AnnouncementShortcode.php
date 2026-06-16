@@ -8,6 +8,9 @@ class AnnouncementShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getHandlers()->has('announcement')) {
+            return;
+        }
         $this->shortcode->getHandlers()->add('announcement', function(ShortcodeInterface $sc) {
             $content = $sc->getContent();
 

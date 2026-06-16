@@ -8,6 +8,9 @@ class H5PShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getHandlers()->has('h5p')) {
+            return;
+        }
         $this->shortcode->getHandlers()->add('h5p', function(ShortcodeInterface $sc) {
 
             // Get shortcode content and parameters

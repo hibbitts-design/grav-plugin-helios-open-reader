@@ -216,7 +216,11 @@ class HeliosOpenReaderPlugin extends Plugin
             if ($file->isDot() || $file->isDir() || $file->getExtension() !== 'php') {
                 continue;
             }
-            $shortcodes->registerShortcode($file->getFilename(), $dir);
+            try {
+                $shortcodes->registerShortcode($file->getFilename(), $dir);
+            } catch (\RuntimeException $e) {
+                // Handler already registered by another plugin (e.g. helios-course-hub)
+            }
         }
     }
 

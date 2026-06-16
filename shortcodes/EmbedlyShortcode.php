@@ -7,6 +7,9 @@ class EmbedlyShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getHandlers()->has('embedly')) {
+            return;
+        }
         $this->shortcode->getHandlers()->add('embedly', function(ShortcodeInterface $sc) {
 
             // Get shortcode content and parameters

@@ -7,6 +7,9 @@ class GoogleSlidesShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getRawHandlers()->has('googleslides')) {
+            return;
+        }
         $this->shortcode->getRawHandlers()->add('googleslides', function(ShortcodeInterface $sc) {
 
             // Get shortcode content and parameters

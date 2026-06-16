@@ -7,6 +7,9 @@ class PDFShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getHandlers()->has('pdf')) {
+            return;
+        }
         $this->shortcode->getHandlers()->add('pdf', function(ShortcodeInterface $sc) {
 
             // Get shortcode content and parameters

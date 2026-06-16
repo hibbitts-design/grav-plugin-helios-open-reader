@@ -7,6 +7,9 @@ class iFrameShortcode extends Shortcode
 {
     public function init()
     {
+        if ($this->shortcode->getHandlers()->has('iframe')) {
+            return;
+        }
         $this->shortcode->getHandlers()->add('iframe', function(ShortcodeInterface $sc) {
 
             // Get shortcode content and parameters
