@@ -43,7 +43,7 @@
         </div>
     </header>
 
-    {# Split page content above/below publication cards using === delimiter #}
+    {# Split page content above/below reader cards using === delimiter #}
     {% set raw = page.rawMarkdown() %}
     {% if '===' in raw %}
         {% set content_above = page.summary() %}
@@ -60,7 +60,7 @@
         </article>
     {% endif %}
 
-    {# Publication cards — one card per publication home page (section-list or publication-home, scanned from root by PHP) #}
+    {# Reader cards — one card per reader home page (section-list, scanned from root by PHP) #}
     {% if publication_pages is defined and publication_pages|length > 0 %}
     {% set cpr = page.header.cards_per_row|default(1) %}
     {% set colClass = {
@@ -89,7 +89,7 @@
     </div>
     {% endif %}
 
-    {# Page content below publication cards #}
+    {# Page content below reader cards #}
     {% if content_below and content_below|trim %}
         <article class="prose prose-lg dark:prose-invert max-w-none mt-8">
             {{ content_below|raw }}

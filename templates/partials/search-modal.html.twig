@@ -286,7 +286,7 @@ function searchComponent() {
                 // PLUGIN CHANGE 1: Re-group using breadcrumb, skipping the top-level container (e.g. "Pages")
                 // When scoped to a publication (publicationBasePath set), skip one extra level so the
                 // publication title doesn't appear in group headers — user is already inside that publication.
-                // On the publications list page (isMultiPublication, no scope), group by publication name only
+                // On the readers list page (isMultiPublication, no scope), group by publication name only
                 // so results cluster per publication; section detail remains visible in each result's breadcrumb.
                 // Decode HTML entities in breadcrumb for display (Twig auto-escapes > to &gt;)
                 const decodeEntities = str => str ? str.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&') : '';

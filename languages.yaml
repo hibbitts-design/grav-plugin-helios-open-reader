@@ -5,6 +5,8 @@ en:
     ATTRIBUTION_LABEL: "License"
     SECTION_LABEL: "Section"
     SECTION_LATEST_LABEL: "latest"
+    THEME_REQUIRED_NOTICE: "Helios Grav Premium theme required. Enter your Helios and SVG Icons license keys, then install and activate the theme. (Helios Open Reader Plugin)"
+    THEME_INACTIVE_NOTICE: "Helios Grav Premium theme is installed but not active. Please activate the Helios theme to use the Open Reader plugin. (Helios Open Reader Plugin)"
 
 fr:
   PLUGIN_HELIOS_OPEN_READER:

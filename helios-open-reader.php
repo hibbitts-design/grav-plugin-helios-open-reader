@@ -5,11 +5,13 @@
 namespace Grav\Plugin;
 
 use Grav\Common\Plugin;
+use RocketTheme\Toolbox\Event\Event;
 
 class HeliosOpenReaderPlugin extends Plugin
 {
     /** @var bool Whether the Helios theme is missing or inactive */
-    protected $themeMissing = false;
+    protected $themeMissing       = false;
+    protected $themeInstalledOnly = false;
 
     /** @var bool Guard against onShortcodeHandlers firing more than once */
     protected $shortcodesRegistered = false;
@@ -31,16 +33,20 @@ class HeliosOpenReaderPlugin extends Plugin
         $themePath   = GRAV_ROOT . '/user/themes/' . $themeName;
         $themeActive = $this->config->get('system.pages.theme') === $themeName;
 
-        if (!is_dir($themePath) || !$themeActive) {
+        $themeInstalled = is_dir($themePath);
+
+        if (!$themeInstalled || !$themeActive) {
             $fallback = is_dir(GRAV_ROOT . '/user/themes/quark2') ? 'quark2' : 'quark';
             $this->config->set('system.pages.theme', $fallback);
-            $this->themeMissing = true;
+            $this->themeMissing        = true;
+            $this->themeInstalledOnly  = $themeInstalled && !$themeActive;
         }
 
         // Register page blueprints in every context so they are discoverable
         // from admin, frontend, CLI, and API requests alike.
         $this->enable([
-            'onGetPageBlueprints' => ['onGetPageBlueprints', 0],
+            'onGetPageBlueprints'         => ['onGetPageBlueprints', 0],
+            'onApiDashboardNotifications' => ['onApiDashboardNotifications', 0],
         ]);
 
         if ($this->isAdmin2Route()) {
@@ -52,8 +58,9 @@ class HeliosOpenReaderPlugin extends Plugin
 
         if ($this->isAdmin()) {
             $this->enable([
-                'onPageInitialized' => ['onPageInitialized', 0],
-                'onOutputGenerated' => ['onOutputGenerated', 0],
+                'onAdminTwigTemplatePaths' => ['onAdminHeliosNotice', 0],
+                'onPageInitialized'        => ['onPageInitialized', 0],
+                'onOutputGenerated'        => ['onOutputGenerated', 0],
             ]);
             return;
         }
@@ -125,11 +132,49 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         ob_start(function (string $html) use ($css): string {
-            if (strpos($html, 'data-sveltekit-preload-data') === false) {
+            if (strpos($html, 'data-sveltekit') === false && strpos($html, '</body>') === false) {
                 return $html;
             }
             return str_replace('</head>', '<style>' . $css . '</style></head>', $html);
         });
+    }
+
+    protected function themeNoticeKey(): string
+    {
+        return $this->themeInstalledOnly
+            ? 'PLUGIN_HELIOS_OPEN_READER.THEME_INACTIVE_NOTICE'
+            : 'PLUGIN_HELIOS_OPEN_READER.THEME_REQUIRED_NOTICE';
+    }
+
+    public function onAdminHeliosNotice(): void
+    {
+        if (!$this->themeMissing) {
+            return;
+        }
+
+        $this->grav['messages']->add(
+            $this->grav['language']->translate($this->themeNoticeKey()),
+            'warning'
+        );
+    }
+
+    public function onApiDashboardNotifications(Event $event): void
+    {
+        if (!$this->themeMissing) {
+            return;
+        }
+
+        $notifications = $event['notifications'] ?? [];
+        $notifications['top'][] = [
+            'id'             => 'helios-open-reader-theme-required',
+            'date'           => date('c'),
+            'level'          => 'warning',
+            'icon'           => 'shield-alert',
+            'location'       => ['top'],
+            'message'        => $this->grav['language']->translate($this->themeNoticeKey()),
+            'reappear_after' => '+1 days',
+        ];
+        $event['notifications'] = $notifications;
     }
 
     public function onPageInitialized()
@@ -151,11 +196,6 @@ class HeliosOpenReaderPlugin extends Plugin
             $targetRoute   = $heliosLicense ? '/admin/themes' : '/admin/license-manager';
             $currentRoute  = $this->grav['uri']->path();
             $isLoggedIn    = $this->grav['user']->authenticated ?? false;
-
-            $this->grav['messages']->add(
-                "Helios Grav Premium theme required. Enter your Helios and SVG Icons license keys, then install and activate the theme. (Helios Open Reader Plugin)",
-                'warning'
-            );
 
             if ($isLoggedIn && $currentRoute === '/admin') {
                 $this->grav->redirect($targetRoute);
@@ -273,7 +313,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['hor_prev_next_position'] = 'both';
 
         // Find the reader home page to pull attribution fields, logo URL, and favicon.
-        // Strategy: pre-scan root for publication-list (sets multi-publication mode before
+        // Strategy: pre-scan root for reader-list (sets multi-publication mode before
         // the ancestor walk), then walk ancestors to find the reader/publication home.
         $page                = $this->grav['page'];
         $readerHome          = null;
@@ -281,12 +321,12 @@ class HeliosOpenReaderPlugin extends Plugin
         $isNestedPublication = false;
         $publicationListPage = null;
 
-        // Pre-scan root for publication-list: must happen before the ancestor walk so that
+        // Pre-scan root for reader-list: must happen before the ancestor walk so that
         // section-list pages encountered in the walk can be correctly identified as nested
         // publication homes (multi-pub) vs. single-publication reader homes.
         $root = $this->grav['pages']->root();
         foreach ($root->children() as $child) {
-            if ($child->template() === 'publication-list') {
+            if ($child->template() === 'reader-list') {
                 $isMultiPublication  = true;
                 $publicationListPage = $child;
                 break;
@@ -294,8 +334,8 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         // Ancestor walk: finds the reader home and detects nested publication context.
-        // In multi-publication mode, a section-list (new) or publication-home (legacy)
-        // found during the walk is a nested publication home, not the top-level reader root.
+        // In multi-publication mode, a section-list found during the walk is a nested
+        // publication home, not the top-level reader root.
         $candidate = $page;
         while ($candidate) {
             $tmpl = $candidate->template();
@@ -306,19 +346,14 @@ class HeliosOpenReaderPlugin extends Plugin
                 }
                 break;
             }
-            if ($tmpl === 'publication-list') {
+            if ($tmpl === 'reader-list') {
                 $readerHome = $candidate;
-                break;
-            }
-            if ($tmpl === 'publication-home') {
-                $readerHome          = $candidate;
-                $isNestedPublication = true;
                 break;
             }
             $candidate = $candidate->parent();
         }
 
-        // Fallback: ancestor walk found nothing — use the publication-list page,
+        // Fallback: ancestor walk found nothing — use the reader-list page,
         // or scan root children for a section-list (single-publication mode).
         if (!$readerHome) {
             if ($publicationListPage) {
@@ -335,29 +370,27 @@ class HeliosOpenReaderPlugin extends Plugin
 
         // Base path for page lookups: empty for flat/root-level sections, publication route for nested.
         $nestedTmpl          = $readerHome ? $readerHome->template() : '';
-        $publicationBasePath = ($isNestedPublication && ($nestedTmpl === 'publication-home' || $nestedTmpl === 'section-list'))
+        $publicationBasePath = ($isNestedPublication && $nestedTmpl === 'section-list')
             ? $readerHome->route()
             : '';
 
         $twig->twig_vars['is_multi_publication']  = $isMultiPublication;
         $twig->twig_vars['is_nested_publication'] = $isNestedPublication;
         $twig->twig_vars['publication_base_path'] = $publicationBasePath;
-        $twig->twig_vars['publication_list_url']  = $isMultiPublication
+        $twig->twig_vars['reader_list_url']       = $isMultiPublication
             ? ($publicationListPage ? $publicationListPage->url() : ($readerHome ? $readerHome->url() : null))
             : null;
 
-        // Collect publication home pages for the publication-list template and sidebar links.
-        // Both section-list (new) and publication-home (legacy) pages act as publication homes.
+        // Collect publication home pages for the reader-list template and sidebar links.
         $publicationPages = [];
         if ($isMultiPublication) {
             foreach ($root->children() as $child) {
-                $childTmpl = $child->template();
-                if (($childTmpl === 'publication-home' || $childTmpl === 'section-list') && $child->visible()) {
+                if ($child->template() === 'section-list' && $child->visible()) {
                     $publicationPages[] = $child;
                 }
             }
 
-            if ($isNestedPublication && $readerHome && ($readerHome->template() === 'publication-home' || $readerHome->template() === 'section-list')) {
+            if ($isNestedPublication && $readerHome && $readerHome->template() === 'section-list') {
                 // Nested mode: only set the Back to Book Home link when we're INSIDE the
                 // book (i.e. the current page is not the book home itself).
                 if ($page->url() !== $readerHome->url()) {
@@ -381,13 +414,6 @@ class HeliosOpenReaderPlugin extends Plugin
                             break;
                         }
                     }
-                }
-            } elseif ($page->template() === 'publication-home' && !$isNestedPublication) {
-                // Flat mode: on a book-home page itself.
-                $partKey = trim((string) ($page->header()->part_key ?? ''));
-                if ($partKey !== '') {
-                    $twig->twig_vars['current_publication_part'] = $partKey;
-                    $twig->twig_vars['publication_home_title']   = $page->title();
                 }
             }
         }
@@ -427,11 +453,11 @@ class HeliosOpenReaderPlugin extends Plugin
                 ]);
             }
 
-            // Logo target: publications list in nested multi-publication mode; otherwise the reader home.
+            // Logo target: readers list in nested multi-publication mode; otherwise the reader home.
             $logoTarget = ($isNestedPublication && $publicationListPage) ? $publicationListPage : $readerHome;
 
             // When logo_link_target is 'single_publication' and only one publication is active,
-            // point the logo directly to that publication's home page, bypassing the publications list.
+            // point the logo directly to that publication's home page, bypassing the readers list.
             $logoLinkTarget = $this->config->get('plugins.helios-open-reader.logo_link_target', 'single_publication');
             if ($logoLinkTarget === 'single_publication' && $isMultiPublication && count($publicationPages) === 1) {
                 $logoTarget = $publicationPages[0];
@@ -440,7 +466,7 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['logo_url'] = $logoTarget->url();
 
             // Build "Reader Title | Page Title | Site Title" for non-home pages
-            if ($page->template() !== 'section-list' && $page->template() !== 'publication-list' && $page->template() !== 'publication-home') {
+            if ($page->template() !== 'section-list' && $page->template() !== 'reader-list') {
                 $readerTitle = $readerHome->title();
                 $pageTitle = $page->title();
                 $siteTitle = $this->grav['config']->get('site.title', '');
@@ -464,7 +490,7 @@ class HeliosOpenReaderPlugin extends Plugin
         // Build both doc_version_info and nav_tree from the publication's section hierarchy.
         if ($isNestedPublication
             && $readerHome
-            && ($readerHome->template() === 'publication-home' || $readerHome->template() === 'section-list')
+            && $readerHome->template() === 'section-list'
             && $page->template() === 'section-page'
         ) {
             $nSegs        = explode('/', trim($page->route(), '/'));

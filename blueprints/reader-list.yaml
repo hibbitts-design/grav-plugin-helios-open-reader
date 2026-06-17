@@ -1,4 +1,4 @@
-title: Publications List
+title: Readers List
 '@extends':
     type: default
     context: blueprints://pages
@@ -22,24 +22,24 @@ form:
               label: Subtitle
               toggleable: true
               placeholder: 'e.g. A Collection of Open Publications and Guides'
-              help: 'Optional subtitle displayed below the publications list title on the home page.'
+              help: 'Optional subtitle displayed below the readers list title on the home page.'
             header.authors:
               type: text
               label: Author(s)
               toggleable: true
               placeholder: 'e.g. Jane Smith or Jane Smith & John Doe'
-              help: 'Author name(s) displayed on the publications home page and used in the OER attribution block.'
+              help: 'Author name(s) displayed on the readers home page and used in the OER attribution block.'
             header.edition:
               type: text
               label: Edition
               toggleable: true
               placeholder: 'e.g. First Edition, 2025'
-              help: 'Edition or version label displayed on the publications home page.'
+              help: 'Edition or version label displayed on the readers home page.'
             header.cover_image:
               type: pagemediaselect
               label: Cover Image
               toggleable: true
-              help: 'Optional cover image displayed on the publications home page.'
+              help: 'Optional cover image displayed on the readers home page.'
             header.prev_next_position:
               type: select
               label: 'Prev/Next Page Controls Position'
@@ -64,13 +64,13 @@ form:
                 1: '1 (full width)'
                 2: '2 per row'
                 3: '3 per row'
-              help: 'Number of publication cards displayed per row on the publications home page.'
+              help: 'Number of reader cards displayed per row on the readers home page.'
             header.card_icon:
               type: text
               label: Default Card Icon
               toggleable: true
               placeholder: 'tabler/book.svg'
-              help: 'Tabler icon path used as the default for publication cards that don''t have their own icon set.'
+              help: 'Tabler icon path used as the default for reader cards that don''t have their own icon set.'
             header.card_image_layout:
               type: select
               label: Card Image Layout
@@ -99,7 +99,7 @@ form:
             header.parts:
               type: list
               label: 'Publications / Guides'
-              help: 'Per-publication metadata for the publications list cards. ID must match the part folder prefix (e.g. part-1).'
+              help: 'Per-publication metadata for the readers list cards. ID must match the part folder prefix (e.g. part-1).'
               fields:
                 .id:
                   type: text
@@ -110,12 +110,12 @@ form:
                   type: text
                   label: 'Title'
                   placeholder: 'e.g. Foundations of Open Education'
-                  help: 'Publication title displayed on the publications list card.'
+                  help: 'Publication title displayed on the readers list card.'
                 .description:
                   type: textarea
                   label: 'Description'
                   rows: 2
-                  help: 'Short description displayed on the publications list card.'
+                  help: 'Short description displayed on the readers list card.'
                 .cover_image:
                   type: pagemediaselect
                   label: 'Cover Image'
@@ -169,7 +169,7 @@ form:
                 'CC BY-NC-SA 4.0': 'CC BY-NC-SA 4.0 — Attribution-NonCommercial-ShareAlike'
                 'CC BY-ND 4.0': 'CC BY-ND 4.0 — Attribution-NoDerivatives'
                 'CC BY-NC-ND 4.0': 'CC BY-NC-ND 4.0 — Attribution-NonCommercial-NoDerivatives'
-              help: 'Creative Commons license for this publications list. Displayed in the footer when OER Attribution is enabled.'
+              help: 'Creative Commons license for this readers list. Displayed in the footer when OER Attribution is enabled.'
             header.license_url:
               type: text
               label: License URL
