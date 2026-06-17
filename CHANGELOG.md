@@ -1,9 +1,20 @@
-# v0.9.10
+# v0.9.12
 ## 06/17/2026
 
 1. [](#improved)
-    * Add per-publication plain text export with scoped footer link and hide link on publications list page
-    * Improve Admin2 theme warning, refactor Admin1 notice to language strings, and rename publication templates to readers
+   * Improve Admin2 theme warning, refactor Admin1 notice to language strings, and rename publication templates to readers
+
+# v0.9.11
+## 06/17/2026
+
+1. [](#improved)
+   * Add per-publication plain text export with scoped footer link and hide link on publications list page
+   
+# v0.9.10
+## 06/17/2026
+
+1. [](#new)
+   * Add multi-publication support using section-list template, with per-publication Save My Place, search scoping, and single-publication logo link bypass
 
 # v0.9.9
 ## 06/17/2026
