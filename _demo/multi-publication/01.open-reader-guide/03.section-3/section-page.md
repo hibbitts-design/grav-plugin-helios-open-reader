@@ -1,6 +1,6 @@
 ---
 title: 'Creating Content'
-section_number: '1'
+section_number: '3'
 icon: tabler/pencil.svg
 description: 'Folder structure, frontmatter fields, callout blocks, and embedding rich content.'
 learning_objectives: "- Explain the folder naming convention for sections and sub-pages\n- Configure a reader home page and section page using frontmatter fields\n- Apply callout blocks and embedding shortcodes in reader content"

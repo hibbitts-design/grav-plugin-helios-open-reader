@@ -4,6 +4,7 @@ admin_font_size: large
 admin_label_alignment: true
 show_site_icon: true
 site_icon: tabler/notebook.svg
+logo_link_target: single_publication
 show_plugin_credits: true
 github_server: github.com
 github_link_icon: tabler/file-text.svg

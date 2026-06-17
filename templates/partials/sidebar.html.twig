@@ -3,7 +3,7 @@
  # Changes from theme original:
  #   1. Site icon wrapped in show_site_icon toggle + custom icon support (search: PLUGIN CHANGE 1)
  #   2. nav_items macro: active branch persisted to localStorage + aria-expanded binding (search: PLUGIN CHANGE 2)
- #   3. Logo link uses logo_url to navigate to reader home page (search: PLUGIN CHANGE 3)
+ #   3. Logo link uses logo_url to navigate to reader/publication home page (search: PLUGIN CHANGE 3)
  #   4. Section sidebar image banner shown below logo header (search: PLUGIN ADDITION 1)
  #   5. Section label shown above nav when version dropdown is hidden (search: PLUGIN ADDITION 2)
  #   6. Back to Publications list link shown above nav in multi-publication mode — uses publication_list_url (search: PLUGIN ADDITION 3)
@@ -16,7 +16,7 @@
 <div class="flex flex-col h-full">
     {# Sidebar header with logo #}
     <div class="flex items-center h-16 px-4 border-b border-gray-200 dark:border-gray-800 shrink-0">
-        <a href="{{ logo_url }}" class="flex items-center gap-3" @click="mobileNavOpen = false">{# PLUGIN CHANGE 3: logo_url links to reader home page #}
+        <a href="{{ logo_url }}" class="flex items-center gap-3" @click="mobileNavOpen = false">{# PLUGIN CHANGE 3: logo_url links to reader/publication home page #}
             {% if logo.image %}
                 {% set logo_file = logo.image|first %}
                 {% set logo_dark_file = logo.image_dark|first %}

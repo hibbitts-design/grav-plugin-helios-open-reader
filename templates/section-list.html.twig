@@ -62,7 +62,7 @@
     {% endif %}
 
     {# Resume Reading strip — populated by helios.js from localStorage if a section page was previously visited #}
-    <div id="hor-resume-reading" class="hor-resume-strip" hidden>
+    <div id="hor-resume-reading" class="hor-resume-strip" data-hor-publication-path="{{ publication_base_path is defined ? publication_base_path : '' }}" hidden>
         <svg class="hor-resume-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
         </svg>
@@ -70,15 +70,51 @@
         <button type="button" class="hor-resume-dismiss" aria-label="Dismiss">&#x2715;</button>
     </div>
 
-    {# Section card grid — driven by doc_version_info #}
-    {% if doc_version_info is defined and doc_version_info.versions|length > 0 %}
+    {# Section card grid #}
+    {% set cpr = page.header.cards_per_row|default(1) %}
+    {% set colClass = {1: 'grid-cols-1', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3'} %}
+    {% set gridClasses = 'section-card-grid grid gap-4 mb-8 ' ~ (colClass[cpr] ?? 'grid-cols-1') ~ ' ' ~ (cpr == 2 ? 'section-card-grid--cols-2' : (cpr == 3 ? 'section-card-grid--cols-3' : '')) %}
+    {% set btn_text = page.header.start_button_text ?? 'Start Reading' %}
+
+    {% if is_nested_publication is defined and is_nested_publication %}
+        {# Nested multi-pub: sections are direct children of this page — no version lookup needed #}
+        {% set section_pages = page.children.visible %}
+        {% if section_pages|length > 0 %}
+        <div class="{{ gridClasses }}">
+            {% for child_page in section_pages %}
+                {% set card_image = child_page.header.image ? child_page.media[child_page.header.image] : null %}
+                {% include 'partials/section-card.html.twig' with {
+                    title: child_page.title,
+                    link: child_page.url,
+                    icon: child_page.header.icon|default(page.header.card_icon),
+                    section_number: child_page.header.section_number|default(loop.index),
+                    section_label: section_label,
+                    description: child_page.header.description|default(null),
+                    author: child_page.header.author|default(null),
+                    badge_label: child_page.header.badge_label|default(null),
+                    badge_color: child_page.header.badge_color|default('default'),
+                    image: card_image,
+                    image_layout: (cpr == 3) ? 'top' : page.header.card_image_layout|default('side'),
+                    card_description_lines: page.header.card_description_lines|default(3)
+                } only %}
+            {% endfor %}
+        </div>
+        {% if btn_text %}
+            {% set start_page = section_pages|first %}
+            {% if start_page %}
+            <div class="mb-8 no-print">
+                <a href="{{ start_page.url }}" class="doc-btn doc-btn--primary">
+                    {{ btn_text }}
+                    <svg class="inline-block ml-2 w-4 h-4" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                    </svg>
+                </a>
+            </div>
+            {% endif %}
+        {% endif %}
+        {% endif %}
+    {% elseif doc_version_info is defined and doc_version_info.versions|length > 0 %}
     {% set first_version = doc_version_info.versions|first %}
-    {% set colClass = {
-        1: 'grid-cols-1',
-        2: 'sm:grid-cols-2',
-        3: 'sm:grid-cols-2 lg:grid-cols-3'
-    } %}
-    {% set gridClasses = 'section-card-grid grid gap-4 mb-8 ' ~ (colClass[page.header.cards_per_row|default(1)] ?? 'grid-cols-1') ~ ' ' ~ (page.header.cards_per_row|default(1) == 2 ? 'section-card-grid--cols-2' : (page.header.cards_per_row|default(1) == 3 ? 'section-card-grid--cols-3' : '')) %}
 
     {% if has_parts %}
         {# Parts mode — render a labelled heading + card grid for each part #}
@@ -104,7 +140,7 @@
                             badge_label: card_page.header.badge_label|default(null),
                             badge_color: card_page.header.badge_color|default('default'),
                             image: card_image,
-                            image_layout: (page.header.cards_per_row|default(1) == 3) ? 'top' : page.header.card_image_layout|default('side'),
+                            image_layout: (cpr == 3) ? 'top' : page.header.card_image_layout|default('side'),
                             card_description_lines: page.header.card_description_lines|default(3)
                         } only %}
                     {% endif %}
@@ -129,7 +165,7 @@
                         badge_label: card_page.header.badge_label|default(null),
                         badge_color: card_page.header.badge_color|default('default'),
                         image: card_image,
-                        image_layout: (page.header.cards_per_row|default(1) == 3) ? 'top' : page.header.card_image_layout|default('side'),
+                        image_layout: (cpr == 3) ? 'top' : page.header.card_image_layout|default('side'),
                         card_description_lines: page.header.card_description_lines|default(3)
                     } only %}
                 {% endif %}
@@ -138,7 +174,6 @@
     {% endif %}
 
     {# Start Reading button — links directly to first section #}
-    {% set btn_text = page.header.start_button_text ?? 'Start Reading' %}
     {% if btn_text %}
         {% set start_page = pages.find('/' ~ first_version.id) %}
         {% if start_page %}

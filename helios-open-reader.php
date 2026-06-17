@@ -273,64 +273,69 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['hor_prev_next_position'] = 'both';
 
         // Find the reader home page to pull attribution fields, logo URL, and favicon.
-        // Sections are top-level siblings of the reader home (same structure as
-        // Course Hub courses), so ancestor walking alone won't reach it from section pages.
-        // Strategy: walk up first (handles the reader home page itself), then fall back to
-        // scanning root-level children for a 'section-list' (single-book) or 'publication-list' (multi-book) page.
-        $page         = $this->grav['page'];
-        $readerHome   = null;
+        // Strategy: pre-scan root for publication-list (sets multi-publication mode before
+        // the ancestor walk), then walk ancestors to find the reader/publication home.
+        $page                = $this->grav['page'];
+        $readerHome          = null;
         $isMultiPublication  = false;
         $isNestedPublication = false;
         $publicationListPage = null;
 
-        // Pass 1 — ancestor walk: catches the reader home itself and nested-book ancestors.
-        // In nested multi-book mode a section page is a grandchild of a book-home page,
-        // so walking ancestors finds the book-home before reaching the root.
+        // Pre-scan root for publication-list: must happen before the ancestor walk so that
+        // section-list pages encountered in the walk can be correctly identified as nested
+        // publication homes (multi-pub) vs. single-publication reader homes.
+        $root = $this->grav['pages']->root();
+        foreach ($root->children() as $child) {
+            if ($child->template() === 'publication-list') {
+                $isMultiPublication  = true;
+                $publicationListPage = $child;
+                break;
+            }
+        }
+
+        // Ancestor walk: finds the reader home and detects nested publication context.
+        // In multi-publication mode, a section-list (new) or publication-home (legacy)
+        // found during the walk is a nested publication home, not the top-level reader root.
         $candidate = $page;
         while ($candidate) {
             $tmpl = $candidate->template();
             if ($tmpl === 'section-list') {
                 $readerHome = $candidate;
+                if ($isMultiPublication) {
+                    $isNestedPublication = true;
+                }
                 break;
             }
             if ($tmpl === 'publication-list') {
-                $readerHome  = $candidate;
-                $isMultiPublication = true;
+                $readerHome = $candidate;
                 break;
             }
             if ($tmpl === 'publication-home') {
-                $readerHome   = $candidate;
+                $readerHome          = $candidate;
                 $isNestedPublication = true;
                 break;
             }
             $candidate = $candidate->parent();
         }
 
-        // Pass 2 — always scan root for book-list (multi-book detection must happen even
-        // when Pass 1 already found a book-home ancestor in nested mode).
-        // Also provides the section-list fallback when Pass 1 found nothing.
-        $root = $this->grav['pages']->root();
-        foreach ($root->children() as $child) {
-            if ($child->template() === 'publication-list') {
-                $isMultiPublication  = true;
-                $publicationListPage = $child;
-                if (!$readerHome) {
-                    $readerHome = $child;
-                }
-                break;
-            }
-        }
+        // Fallback: ancestor walk found nothing — use the publication-list page,
+        // or scan root children for a section-list (single-publication mode).
         if (!$readerHome) {
-            foreach ($root->children() as $child) {
-                if ($child->template() === 'section-list') {
-                    $readerHome = $child;
-                    break;
+            if ($publicationListPage) {
+                $readerHome = $publicationListPage;
+            } else {
+                foreach ($root->children() as $child) {
+                    if ($child->template() === 'section-list') {
+                        $readerHome = $child;
+                        break;
+                    }
                 }
             }
         }
 
-        // Base path for page lookups: empty for flat/root-level sections, book route for nested.
-        $publicationBasePath = ($isNestedPublication && $readerHome && $readerHome->template() === 'publication-home')
+        // Base path for page lookups: empty for flat/root-level sections, publication route for nested.
+        $nestedTmpl          = $readerHome ? $readerHome->template() : '';
+        $publicationBasePath = ($isNestedPublication && ($nestedTmpl === 'publication-home' || $nestedTmpl === 'section-list'))
             ? $readerHome->route()
             : '';
 
@@ -341,17 +346,18 @@ class HeliosOpenReaderPlugin extends Plugin
             ? ($publicationListPage ? $publicationListPage->url() : ($readerHome ? $readerHome->url() : null))
             : null;
 
-        // Expose book-home pages for the book-list template, and
-        // expose book_home_url/title so the sidebar can show a Back to Book Home link.
+        // Collect publication home pages for the publication-list template and sidebar links.
+        // Both section-list (new) and publication-home (legacy) pages act as publication homes.
         $publicationPages = [];
         if ($isMultiPublication) {
             foreach ($root->children() as $child) {
-                if ($child->template() === 'publication-home') {
+                $childTmpl = $child->template();
+                if (($childTmpl === 'publication-home' || $childTmpl === 'section-list') && $child->visible()) {
                     $publicationPages[] = $child;
                 }
             }
 
-            if ($isNestedPublication && $readerHome && $readerHome->template() === 'publication-home') {
+            if ($isNestedPublication && $readerHome && ($readerHome->template() === 'publication-home' || $readerHome->template() === 'section-list')) {
                 // Nested mode: only set the Back to Book Home link when we're INSIDE the
                 // book (i.e. the current page is not the book home itself).
                 if ($page->url() !== $readerHome->url()) {
@@ -421,9 +427,16 @@ class HeliosOpenReaderPlugin extends Plugin
                 ]);
             }
 
-            // Point logo to the library home in nested multi-book mode; otherwise the reader home.
-            // This keeps logo → library consistent with flat multi-book behaviour.
+            // Logo target: publications list in nested multi-publication mode; otherwise the reader home.
             $logoTarget = ($isNestedPublication && $publicationListPage) ? $publicationListPage : $readerHome;
+
+            // When logo_link_target is 'single_publication' and only one publication is active,
+            // point the logo directly to that publication's home page, bypassing the publications list.
+            $logoLinkTarget = $this->config->get('plugins.helios-open-reader.logo_link_target', 'single_publication');
+            if ($logoLinkTarget === 'single_publication' && $isMultiPublication && count($publicationPages) === 1) {
+                $logoTarget = $publicationPages[0];
+            }
+
             $twig->twig_vars['logo_url'] = $logoTarget->url();
 
             // Build "Reader Title | Page Title | Site Title" for non-home pages
@@ -444,14 +457,14 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['reader_attribution'] = '';
         }
 
-        // Nested multi-book: Helios's versioning only scans root-level pages for version
-        // pattern matches. Because section pages live inside book folders (not at root),
+        // Nested multi-publication: Helios's versioning only scans root-level pages for version
+        // pattern matches. Because section pages live inside publication folders (not at root),
         // Helios finds nothing and leaves doc_version_info unset — which causes the sidebar
         // nav tree, cross-section Prev/Next, and progress counter to all bail out early.
-        // Build both doc_version_info and nav_tree from the book's section hierarchy.
+        // Build both doc_version_info and nav_tree from the publication's section hierarchy.
         if ($isNestedPublication
             && $readerHome
-            && $readerHome->template() === 'publication-home'
+            && ($readerHome->template() === 'publication-home' || $readerHome->template() === 'section-list')
             && $page->template() === 'section-page'
         ) {
             $nSegs        = explode('/', trim($page->route(), '/'));

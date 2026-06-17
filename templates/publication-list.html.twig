@@ -60,7 +60,7 @@
         </article>
     {% endif %}
 
-    {# Publication cards — one card per publication-home page (scanned from root by PHP) #}
+    {# Publication cards — one card per publication home page (section-list or publication-home, scanned from root by PHP) #}
     {% if publication_pages is defined and publication_pages|length > 0 %}
     {% set cpr = page.header.cards_per_row|default(1) %}
     {% set colClass = {

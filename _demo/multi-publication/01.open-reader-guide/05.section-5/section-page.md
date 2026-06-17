@@ -1,6 +1,6 @@
 ---
 title: Customization
-section_number: '3'
+section_number: '5'
 icon: tabler/settings.svg
 description: 'Label customization, admin panel styling, templates, CSS and JavaScript assets, and all plugin settings.'
 sitemap:

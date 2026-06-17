@@ -3,16 +3,16 @@ title: 'Folder Structure'
 description: 'How reader content is organized, and how to show, hide, and add sections.'
 ---
 
-All reader content lives within `user/pages/`. The skeleton ships pre-configured as a single-publication reader with demo sections.
+All reader content lives within `user/pages/`. The skeleton ships with a reader home page and pre-configured demo sections.
 
 ```
 user/pages/
 ├── 00.sections/              # Reader home page
-│   └── section-list.md       # Reader title, subtitle, authors, edition, license, cover image
-├── 01.section-1/             # Section 1
-│   ├── section-page.md       # Section settings (section_number, description, icon, learning_objectives)
-│   ├── 01.page-one/          # Sub-page (also uses section-page.md)
-│   └── 02.page-two/
+│   └── section-list.md           # Reader title, subtitle, authors, edition, license, cover image
+├── 01.section-1/           # Section 1 (published by default)
+│   ├── section-page.md     # Section settings (section_number, description, icon, learning_objectives)
+│   ├── 01.section-one/     # Sub-page (also uses section-page.md)
+│   └── 02.section-two/     # Sub-page (also uses section-page.md)
 ├── 02.section-2/
 ├── 03.section-3/
 └── readme/
@@ -23,39 +23,9 @@ Rename section folders to match your content, either in the Admin Panel or via F
 > [!TIP]
 > After adding, renaming, or removing a section folder, update `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) to add the new folder name as a key – this sets the section name shown in the sidebar and browser tab title.
 
-## Switching to Multi-Publication Mode
-
-To host multiple publications within a single Helios Open Reader site, switch to multi-publication mode. A `publication-list.md` page serves as the publications home; each publication has its own `publication-home.md` and its section folders nested inside it:
-
-```
-user/pages/
-├── 00.publications/                # Publications home page
-│   └── publication-list.md        # Publications list title, description, layout settings
-├── 01.getting-started/             # Publication 1
-│   ├── publication-home.md        # Publication title, subtitle, authors, edition, license, cover image
-│   ├── 01.section-1/              # Section 1
-│   │   ├── section-page.md
-│   │   ├── 01.page-one/
-│   │   └── 02.page-two/
-│   └── 02.section-2/
-├── 02.working-with-reader/         # Publication 2
-│   ├── publication-home.md
-│   └── ...
-└── readme/
-```
-
-To switch to multi-publication mode:
-
-1. Create a `00.publications/` folder with a `publication-list.md` file inside
-2. Create numbered publication folders at root level (e.g. `01.my-publication/`), each with a `publication-home.md`
-3. Nest your section folders inside each publication folder
-4. Update `home.alias` in `user/config/system.yaml` to `/publications`
-
-In multi-publication mode, section names in the sidebar are drawn from each section page's `title` field — no `versioning.labels` configuration is needed.
-
 ## Grouping Sections into Parts
 
-To group sections into parts on the reader home page (or within a publication in multi-publication mode), use the `part-N-section-M` folder naming pattern instead of `section-N`:
+To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
 
 ```
 user/pages/
@@ -83,7 +53,7 @@ versioning:
 > [!TIP]
 > The `version_pattern` in `user/config/themes/helios.yaml` detects both `section-N` and `part-N-section-M` folder names automatically — no change to the pattern is needed when switching to parts.
 
-To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to `section-list.md` (or `publication-home.md` in multi-publication mode):
+To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to the `section-list.md` frontmatter:
 
 ```yaml
 parts:
