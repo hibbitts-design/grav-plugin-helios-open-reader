@@ -1,3 +1,9 @@
+# v0.9.11
+## 06/17/2026
+
+1. [](#improved)
+   * Add per-publication plain text export with scoped footer link and hide link on publications list page
+
 # v0.9.10
 ## 06/17/2026
 
