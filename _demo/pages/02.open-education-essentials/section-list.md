@@ -12,7 +12,7 @@ card_image_layout: side
 card_description_lines: '3'
 sitemap:
     lastmod: '29-04-2026 14:22'
-media_order: viktor-forgacs-click-LNwIJHUtED4-unsplash.jpg
+media_order: kevin-grieve-B8ciJlFvaBQ-unsplash.jpg
 prev_next_position: both
 published: true
 show_oer_attribution: false

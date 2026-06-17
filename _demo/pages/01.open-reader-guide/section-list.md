@@ -12,7 +12,7 @@ card_image_layout: side
 card_description_lines: '3'
 sitemap:
     lastmod: '30-04-2026 10:00'
-media_order: viktor-forgacs-click-LNwIJHUtED4-unsplash.jpg
+media_order: olga-tutunaru-JMATuFkXeHU-unsplash.jpg
 section_label: Chapter
 prev_next_position: both
 show_oer_attribution: true

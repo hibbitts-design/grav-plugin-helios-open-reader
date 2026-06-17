@@ -36,10 +36,11 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 
 ## Features
 
-Helios Open Reader provides a ready-built site for open educational content – open textbooks, readers, and student projects – using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built site for open educational content – open textbooks, readers, and student projects – using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ### Reader Structure
 - **Sections structure** – top-level folders named `section-N` are auto-detected as sections and render as cards on the reader home
+- **Multi-publication** – group multiple publications (books, guides, essays, reports) under a single publications home page; each publication has its own cover image, metadata, and section card grid; publication folders using `section-list.md` (recommended) or `publication-home.md` at root level are auto-detected; the sidebar shows links back to the publications list and the current publication home
 - **Optional parts grouping** – rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** – section pages automatically display their section number and label in the page header; inherits correctly for all sub-pages within a section. The label is configurable (e.g. Chapter, Project, Unit, Module) via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** – sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
@@ -281,7 +282,9 @@ If you prefer not to write Markdown directly, the optional [Grav Premium Editor 
 Custom CSS, JavaScript, shortcodes, callout blocks, and Helios-inspired Admin Panel styling for the Helios Open Reader skeleton. If the Helios theme is not installed, the plugin automatically falls back to the Quark or Quark2 theme so the frontend site remains viewable, redirecting to the License Manager page in the Admin panel.
 
 ### Templates
-- **section-list** – Reader home template displaying the reader header, resume reading strip, and section card grid
+- **publication-list** – Publications home template displaying a card grid of all publications (multi-publication mode)
+- **section-list** – Reader home for single-publication mode and recommended publication home in multi-publication mode; displays the reader header, resume reading strip, and section card grid
+- **publication-home** – Alternative publication home template for multi-publication mode (legacy; `section-list.md` is recommended for new sites)
 - **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content
 - **default-toc** – Content page template with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
@@ -333,6 +336,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Admin Font Size (Admin 1.7 only) | Large | Sets the Admin Panel font size: Default, Large, or Larger |
 | Show Site Logo Icon | Enabled | Show or hide the icon square next to the Logo Text in the header when no logo image is set |
 | Site Logo Icon | [raw]`tabler/notebook.svg`[/raw] | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
+| Single Publication Site Logo Link | Home of Only Listed Publication (default) | When only one publication is listed, the site logo links directly to that publication's home page. Set to **Publications Home Page** to always link to the publications list instead. |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
 | Show Repository Host Icon Link in Header | Enabled | Show a GitHub or Codeberg icon link to the reader repository in the site header (requires GitHub Integration enabled in the Helios theme) |
 | Git Link Icon | [raw]`tabler/file-text.svg`[/raw] | Tabler icon path for the Git link icon shown in the page footer |
@@ -340,7 +344,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Repository Host | [raw]`github.com`[/raw] | Repository hosting service for the Helios GitHub Integration ([raw]`github.com`[/raw] or [raw]`codeberg.org`[/raw]) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with [raw]`[h5p id="..."]`[/raw]) |
 | Enable Plain Text Version | Disabled | Generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints containing all reader content in plain text |
-| Show Plain Text Version Link in Footer | Enabled | Show a link to `/llms-full.txt` in the page footer. Only applies when Enable Plain Text Version is enabled |
+| Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer. In multi-publication mode the link is scoped to the current publication; not shown on the publications list page. Only applies when Enable Plain Text Version is enabled |
 | Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how images appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to AI tools), **Suppress images** (text-only output), or **Relative paths** (not recommended for remote LLM use) |
