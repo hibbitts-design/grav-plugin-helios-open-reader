@@ -1,16 +1,17 @@
-name: Helios Open Reader
+name: Helios Course Hub
 type: plugin
-version: 0.9.11
-description: Adds reader sections, reading progress, Save My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
-icon: newspaper-o
+version: 1.1.5
+description: Adds course cards, course-aware search, Codeberg integration, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for one or more courses.
+icon: th
 author:
   name: HibbittsDesign.org
   email: paul@hibbittsdesign.org
   url: https://hibbittsdesign.org
-homepage: https://github.com/hibbitts-design/grav-plugin-helios-open-reader
-demo: https://demo.hibbittsdesign.org/grav-plugin-helios-open-reader
-keywords: grav, helios, reader, oer, open education
-bugs: https://github.com/hibbitts-design/grav-plugin-helios-open-reader/issues
+homepage: https://github.com/hibbitts-design/grav-plugin-helios-course-hub
+demo: https://demo.hibbittsdesign.org/grav-helios-course-hub
+docs: https://github.com/hibbitts-design/grav-plugin-helios-course-hub/blob/main/README.md
+keywords: grav, helios, courses 
+bugs: https://demo.hibbittsdesign.org/grav-plugin-helios-course-hub/issues
 license: MIT
 compatibility:
   grav: ['1.7', '2.0']
@@ -20,6 +21,8 @@ dependencies:
   - { name: shortcode-core, version: '>=5.0.0' }
   - { name: github-markdown-alerts, version: '>=1.0.0' }
   - { name: external_links, version: '>=1.6.3' }
+  - { name: git-sync, version: '>=3.2.0' }
+  - { name: page-inject, version: '>=2.2.0' }
   - { name: page-toc, version: '>=3.2.5' }
   - { name: simplesearch, version: '>=2.3.0' }
 
@@ -58,17 +61,17 @@ form:
       type: text
       size: medium
       label: 'Site Logo Icon'
-      help: 'Tabler icon path for the site logo icon square (e.g. tabler/notebook.svg). Only applies when Show Site Logo Icon is enabled. Leave empty to use the default icon.'
-      placeholder: 'tabler/notebook.svg'
+      help: 'Tabler icon path for the site logo icon square (e.g. tabler/book.svg). Only applies when Show Site Logo Icon is enabled. Leave empty to use the default icon.'
+      placeholder: 'tabler/book.svg'
 
     logo_link_target:
       type: select
-      label: 'Single Publication Site Logo Link'
-      help: 'Choose where the site Logo Text and icon link navigates when only one publication is listed.'
-      default: 'single_publication'
+      label: 'Single Course Site Logo Link'
+      help: 'Choose where the site Logo Text and icon link navigates when only one course is listed.'
+      default: 'single_course'
       options:
-        publications_list: 'Publications Home Page'
-        single_publication: 'Home of Only Listed Publication (default)'
+        courses_list: 'Courses Home Page'
+        single_course: 'First Page of Only Listed Course (default)'
 
     footer_section:
       type: section
@@ -78,7 +81,7 @@ form:
     show_plugin_credits:
       type: toggle
       label: 'Show Plugin Credits'
-      help: 'Show the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer.'
+      help: 'Show the "Built with Grav · Helios · Helios Course Hub" attribution line in the footer.'
       highlight: 1
       default: 1
       options:
@@ -86,6 +89,23 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    chapter_pages_section:
+      type: section
+      title: 'Chapter Pages (incl. Modules)'
+      underline: true
+
+    chapter_description_lines:
+      type: select
+      label: 'Description Line Limit'
+      help: 'Maximum lines shown per card description on Chapter template pages. Applies to the Modules section and any Chapter template pages you add.'
+      default: 2
+      options:
+        2: '2 lines (default)'
+        3: '3 lines'
+        0: 'No limit'
+      validate:
+        type: int
 
     integrations_section:
       type: section
@@ -95,7 +115,7 @@ form:
     show_github_header_icon:
       type: toggle
       label: 'Show Repository Host Icon Link in Header'
-      help: 'Show a GitHub or Codeberg icon link to the reader repository in the site header. Only applies when GitHub Integration is enabled in the Helios theme settings.'
+      help: 'Show a GitHub or Codeberg icon link to the course repository in the site header. Only applies when GitHub Integration is enabled in the Helios theme settings.'
       highlight: 1
       default: 1
       options:
@@ -137,72 +157,6 @@ form:
       description: 'H5P embed source URL path up to, but not including, the Content ID. For example, ''https://h5p.org/h5p/embed/'' or ''https://yourorganization.h5p.com/content/''.'
       validate:
         type: url
-
-    plain_text_section:
-      type: section
-      title: 'Plain Text Version'
-      underline: true
-
-    plain_text_export_enabled:
-      type: toggle
-      label: 'Enable Plain Text Version'
-      help: 'Publish reader content as structured plain text for open access in a portable, format-neutral form — useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. Once enabled, visit /llms.txt (index) and /llms-full.txt (full content) from your site root.'
-      highlight: 0
-      default: 0
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    show_plain_text_link:
-      type: toggle
-      label: 'Show Plain Text Version Link in Footer'
-      help: 'Show a "Plain text version" link in the page footer linking to /llms-full.txt. Only applies when Enable Plain Text Version is enabled.'
-      highlight: 1
-      default: 1
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
-
-    plain_text_link_label:
-      type: text
-      size: medium
-      label: 'Plain Text Version Link Label'
-      help: 'The label for the plain text version link shown in the footer.'
-      placeholder: 'Plain text version'
-
-    plain_text_link_icon:
-      type: text
-      size: medium
-      label: 'Plain Text Version Link Icon'
-      help: 'Tabler icon path shown before the plain text version link label (e.g. tabler/file-type-txt.svg). Leave empty to show no icon.'
-      placeholder: 'tabler/book.svg'
-
-    plain_text_images:
-      type: select
-      label: 'Image URLs in Plain Text Version'
-      help: 'How images appear in the plain text version. Absolute URLs (recommended) makes images accessible to AI tools. Suppress images removes image markdown for text-only output. Relative paths leaves paths unchanged.'
-      default: 'absolute'
-      options:
-        absolute: 'Absolute URLs (recommended)'
-        suppress: 'Suppress images'
-        relative: 'Relative paths'
-
-    plain_text_templates:
-      type: selectize
-      label: 'Include Page Templates'
-      help: 'Only pages using these templates will appear in the plain text version.'
-      default:
-        - section-page
-      options:
-        section-page: 'Section Page'
-        default: 'Default'
-        default-toc: 'Default with TOC'
-      validate:
-        type: commalist
 
     admin_panel_section:
       type: section

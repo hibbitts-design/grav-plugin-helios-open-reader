@@ -1,81 +1,72 @@
-# v0.9.11
-## 06/17/2026
-
-1. [](#improved)
-   * Add per-publication plain text export with scoped footer link and hide link on publications list page
-
 # v0.9.10
 ## 06/17/2026
 
-1. [](#new)
-   * Add multi-publication support using section-list template, with per-publication Save My Place, search scoping, and single-publication logo link bypass
+1. [](#improved)
+    * Add per-publication plain text export with scoped footer link and hide link on publications list page
+    * Improve Admin2 theme warning, refactor Admin1 notice to language strings, and rename publication templates to readers
 
 # v0.9.9
-## 06/16/2026
-
-1. [](#improved)
-   * Add has() guard to shared shortcodes to prevent duplicate handler error when both plugins are active simultaneously
-
-# v0.9.8
-## 06/15/2026
+## 06/17/2026
 
 1. [](#bugfix)
-   * Add ignore missing to yetisearch-pro include
-   * Update plugin templates and PHP to use Helios v2.1.6 renamed Twig variables (helios_* → doc_*, nav_tree)
-   * Fix duplicate shortcode handler error on Grav v2.0 by guarding onShortcodeHandlers() against multiple firings
+    * Fix incorrect home alias
+
+# v0.9.8
+## 06/17/2026
+
+1. [](#improved)
+    * Updated screenshot
+    * Update example pages (default multi-publication setup)
+    * Updated ReadMe
 
 # v0.9.7
+## 06/15/2026
+
+1. [](#improved)
+    * Updated with latest Helios Open Reader plugin
+    
+# v0.9.6
+## 05/21/2026
+
+1. [](#bugfix)
+    * Set default theme to Helios
+
+# v0.9.5
 ## 05/21/2026
 
 1. [](#improved)
-   * Updated demo pages and ReadMe
-   * Updates for Helios theme v2.1.3: migrate base.html.twig to swap-body architecture and add missing TOC layout variables
+    * Updated ReadMe
+    * Update example pages
+    * Updated with latest Helios Open Reader plugin
 
-# v0.9.6
+# v0.9.4
 ## 05/18/2026
 
 1. [](#improved)
-   * Removed no longer needed Admin2 font sizing
-
-# v0.9.5
-## 05/15/2026
-
-1. [](#improved)
-   * Trim trailing slash from repo value in footer git link URL
-   * Add absolute URL resolution for images in llms-full.txt output
-   * Add configurable image URL handling (absolute, suppress, relative) for plain text version
-
-# v0.9.4
-## 05/14/2026
-
-1. [](#improved)
-   * Fix llms.txt output to use colon separator per spec
-   * Add configurable icon to plain text version footer link
-   * Remove border between GitHub link and OER attribution in footer
+    * Updated screenshot
 
 # v0.9.3
-## 05/13/2026
+## 05/18/2026
 
 1. [](#new)
-   * Add opt-in plain text version endpoints (llms.txt / llms-full.txt) with documentation
+    * Add notebook favicon matching site icon
+    * Add footnote examples to OER attribution sample page
 
 1. [](#improved)
-   * Reduce Admin2 zoom and prevent button text wrapping in large font size modes
+    * Updated with latest Helios Open Reader plugin
 
 # v0.9.2
-## 05/07/2026
+## 05/13/2026
 
 1. [](#improved)
-   * Add admin label alignment adjustment for Admin 2 with optional config key
-
-1. [](#bugfix)
-   * Fix continue reading cross-site bleed by namespacing localStorage key with window.location.origin
+    * Updated ReadMes
+    * Updated with latest Helios Open Reader plugin
 
 # v0.9.1
 ## 05/06/2026
 
 1. [](#bugfix)
-    * Updated blueprints.yaml icon and description
+    * Updated blueprints.yaml
 
 # v0.9.0
 ## 04/28/2026
