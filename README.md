@@ -118,7 +118,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
-- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single publications home page; each publication has its own cover image, metadata, and section card grid; `publication-home` folders at root level are auto-detected; the sidebar shows links back to the publications list and the current publication home
+- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single publications home page; each publication has its own cover image, metadata, and section card grid; publication folders using `section-list.md` (recommended) or `publication-home.md` at root level are auto-detected; the sidebar shows links back to the publications list and the current publication home
 - **Optional parts grouping** — rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** — section pages automatically display their section number and configurable label in the page header (e.g. `Chapter 1`, `Project 2`, `Unit 3`); inherits correctly for all sub-pages within a section. Set via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
@@ -195,23 +195,31 @@ Add a `labels` entry in `user/config/themes/helios.yaml` for each section folder
 
 ### Multi-Publication Setup
 
-To host multiple publications within a single Helios Open Reader site, switch to multi-publication mode. A `publication-list.md` at root is the publications home; each publication lives in its own folder with a `publication-home.md` and its section folders nested inside:
+To host multiple publications within a single Helios Open Reader site, switch to multi-publication mode. A `publication-list.md` at root is the publications home; each publication lives in its own folder with a `section-list.md` (recommended) as its home and section folders nested inside:
 
 ```
-00.publications/         ← publications home (publication-list.md)
-01.my-publication/       ← publication folder
-  publication-home.md    ← publication home
-  01.section-1/          ← section 1 (section-page.md)
-    01.intro/            ← sub-page (section-page.md)
-  02.section-2/          ← section 2 (section-page.md)
+00.publications/          ← publications home (publication-list.md)
+01.my-publication/        ← publication folder
+  section-list.md         ← publication home (recommended)
+  01.section-1/           ← section 1 (section-page.md)
+    01.intro/             ← sub-page (section-page.md)
+  02.section-2/           ← section 2 (section-page.md)
 02.another-publication/
-  publication-home.md
+  section-list.md
   01.section-1/
 ```
 
 In multi-publication mode, section names in the sidebar are drawn from each section page's `title` field — no `versioning.labels` configuration is needed.
 
 Update `home.alias` in `user/config/system.yaml` to `/publications`.
+
+> [!TIP]
+> Using `section-list.md` as the publication home makes it easy to migrate from single-publication to multi-publication mode: add a `publication-list.md` at root, move your sections into a publication folder, and the existing `section-list.md` becomes the publication home — no files need renaming.
+
+To hide a publication from the list while keeping its URL accessible, set `visible: false` in the publication's `section-list.md` frontmatter.
+
+> [!NOTE]
+> `publication-home.md` is also supported as an alternative publication home template for backward compatibility. New sites should use `section-list.md`.
 
 ### Grouping Sections into Parts
 
@@ -256,7 +264,7 @@ versioning:
 
 #### Publications List (`publication-list.md`)
 
-Global settings for section label, Prev/Next position, and OER attribution are set here and apply to all publications; individual publications can override them in their own `publication-home.md`.
+Global settings for section label, Prev/Next position, and OER attribution are set here and apply to all publications; individual publications can override them in their own `section-list.md` (or `publication-home.md` for legacy sites).
 
 | Field | Description |
 |-------|-------------|
@@ -274,7 +282,9 @@ Global settings for section label, Prev/Next position, and OER attribution are s
 | `card_image_layout` | Card image position: `side` or `top` |
 | `card_description_lines` | Max description lines per card |
 
-#### Publication Home (`publication-home.md`)
+#### Publication Home Settings (`section-list.md`)
+
+These fields apply when `section-list.md` is used as the publication home (recommended). The same fields are also supported in `publication-home.md` for sites using the legacy template.
 
 | Field | Description |
 |-------|-------------|
@@ -368,8 +378,8 @@ The **Part Label** (default: `Part`) can be customized via **Admin → Pages →
 ## Templates
 
 - **publication-list** – Publications home template displaying a card grid of all publications (multi-publication mode)
-- **publication-home** – Publication home template displaying publication metadata and a card grid of its sections (multi-publication mode)
-- **section-list** – Reader home template for single-publication mode; displays the reader header, resume reading strip, and section card grid
+- **section-list** – Reader home for single-publication mode and recommended publication home in multi-publication mode; displays the reader header, resume reading strip, and section card grid
+- **publication-home** – Alternative publication home template for multi-publication mode (legacy; `section-list.md` is recommended for new sites)
 - **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content; extends the full Helios base with sidebar and Prev/Next navigation
 - **default-toc** – Content page with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
@@ -435,6 +445,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Admin Font Size (Admin 1.7 only) | Large | Sets the Admin Panel font size: Default, Large, or Larger |
 | Show Site Logo Icon | Enabled | Show or hide the icon square next to the Logo Text in the header when no logo image is set |
 | Site Logo Icon | `tabler/notebook.svg` | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
+| Single Publication Site Logo Link | `single_publication` (default) | When only one publication is listed, the site logo links directly to that publication's home page. Set to **Publications Home Page** to always link to the publications list instead. |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
 | Show Repository Host Icon Link in Header | Enabled | Show a GitHub or Codeberg icon link to the reader repository in the site header (requires GitHub Integration enabled in the Helios theme) |
 | Git Link Icon | `tabler/file-text.svg` | Tabler icon path for the Git link icon shown in the page footer |
