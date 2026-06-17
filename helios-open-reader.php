@@ -951,27 +951,40 @@ class HeliosOpenReaderPlugin extends Plugin
         if ($path === '/llms') {
             $this->outputLlms(false);
         } elseif ($path === '/llms-full') {
-            $this->outputLlms(true);
+            $pub = $this->grav['uri']->query('pub');
+            $this->outputLlms(true, $pub ? '/' . ltrim((string) $pub, '/') : null);
         }
     }
 
-    private function outputLlms(bool $full): void
+    private function outputLlms(bool $full, ?string $pubPath = null): void
     {
-        $config     = $this->grav['config'];
-        $title      = $config->get('site.title', 'Open Reader');
-        $desc       = $config->get('site.metadata.description', '');
-        $templates  = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
-        $imageMode  = $this->config->get('plugins.helios-open-reader.plain_text_images', 'absolute');
+        $config    = $this->grav['config'];
+        $title     = $config->get('site.title', 'Open Reader');
+        $desc      = $config->get('site.metadata.description', '');
+        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
+        $imageMode = $this->config->get('plugins.helios-open-reader.plain_text_images', 'absolute');
 
         $lines = [];
-        $lines[] = '# ' . $title;
-        if ($desc) {
-            $lines[] = '> ' . $desc;
-        }
-        $lines[] = '';
 
-        foreach ($this->grav['pages']->root()->children()->published()->visible() as $child) {
-            $this->walkPages($child, [], $lines, $full, $templates, $imageMode);
+        if ($pubPath) {
+            $pubPage = $this->grav['pages']->find($pubPath);
+            if ($pubPage && $pubPage->published() && $pubPage->visible()) {
+                $lines[] = '# ' . $pubPage->title();
+                if ($desc) {
+                    $lines[] = '> ' . $desc;
+                }
+                $lines[] = '';
+                $this->walkPages($pubPage, [], $lines, $full, $templates, $imageMode);
+            }
+        } else {
+            $lines[] = '# ' . $title;
+            if ($desc) {
+                $lines[] = '> ' . $desc;
+            }
+            $lines[] = '';
+            foreach ($this->grav['pages']->root()->children()->published()->visible() as $child) {
+                $this->walkPages($child, [], $lines, $full, $templates, $imageMode);
+            }
         }
 
         header('Content-Type: text/plain; charset=utf-8');
