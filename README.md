@@ -50,7 +50,7 @@ The recommended starting point is the pre-configured [Grav Helios Open Reader Sk
 1. **Download and install** the [Grav Helios Open Reader Skeleton](https://github.com/hibbitts-design/grav-skeleton-helios-open-reader/releases/latest) package
 2. **Enter your licenses** – your Helios and complimentary SVG Icons license keys (or import an existing license file), then install and activate the theme
 
-The skeleton comes pre-configured with demo sections and is ready to use after licensing the Helios theme.
+The skeleton comes pre-configured in multi-publication mode with two demo publications, and is ready to use after licensing the Helios theme.
 
 To install the plugin manually on an existing Grav + Helios site, see the [Installation](#installation) and [Demo Content](#demo-content) sections below.
 
@@ -66,13 +66,14 @@ Alternatively it can be installed via the [Admin Plugin](http://learn.getgrav.or
 
 ## Demo Content
 
-The `_demo` folder in this plugin contains a default Helios Open Reader site that can be used as a starting point:
+The `_demo` folder in this plugin contains a default Helios Open Reader site that can be used as a starting point. The default demo uses multi-publication mode with two publications:
 
-- `00.sections/` – Reader home page (`section-list.md` sets the reader title, subtitle, authors, edition, license, and cover image)
-- `01.section-1/` – Section 1: What is Open Education? (with sub-pages)
-- `02.section-2/` – Section 2: Tools for Open Course Design (with sub-pages)
-- `03.section-3/` – Section 3: Getting Started with Open Authoring (with sub-pages)
+- `00.publications/` – Publications home (`publication-list.md`)
+- `01.open-reader-guide/` – Publication 1: Grav Helios Open Reader (with `section-list.md` home and five sections)
+- `02.open-education-essentials/` – Publication 2: Open Education Essentials (with `section-list.md` home and three sections)
 - `readme/` – In-site README page
+
+A single-publication demo is also included in `_demo/single-publication/` for reference.
 
 To use the demo content, copy the contents of `_demo/pages/` into your Grav `user/pages/` folder.
 
@@ -176,57 +177,60 @@ If you prefer not to write Markdown directly, the optional [Grav Premium Editor 
 
 A **publication** is a titled reader with its own home page, authors, sections, and optional parts.
 
-### Single-Publication Setup (Default)
+The skeleton ships pre-configured in multi-publication mode with two demo publications.
 
-The skeleton ships pre-configured as a single-publication reader. A `section-list.md` at root is the reader home, with section folders alongside it:
+### Default Setup (Multi-Publication)
 
 ```
-00.sections/          ← reader home (section-list.md)
-01.section-1/         ← section 1 (section-page.md)
-  01.intro/           ← sub-page (section-page.md)
-02.section-2/         ← section 2 (section-page.md)
-03.section-3/         ← section 3 (section-page.md)
+00.publications/              ← publications home (publication-list.md)
+01.open-reader-guide/         ← Publication 1 — Grav Helios Open Reader
+  section-list.md             ← publication home
+  01.section-1/               ← section 1 (section-page.md)
+    01.intro/                 ← sub-page (section-page.md)
+  02.section-2/               ← section 2 (section-page.md)
+02.open-education-essentials/ ← Publication 2 — Open Education Essentials
+  section-list.md             ← publication home
+  01.section-1/
+  02.section-2/
 ```
 
-Add a `labels` entry in `user/config/themes/helios.yaml` for each section folder.
+The publications home auto-detects all publication folders at root level and displays them as cards. Section names in the sidebar are drawn from each section page's `title` field — no `versioning.labels` configuration is needed.
+
+To add a new publication, create a numbered folder at root level with a `section-list.md` — set at minimum a `title` — and your section folders inside.
 
 > [!TIP]
 > After adding, renaming, or removing a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel.
-
-### Multi-Publication Setup
-
-To host multiple publications within a single Helios Open Reader site, switch to multi-publication mode. A `publication-list.md` at root is the publications home; each publication lives in its own folder with a `section-list.md` (recommended) as its home and section folders nested inside:
-
-```
-00.publications/          ← publications home (publication-list.md)
-01.my-publication/        ← publication folder
-  section-list.md         ← publication home (recommended)
-  01.section-1/           ← section 1 (section-page.md)
-    01.intro/             ← sub-page (section-page.md)
-  02.section-2/           ← section 2 (section-page.md)
-02.another-publication/
-  section-list.md
-  01.section-1/
-```
-
-In multi-publication mode, section names in the sidebar are drawn from each section page's `title` field — no `versioning.labels` configuration is needed.
-
-Update `home.alias` in `user/config/system.yaml` to `/publications`.
-
-> [!TIP]
-> Using `section-list.md` as the publication home makes it easy to migrate from single-publication to multi-publication mode: add a `publication-list.md` at root, move your sections into a publication folder, and the existing `section-list.md` becomes the publication home — no files need renaming.
 
 To hide a publication from the list while keeping its URL accessible, set `visible: false` in the publication's `section-list.md` frontmatter.
 
 > [!NOTE]
 > `publication-home.md` is also supported as an alternative publication home template for backward compatibility. New sites should use `section-list.md`.
 
-### Grouping Sections into Parts
+### Single-Publication Alternative
 
-To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
+If you only need a single publication and prefer a simpler root-level folder structure, you can convert the skeleton to single-publication mode:
+
+1. Remove the `00.publications/` folder
+2. Move your publication folder's contents (`section-list.md` and section folders) to root level
+3. Update `home.alias` in `user/config/system.yaml` to point to your reader home (e.g. `/open-reader-guide`)
 
 ```
-00.sections/
+00.my-publication/    ← reader home (section-list.md)
+01.section-1/         ← section 1 (section-page.md)
+  01.intro/           ← sub-page (section-page.md)
+02.section-2/         ← section 2 (section-page.md)
+03.section-3/         ← section 3 (section-page.md)
+```
+
+> [!TIP]
+> In single-publication mode, add a `versioning.labels` entry in `user/config/themes/helios.yaml` for each section folder — this sets the section name shown in the sidebar and browser tab title.
+
+#### Grouping Sections into Parts
+
+Parts grouping applies in single-publication mode. To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
+
+```
+00.my-publication/
 01.part-1-section-1/    ← Part 1, Section 1 (section-page.md)
 02.part-1-section-2/    ← Part 1, Section 2 (section-page.md)
 03.part-2-section-1/    ← Part 2, Section 1 (section-page.md)
@@ -305,11 +309,11 @@ These fields apply when `section-list.md` is used as the publication home (recom
 
 ### Reader Home Settings
 
-The `section-list.md` frontmatter controls the reader identity and card layout on the home page.
+The `section-list.md` frontmatter controls the publication identity and card layout. In single-publication mode it is the reader home; in multi-publication mode it is the publication home inside each publication folder.
 
 | Field | Description |
 |-------|-------------|
-| `title` | Reader title displayed in the header |
+| `title` | Title displayed in the header |
 | `subtitle` | Optional subtitle shown below the title in italics |
 | `authors` | Author name(s) shown below the subtitle |
 | `edition` | Optional edition line (e.g. `First Edition, 2025`) |
@@ -453,7 +457,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Repository Host | `github.com` | Repository hosting service for the Helios GitHub Integration (`github.com` or `codeberg.org`) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with `[h5p id="..."]`) |
 | Enable Plain Text Version | Disabled | Generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints containing all reader content in plain text |
-| Show Plain Text Version Link in Footer | Enabled | Show a link to `/llms-full.txt` in the page footer. Only applies when Enable Plain Text Version is enabled |
+| Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer. In multi-publication mode the link is scoped to the current publication; not shown on the publications list page. Only applies when Enable Plain Text Version is enabled |
 | Plain Text Version Link Label | `Plain text version (llms-full.txt)` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | `tabler/book.svg` | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 | Include Page Templates | `section-page` | Only pages using these templates appear in the plain text version |
