@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 0.9.8
+version: 0.9.10
 description: Adds reader sections, reading progress, Save My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -60,6 +60,15 @@ form:
       label: 'Site Logo Icon'
       help: 'Tabler icon path for the site logo icon square (e.g. tabler/notebook.svg). Only applies when Show Site Logo Icon is enabled. Leave empty to use the default icon.'
       placeholder: 'tabler/notebook.svg'
+
+    logo_link_target:
+      type: select
+      label: 'Single Publication Site Logo Link'
+      help: 'Choose where the site Logo Text and icon link navigates when only one publication is listed.'
+      default: 'single_publication'
+      options:
+        publications_list: 'Publications Home Page'
+        single_publication: 'Home of Only Listed Publication (default)'
 
     footer_section:
       type: section

@@ -1,8 +1,8 @@
 # v0.9.10
-## XX/XX/2026
+## 06/17/2026
 
 1. [](#new)
-   * Add multi-publication mode with per-publication home pages, scoped search, and Save My Place support
+   * Add multi-publication support using section-list template, with per-publication Save My Place, search scoping, and single-publication logo link bypass
 
 # v0.9.9
 ## 06/16/2026
