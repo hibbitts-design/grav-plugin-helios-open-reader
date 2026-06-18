@@ -119,11 +119,11 @@ Helios Open Reader provides a ready-built site for open educational content — 
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
-- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single readers home page; each publication has its own cover image, metadata, and section card grid; publication folders using `section-list.md` at root level are auto-detected; the sidebar shows links back to the readers list and the current publication home
+- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single readers home page; publication cards show the title, subtitle, authors, and edition from each publication home; publications can be organized under labeled group headings on the readers list; publication folders using `section-list.md` at root level are auto-detected; the sidebar shows links back to the readers list and the current publication home
 - **Optional parts grouping** — rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** — section pages automatically display their section number and configurable label in the page header (e.g. `Chapter 1`, `Project 2`, `Unit 3`); inherits correctly for all sub-pages within a section. Set via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
-- Reader home page with cover image, title, subtitle, authors, edition, and CC license badge
+- Publication home page with cover image, title, subtitle, authors, edition, and CC license badge
 
 ### Callout Blocks
 - **Learning Objectives** — `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
@@ -270,8 +270,7 @@ Global settings for section label, Prev/Next position, and OER attribution are s
 | Field | Description |
 |-------|-------------|
 | `title` | Publications list title displayed in the header |
-| `subtitle` | Optional subtitle |
-| `cover_image` | Filename of a cover image |
+| `subtitle` | Optional collection tagline displayed below the title |
 | `prev_next_position` | Prev/Next position on section pages: `both` (default), `top`, or `bottom` |
 | `show_oer_attribution` | Show CC license footer on all pages |
 | `section_label` | Section label for all publications (e.g. `Chapter`). Overridable per publication. |
@@ -290,10 +289,11 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | Field | Description |
 |-------|-------------|
 | `title` | Publication title |
-| `subtitle` | Optional subtitle shown below the title |
+| `subtitle` | Optional subtitle shown below the title; also used as the description on the publication card in the readers list |
 | `cover_image` | Cover image filename for this publication |
-| `authors` | Author name(s) |
-| `edition` | Optional edition label |
+| `authors` | Author name(s); also shown on the publication card in the readers list |
+| `edition` | Optional edition label; also shown on the publication card in the readers list |
+| `group` | Optional group label for organizing this publication under a heading on the readers list (e.g. `Textbooks`, `Guides`). Publications without a group appear first. |
 | `license` | CC license badge |
 | `start_button_text` | Start Reading button label. Leave empty to hide. |
 | `section_label` | Override the section label for this publication only |

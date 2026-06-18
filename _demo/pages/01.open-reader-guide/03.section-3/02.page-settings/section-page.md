@@ -10,13 +10,14 @@ The `section-list.md` frontmatter controls the reader identity and card layout o
 | Field | Description |
 |-------|-------------|
 | `title` | Reader title displayed in the header |
-| `subtitle` | Optional subtitle shown below the title in italics |
-| `authors` | Author name(s) shown below the subtitle |
-| `edition` | Optional edition line (e.g. `First Edition, 2025`) |
+| `subtitle` | Optional subtitle shown below the title in italics; used as the description on the publication card in the readers list |
+| `authors` | Author name(s) shown below the subtitle; also shown on the publication card in the readers list |
+| `edition` | Optional edition line (e.g. `First Edition, 2025`); also shown on the publication card in the readers list |
 | `license` | CC license label shown as a badge (e.g. `CC BY 4.0`) |
 | `license_url` | URL for the license badge link |
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |
 | `cover_image` | Filename of a cover image uploaded to the reader home media folder |
+| `group` | Group label for organizing this publication under a heading on the readers list page (e.g. `Textbooks`, `Guides`). Publications without a group appear first. |
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
 | `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
 | `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |

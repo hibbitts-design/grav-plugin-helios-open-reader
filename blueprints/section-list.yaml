@@ -40,6 +40,12 @@ form:
               label: Cover Image
               toggleable: true
               help: 'Optional cover image displayed on the reader home page.'
+            header.group:
+              type: text
+              label: 'Readers List Group'
+              toggleable: true
+              placeholder: 'e.g. Textbooks, Guides, Student Projects'
+              help: 'Optional group label for organizing this publication under a heading on the readers list page.'
             header.start_button_text:
               type: text
               label: Start Button Text

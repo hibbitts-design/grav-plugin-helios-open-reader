@@ -22,24 +22,7 @@ form:
               label: Subtitle
               toggleable: true
               placeholder: 'e.g. A Collection of Open Publications and Guides'
-              help: 'Optional subtitle displayed below the readers list title on the home page.'
-            header.authors:
-              type: text
-              label: Author(s)
-              toggleable: true
-              placeholder: 'e.g. Jane Smith or Jane Smith & John Doe'
-              help: 'Author name(s) displayed on the readers home page and used in the OER attribution block.'
-            header.edition:
-              type: text
-              label: Edition
-              toggleable: true
-              placeholder: 'e.g. First Edition, 2025'
-              help: 'Edition or version label displayed on the readers home page.'
-            header.cover_image:
-              type: pagemediaselect
-              label: Cover Image
-              toggleable: true
-              help: 'Optional cover image displayed on the readers home page.'
+              help: 'Optional tagline displayed below the collection title on the home page.'
             header.prev_next_position:
               type: select
               label: 'Prev/Next Page Controls Position'

@@ -1,4 +1,4 @@
-{# Inner content for section-card - section number, icon, title, arrow, description, author, badge #}
+{# Inner content for section-card - section number, icon, title, arrow, description, author, edition, badge #}
 {% if section_number %}
 <p class="text-xs font-medium text-primary uppercase tracking-wider mb-2">{{ section_label|default('Section') }} {{ section_number }}</p>
 {% endif %}
@@ -21,9 +21,9 @@
     {{ content|raw ?: description }}
 </div>
 {% endif %}
-{% if author %}
+{% if author or edition %}
 <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-    {{ author }}
+    {% if author %}{{ author }}{% endif %}{% if author and edition %} &middot; {% endif %}{% if edition %}<span class="text-xs">{{ edition }}</span>{% endif %}
 </div>
 {% endif %}
 {% if badge_label %}

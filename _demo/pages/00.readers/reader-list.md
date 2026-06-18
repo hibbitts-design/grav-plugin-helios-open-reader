@@ -1,9 +1,9 @@
 ---
 title: 'Open Publications'
 subtitle: 'A Collection of Open Educational Resources'
-cards_per_row: '1'
+cards_per_row: '2'
 prev_next_position: both
-card_image_layout: side
+card_image_layout: top
 card_description_lines: '3'
 sitemap:
     lastmod: '17-06-2026 15:03'
