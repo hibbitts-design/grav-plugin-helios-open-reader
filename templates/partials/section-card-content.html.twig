@@ -1,4 +1,4 @@
-{# Inner content for section-card - section number, icon, title, arrow, description, author, edition, badge #}
+{# Inner content for section-card - section number, icon, title, arrow, description, author, edition, lastmod, badge, license #}
 {% if section_number %}
 <p class="text-xs font-medium text-primary uppercase tracking-wider mb-2">{{ section_label|default('Section') }} {{ section_number }}</p>
 {% endif %}
@@ -26,8 +26,18 @@
     {% if author %}{{ author }}{% endif %}{% if author and edition %} &middot; {% endif %}{% if edition %}<span class="text-xs">{{ edition }}</span>{% endif %}
 </div>
 {% endif %}
-{% if badge_label %}
-{% set badge_color_class = badge_color and badge_color != 'default' ? 'doc-badge-' ~ badge_color : '' %}
-{% set badge_classes = ['doc-badge', badge_color_class]|filter(v => v)|join(' ') %}
-<div class="mt-3"><span class="{{ badge_classes }}">{{ badge_label }}</span></div>
+{% if lastmod %}
+<div class="mt-1 text-xs text-gray-400 dark:text-gray-500">Updated: {{ (lastmod|split(' ')|first)|date('M j, Y') }}</div>
+{% endif %}
+{% if badge_label or license %}
+<div class="mt-3 flex flex-wrap gap-2">
+    {% if badge_label %}
+    {% set badge_color_class = badge_color and badge_color != 'default' ? 'doc-badge-' ~ badge_color : '' %}
+    {% set badge_classes = ['doc-badge', badge_color_class]|filter(v => v)|join(' ') %}
+    <span class="{{ badge_classes }}">{{ badge_label }}</span>
+    {% endif %}
+    {% if license %}
+    <span class="doc-badge doc-badge--plain">{{ license }}</span>
+    {% endif %}
+</div>
 {% endif %}

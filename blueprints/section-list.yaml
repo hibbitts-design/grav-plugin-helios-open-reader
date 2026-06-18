@@ -35,6 +35,11 @@ form:
               toggleable: true
               placeholder: 'e.g. First Edition, 2025'
               help: 'Edition or version label displayed on the reader home page.'
+            header.last_updated:
+              type: datetime
+              label: 'Last Updated'
+              toggleable: true
+              help: 'Date displayed on the publication card in the readers list. Uncheck the toggle to hide.'
             header.cover_image:
               type: pagemediaselect
               label: Cover Image

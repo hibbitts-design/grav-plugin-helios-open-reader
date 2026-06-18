@@ -71,7 +71,7 @@
     </div>
 
     {# Section card grid #}
-    {% set cpr = page.header.cards_per_row|default(1) %}
+    {% set cpr = page.header.cards_per_row|default(1)|int %}
     {% set colClass = {1: 'grid-cols-1', 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3'} %}
     {% set gridClasses = 'section-card-grid grid gap-4 mb-8 ' ~ (colClass[cpr] ?? 'grid-cols-1') ~ ' ' ~ (cpr == 2 ? 'section-card-grid--cols-2' : (cpr == 3 ? 'section-card-grid--cols-3' : '')) %}
     {% set btn_text = page.header.start_button_text ?? 'Start Reading' %}

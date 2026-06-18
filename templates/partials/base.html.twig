@@ -88,6 +88,21 @@
     <meta name="robots" content="{{ page.robots }}">
     {% endif %}
 
+    {# Open Graph meta tags #}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ page.url(true) }}">
+    <meta property="og:title" content="{{ page.title }}{% if site.title %} | {{ site.title }}{% endif %}">
+    {% set og_description = page.header.subtitle|default(page.header.description)|default(page.description) %}
+    {% if og_description %}
+    <meta property="og:description" content="{{ og_description|striptags }}">
+    {% endif %}
+    {% if page.header.cover_image %}
+        {% set og_cover = page.media[page.header.cover_image] %}
+        {% if og_cover %}
+        <meta property="og:image" content="{{ og_cover.url(true) }}">
+        {% endif %}
+    {% endif %}
+
     {# Favicon #}
     {% if theme_config.custom_favicon %}
         {% set favicon = theme_config.custom_favicon|first %}

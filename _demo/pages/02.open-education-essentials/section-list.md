@@ -17,6 +17,7 @@ prev_next_position: both
 published: false
 show_oer_attribution: false
 cover_image: kevin-grieve-B8ciJlFvaBQ-unsplash.jpg
+last_updated: '18-06-2026 16:13'
 ---
 
 Welcome to **Open Education Essentials** – a short, practical guide to understanding and applying open education principles in your teaching practice.
