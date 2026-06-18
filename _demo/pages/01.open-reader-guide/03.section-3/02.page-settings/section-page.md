@@ -13,6 +13,7 @@ The `section-list.md` frontmatter controls the reader identity and card layout o
 | `subtitle` | Optional subtitle shown below the title in italics; used as the description on the publication card in the readers list |
 | `authors` | Author name(s) shown below the subtitle; also shown on the publication card in the readers list |
 | `edition` | Optional edition line (e.g. `First Edition, 2025`); also shown on the publication card in the readers list |
+| `last_updated` | Optional date displayed on the publication card in the readers list. Set via the **Last Updated** field in the Admin panel. |
 | `license` | CC license label shown as a badge (e.g. `CC BY 4.0`) |
 | `license_url` | URL for the license badge link |
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |

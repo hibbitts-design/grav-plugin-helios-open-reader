@@ -62,7 +62,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the reader home page on return
+- **Save My Place** – records the last section page visited in localStorage; the readers list shows a dismissable "Last read" strip linking to the publication home, and the publication home shows a "Continue reading" strip linking directly to the last section read
 - **Reading progress indicator** – shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** – configurable position: top, bottom, or both
 - **TOC scroll spy** – active heading highlighted in the Table of Contents as the reader scrolls
@@ -182,6 +182,7 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `cover_image` | Cover image filename for this publication |
 | `authors` | Author name(s); also shown on the publication card in the readers list |
 | `edition` | Optional edition label; also shown on the publication card in the readers list |
+| `last_updated` | Optional date displayed on the publication card in the readers list. Set via the **Last Updated** field in the Admin panel. |
 | `group` | Optional group label for organizing this publication under a heading on the readers list (e.g. `Textbooks`, `Guides`). Publications without a group appear first. |
 | `license` | CC license badge |
 | `start_button_text` | Start Reading button label. Leave empty to hide. |

@@ -119,7 +119,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
-- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single readers home page; publication cards show the title, subtitle, authors, and edition from each publication home; publications can be organized under labeled group headings on the readers list; publication folders using `section-list.md` at root level are auto-detected; the sidebar shows links back to the readers list and the current publication home
+- **Multi-publication** — group multiple publications (books, guides, essays, reports) under a single readers home page; publication cards show the title, subtitle, authors, edition, and optional last updated date from each publication home; publications can be organized under labeled group headings on the readers list; publication folders using `section-list.md` at root level are auto-detected; the sidebar shows links back to the readers list and the current publication home
 - **Optional parts grouping** — rename section folders to `part-N-section-M` (e.g. `part-1-section-1`, `part-2-section-1`) to group sections into parts; part headings appear automatically on the reader home, and Prev/Next navigation and reading progress are scoped per part
 - **Section N header** — section pages automatically display their section number and configurable label in the page header (e.g. `Chapter 1`, `Project 2`, `Unit 3`); inherits correctly for all sub-pages within a section. Set via **Admin → Pages → Reader Home → Section Label**
 - **Section sub-pages** — sections can contain any number of sub-pages, all shown in the sidebar and navigable with Prev/Next controls
@@ -141,7 +141,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - Five built-in GitHub-style callouts via the github-markdown-alerts plugin: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the reader home page on return
+- **Save My Place** — records the last section page visited in localStorage; the readers list shows a dismissable "Last read" strip linking to the publication home, and the publication home shows a "Continue reading" strip linking directly to the last section read
 - **Reading progress indicator** — shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** — configurable position: top, bottom, or both
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
@@ -293,6 +293,7 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `cover_image` | Cover image filename for this publication |
 | `authors` | Author name(s); also shown on the publication card in the readers list |
 | `edition` | Optional edition label; also shown on the publication card in the readers list |
+| `last_updated` | Optional date displayed on the publication card in the readers list. Set via the **Last Updated** field in the Admin panel. |
 | `group` | Optional group label for organizing this publication under a heading on the readers list (e.g. `Textbooks`, `Guides`). Publications without a group appear first. |
 | `license` | CC license badge |
 | `start_button_text` | Start Reading button label. Leave empty to hide. |
