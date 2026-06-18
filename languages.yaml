@@ -7,6 +7,12 @@ en:
     SECTION_LATEST_LABEL: "latest"
     THEME_REQUIRED_NOTICE: "Helios Grav Premium theme required. Enter your Helios and SVG Icons license keys, then install and activate the theme. (Helios Open Reader Plugin)"
     THEME_INACTIVE_NOTICE: "Helios Grav Premium theme is installed but not active. Please activate the Helios theme to use the Open Reader plugin. (Helios Open Reader Plugin)"
+    CONTINUE_READING: "Continue reading"
+    LAST_READ: "Last read"
+    UPDATED_LABEL: "Updated"
+    PAGE_PROGRESS: "Page %1 of %2"
+    SKIP_TO_CONTENT: "Skip to content"
+    DATE_FORMAT: "M j, Y"
 
 fr:
   PLUGIN_HELIOS_OPEN_READER:
@@ -15,3 +21,9 @@ fr:
     ATTRIBUTION_LABEL: "Licence"
     SECTION_LABEL: "Chapitre"
     SECTION_LATEST_LABEL: "dernière"
+    CONTINUE_READING: "Continuer la lecture"
+    LAST_READ: "Dernière lecture"
+    UPDATED_LABEL: "Mis à jour"
+    PAGE_PROGRESS: "Page %1 sur %2"
+    SKIP_TO_CONTENT: "Aller au contenu"
+    DATE_FORMAT: "d/m/Y"
