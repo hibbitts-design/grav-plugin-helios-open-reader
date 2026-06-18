@@ -1,6 +1,6 @@
 ---
 title: 'Open Publications'
-subtitle: 'A Collection of Open Educational Resources'
+subtitle: 'Open readers, guides, and publications'
 cards_per_row: '2'
 prev_next_position: both
 card_image_layout: top
@@ -10,3 +10,6 @@ sitemap:
 show_oer_attribution: false
 ---
 
+Browse the readers below. All materials are freely available under open licenses and can be used, shared, and adapted with attribution.
+
+Built with the [Grav Helios Open Reader](https://github.com/hibbitts-design/grav-plugin-helios-open-reader) plugin and the [Grav Premium Helios theme](https://getgrav.org/premium/helios).
