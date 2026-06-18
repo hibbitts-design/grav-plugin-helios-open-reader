@@ -1,8 +1,9 @@
 # v0.9.13
-## XX/XX/2026
+## 06/18/2026
 
 1. [](#improved)
    * Update example pages
+   * Add publication card authors, edition, group grouping, and simplified readers list header
 
 # v0.9.12
 ## 06/17/2026
