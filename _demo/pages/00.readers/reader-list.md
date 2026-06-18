@@ -10,8 +10,6 @@ sitemap:
 show_oer_attribution: false
 ---
 
-The **Grav Helios Open Reader**, when paired with the [Grav Premium Helios theme](https://getgrav.org/premium/helios), is a ready-to-use platform for publishing one or more open readers, guides, or other educational publications on the web.
+The **Grav Helios Open Reader**, when paired with the [Grav Premium Helios theme](https://getgrav.org/premium/helios), is a ready-to-use platform for publishing open readers, guides, and other educational publications on the web – a modern, clean home for reading materials that you keep and control.
 
-It gives your content a modern, clean, and organized home on the web – a place to openly share reading materials that you keep and control. Content is stored as simple text files you can keep locally, and it runs on nearly any web hosting service.
-
-Browse the readers below – one a guide to the Helios Open Reader platform itself, the other a sample open education reader you can use as a starting point:
+Browse the readers below – one a guide to the platform itself, the other a sample open education reader you can use as a starting point:
