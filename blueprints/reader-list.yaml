@@ -42,7 +42,7 @@ form:
             header.cards_per_row:
               type: select
               label: Cards Per Row
-              default: 1
+              default: 2
               options:
                 1: '1 (full width)'
                 2: '2 per row'
@@ -57,7 +57,7 @@ form:
             header.card_image_layout:
               type: select
               label: Card Image Layout
-              default: side
+              default: top
               options:
                 side: 'Side (left of content)'
                 top: 'Top (above content)'

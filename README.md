@@ -277,9 +277,9 @@ Global settings for section label, Prev/Next position, and OER attribution are s
 | `license` | CC license label |
 | `license_url` | License URL |
 | `attribution_text` | Full attribution statement |
-| `cards_per_row` | Publication cards per row (1–3) |
+| `cards_per_row` | Publication cards per row (1–3); default is 2 |
 | `card_icon` | Default icon for reader cards |
-| `card_image_layout` | Card image position: `side` or `top` |
+| `card_image_layout` | Card image position: `side` or `top` (default: `top`) |
 | `card_description_lines` | Max description lines per card |
 
 #### Publication Home Settings (`section-list.md`)
@@ -299,9 +299,9 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `section_label` | Override the section label for this publication only |
 | `prev_next_position` | Override Prev/Next position for this publication |
 | `show_oer_attribution` | Override OER attribution display for this publication |
-| `cards_per_row` | Section cards per row (1–3) |
+| `cards_per_row` | Section cards per row (1–3); default is 1 |
 | `card_icon` | Default icon for section cards |
-| `card_image_layout` | Card image position: `side` or `top` |
+| `card_image_layout` | Card image position: `side` or `top` (default: `side`) |
 | `card_description_lines` | Max description lines per card |
 
 ### Reader Home Settings
@@ -324,9 +324,9 @@ The `section-list.md` frontmatter controls the publication identity and card lay
 | `section_label` | Label used for sections throughout the reader (e.g. `Chapter`, `Unit`). Leave empty to use the language default (`Section`). |
 | `part_label` | Label used for part headings on the reader home page when using the `part-N-section-M` folder naming pattern (e.g. `Theme`, `Project`). Leave empty to use the default (`Part`). |
 | `parts` | Optional list of custom part titles — see [Grouping Sections into Parts](#grouping-sections-into-parts) |
-| `cards_per_row` | Number of section cards per row (1–3) |
+| `cards_per_row` | Number of section cards per row (1–3); default is 1 |
 | `card_icon` | Default icon for all cards (Tabler icon path) |
-| `card_image_layout` | Card image position: `side` or `top` |
+| `card_image_layout` | Card image position: `side` or `top` (default: `side`) |
 | `card_description_lines` | Maximum description lines per card (2, 3, or 0 for no limit) |
 
 Page content written in `section-list.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
