@@ -1,16 +1,22 @@
+# v0.9.16
+## 06/19/2026
+
+1. [](#improved)
+   * Reorganise blueprint tabs to bring markdown editor closer to top of Content tab
+
 # v0.9.15
 ## 06/19/2026
 
 1. [](#improved)
    * Update example pages
-   * Add Save My Place to readers list with "Last read" strip linking to publication home, plus Last Updated field on publication cards.
+   * Remove readers list resume strip, simplify Save My Place to publication home only, and add i18n for user-visible strings
 
 # v0.9.14
 ## 06/18/2026
 
 1. [](#improved)
    * Update example pages
-   * Add Save My Place to readers list with "Last read" strip linking to publication home, plus Last Updated field on publication cards.
+   * Add Save My Place to readers list with "Last read" strip linking to publication home, plus Last Updated field on publication cards
 
 # v0.9.13
 ## 06/18/2026
