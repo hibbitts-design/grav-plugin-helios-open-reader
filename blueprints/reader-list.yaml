@@ -39,9 +39,9 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
-        publications_tab:
+        display_tab:
           type: tab
-          title: Publications
+          title: List Display
           fields:
             header.cards_per_row:
               type: select
@@ -75,58 +75,9 @@ form:
                 2: '2 lines'
                 3: '3 lines'
               help: 'Maximum lines of description text shown on each publication card before truncating.'
-            publications_info:
-              type: display
-              label: false
-              content: '<p>Name section folders using <code>part-N-section-M</code> (e.g. <code>part-1-section-1</code>) and add each folder name as a key in <strong>Helios Theme → Versioning → Version Labels</strong>. Then add one entry per publication below with its ID, title, description, and optional cover image.</p>'
-            header.parts:
-              type: list
-              label: 'Publications / Guides'
-              help: 'Per-publication metadata for the readers list cards. ID must match the part folder prefix (e.g. part-1).'
-              fields:
-                .id:
-                  type: text
-                  label: 'Part ID'
-                  placeholder: 'e.g. part-1'
-                  help: 'Must match the part prefix used in folder names (e.g. part-1 for part-1-section-1 folders).'
-                .label:
-                  type: text
-                  label: 'Title'
-                  placeholder: 'e.g. Foundations of Open Education'
-                  help: 'Publication title displayed on the readers list card.'
-                .description:
-                  type: textarea
-                  label: 'Description'
-                  rows: 2
-                  help: 'Short description displayed on the readers list card.'
-                .cover_image:
-                  type: pagemediaselect
-                  label: 'Cover Image'
-                  help: 'Optional cover image for this publication. Place the image file in the parts/ folder.'
-                .icon:
-                  type: text
-                  label: 'Icon'
-                  placeholder: 'tabler/book.svg'
-                  help: 'Optional Tabler icon path for this publication card.'
-                .badge_label:
-                  type: text
-                  label: 'Badge Label'
-                  placeholder: 'e.g. New, Draft'
-                  help: 'Optional badge text shown on the card.'
-                .badge_color:
-                  type: select
-                  label: 'Badge Color'
-                  default: default
-                  options:
-                    default: Default
-                    blue: Blue
-                    green: Green
-                    yellow: Yellow
-                    red: Red
-                    purple: Purple
         oer_tab:
           type: tab
-          title: OER Attribution
+          title: Attribution
           fields:
             header.show_oer_attribution:
               type: toggle

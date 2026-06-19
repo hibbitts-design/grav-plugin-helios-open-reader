@@ -6,7 +6,7 @@ description: 'Git Sync for open authoring, LMS embedding, OER attribution, plain
 learning_objectives: "- Configure Git Sync to keep reader content in sync with a Git repository\n- Embed reader pages in an LMS using URL parameters\n- Enable the OER attribution block in the reader footer\n- Enable the plain text version to make all reader content available at a stable, portable URL"
 sitemap:
     lastmod: '30-04-2026 10:00'
-show_sidebar_image: '1'
+show_sidebar_image: 1
 image: waldemar-brandt-UZQ7owGq3BM-unsplash.jpg
 ---
 

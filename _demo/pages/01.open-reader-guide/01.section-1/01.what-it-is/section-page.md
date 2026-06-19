@@ -1,6 +1,8 @@
 ---
 title: 'What It Is'
 description: 'An overview of Helios Open Reader features: sections structure, callout blocks, and navigation.'
+sitemap:
+    lastmod: '19-06-2026 21:22'
 ---
 
 Helios Open Reader provides a ready-built open textbook or reader site using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
@@ -14,14 +16,62 @@ Helios Open Reader provides a ready-built open textbook or reader site using por
 
 ## Callout Blocks
 
-- **Learning Objectives** – [raw]`[objectives]...[/objectives]`[/raw] (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
-- **Key Takeaways** – [raw]`[key-takeaways]...[/key-takeaways]`[/raw] (blue)
-- **Example** – [raw]`[example]...[/example]`[/raw] (purple)
-- **Exercise** – [raw]`[exercise]...[/exercise]`[/raw] (amber)
-- **Definition** – [raw]`[definition]...[/definition]`[/raw] (blue)
-- **Reflection** – [raw]`[reflection]...[/reflection]`[/raw] (green)
-- **Case Study** – [raw]`[case-study]...[/case-study]`[/raw] (red)
-- **Announcement** – [raw]`[announcement]...[/announcement]`[/raw] (purple by default; configurable type)
+- **Learning Objectives** –
+
+[raw]
+`[objectives]...[/objectives]`
+[/raw]
+(green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
+
+- **Key Takeaways** –
+
+[raw]
+`[key-takeaways]...[/key-takeaways]`
+[/raw]
+(blue)
+
+- **Example** –
+
+[raw]
+`[example]...[/example]`
+[/raw]
+(purple)
+
+- **Exercise** –
+
+[raw]
+`[exercise]...[/exercise]`
+[/raw]
+(amber)
+
+- **Definition** –
+
+[raw]
+`[definition]...[/definition]`
+[/raw]
+(blue)
+
+- **Reflection** –
+
+[raw]
+`[reflection]...[/reflection]`
+[/raw]
+(green)
+
+- **Case Study** –
+
+[raw]
+`[case-study]...[/case-study]`
+[/raw]
+(red)
+
+- **Announcement** –
+
+[raw]
+`[announcement]...[/announcement]`
+[/raw]
+(purple by default; configurable type)
+
 - All callouts accept an optional `title="..."` parameter and support Markdown content
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 

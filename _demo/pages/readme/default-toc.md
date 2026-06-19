@@ -62,7 +62,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** – records the last section page visited in localStorage; the readers list shows a dismissable "Last read" strip linking to the publication home, and the publication home shows a "Continue reading" strip linking directly to the last section read
+- **Save My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
 - **Reading progress indicator** – shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** – configurable position: top, bottom, or both
 - **TOC scroll spy** – active heading highlighted in the Table of Contents as the reader scrolls
