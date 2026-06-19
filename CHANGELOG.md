@@ -2,7 +2,7 @@
 ## 06/19/2026
 
 1. [](#improved)
-   *  Split section-page template into section (landing) and section-page (content), updating blueprints, PHP, Twig, demo pages, and docs to match
+   * Split section-page template into section (landing) and section-page (content), updating blueprints, PHP, Twig, demo pages, and docs to match. Upgrade note: rename each section folder's root file from section-page.md to section.md - the site renders correctly without this, but card fields will no longer be editable in the Admin panel until the rename is done.
 
 # v0.9.17
 ## 06/19/2026
