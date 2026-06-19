@@ -1,3 +1,10 @@
+# v0.9.15
+## 06/19/2026
+
+1. [](#improved)
+   * Update example pages
+   * Add Save My Place to readers list with "Last read" strip linking to publication home, plus Last Updated field on publication cards.
+
 # v0.9.14
 ## 06/18/2026
 
