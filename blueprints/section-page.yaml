@@ -23,6 +23,17 @@ form:
               toggleable: true
               placeholder: 'e.g. 1 or 1.2'
               help: 'Optional section number displayed in the page header. Leave empty to omit.'
+            header.learning_objectives:
+              type: textarea
+              label: Learning Objectives
+              toggleable: true
+              rows: 5
+              placeholder: "- Understand the key concepts\n- Apply the methods described\n- Evaluate the outcomes"
+              help: 'Learning objectives displayed at the top of this page as a styled block. Supports Markdown. Can also be added inline using the [objectives] shortcode.'
+        card_tab:
+          type: tab
+          title: Card
+          fields:
             header.description:
               type: textarea
               label: Description
@@ -76,10 +87,3 @@ form:
                 purple: Purple
                 plain: Plain
               help: 'Badge color. Matches Helios doc-badge color options.'
-            header.learning_objectives:
-              type: textarea
-              label: Learning Objectives
-              toggleable: true
-              rows: 5
-              placeholder: "- Understand the key concepts\n- Apply the methods described\n- Evaluate the outcomes"
-              help: 'Learning objectives displayed at the top of this page as a styled block. Supports Markdown. Can also be added inline using the [objectives] shortcode.'

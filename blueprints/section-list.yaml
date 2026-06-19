@@ -74,6 +74,10 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
+        parts_tab:
+          type: tab
+          title: Sections
+          fields:
             header.cards_per_row:
               type: select
               label: Cards Per Row
@@ -106,10 +110,6 @@ form:
                 2: '2 lines'
                 3: '3 lines'
               help: 'Maximum lines of description text shown on each section card before truncating.'
-        parts_tab:
-          type: tab
-          title: Parts
-          fields:
             parts_info:
               type: display
               label: false

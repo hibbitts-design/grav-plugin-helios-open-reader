@@ -39,6 +39,10 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
+        publications_tab:
+          type: tab
+          title: Publications
+          fields:
             header.cards_per_row:
               type: select
               label: Cards Per Row
@@ -71,10 +75,6 @@ form:
                 2: '2 lines'
                 3: '3 lines'
               help: 'Maximum lines of description text shown on each publication card before truncating.'
-        publications_tab:
-          type: tab
-          title: Publications
-          fields:
             publications_info:
               type: display
               label: false
