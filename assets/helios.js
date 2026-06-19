@@ -74,9 +74,7 @@
         localStorage.setItem(horLastPageKey, JSON.stringify({
           url: savePlaceEl.dataset.horUrl,
           title: savePlaceEl.dataset.horTitle,
-          publicationPath: savePlaceEl.dataset.horPublicationPath || '',
-          publicationUrl: savePlaceEl.dataset.horPublicationUrl || '',
-          publicationTitle: savePlaceEl.dataset.horPublicationTitle || ''
+          publicationPath: savePlaceEl.dataset.horPublicationPath || ''
         }));
       } catch (e) {}
 
@@ -96,16 +94,13 @@
         var saved = localStorage.getItem(horLastPageKey);
         if (saved) {
           var pageData = JSON.parse(saved);
-          var matchAny  = resumeStrip.hasAttribute('data-hor-match-any');
           var stripPath = resumeStrip.dataset.horPublicationPath || '';
           var savedPath = pageData.publicationPath || '';
-          if (matchAny || stripPath === savedPath) {
+          if (stripPath === savedPath) {
             var resumeBtn   = root.querySelector('#hor-resume-btn');
             var resumeTitle = root.querySelector('#hor-resume-title');
-            var destUrl   = matchAny ? (pageData.publicationUrl || pageData.url) : pageData.url;
-            var destTitle = matchAny ? (pageData.publicationTitle || pageData.title) : pageData.title;
-            if (resumeBtn)   resumeBtn.href = destUrl;
-            if (resumeTitle) resumeTitle.textContent = destTitle;
+            if (resumeBtn)   resumeBtn.href = pageData.url;
+            if (resumeTitle) resumeTitle.textContent = pageData.title;
             resumeStrip.removeAttribute('hidden');
 
             var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');

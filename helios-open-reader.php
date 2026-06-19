@@ -377,9 +377,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['is_multi_publication']    = $isMultiPublication;
         $twig->twig_vars['is_nested_publication']  = $isNestedPublication;
         $twig->twig_vars['publication_base_path']  = $publicationBasePath;
-        $twig->twig_vars['publication_home_url']   = $readerHome ? $readerHome->url() : '';
-        $twig->twig_vars['publication_home_title'] = $readerHome ? $readerHome->title() : '';
-        $twig->twig_vars['reader_list_url']        = $isMultiPublication
+$twig->twig_vars['reader_list_url']        = $isMultiPublication
             ? ($publicationListPage ? $publicationListPage->url() : ($readerHome ? $readerHome->url() : null))
             : null;
 
