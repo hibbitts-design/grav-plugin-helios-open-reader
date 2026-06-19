@@ -1,7 +1,5 @@
 ---
 title: Inviting Contributions
-section_number: 3.1
-description: How to make it easy for readers to suggest improvements to your open content.
 ---
 
 Publishing content openly is the first step. Actively inviting others to improve it closes the loop.

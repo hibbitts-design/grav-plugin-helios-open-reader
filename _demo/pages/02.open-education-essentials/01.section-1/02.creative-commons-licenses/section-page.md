@@ -1,6 +1,5 @@
 ---
 title: Creative Commons Licenses
-description: An overview of the six Creative Commons licenses and how to choose the right one for your open content.
 ---
 
 Creative Commons licenses are the practical mechanism behind most open educational resources. They let you specify exactly which permissions you're granting – without requiring individual negotiations with each user.

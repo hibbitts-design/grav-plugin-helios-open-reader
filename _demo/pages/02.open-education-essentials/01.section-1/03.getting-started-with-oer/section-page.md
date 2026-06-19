@@ -1,6 +1,5 @@
 ---
 title: Getting Started with OER
-description: Practical first steps for educators who want to create, publish, or adapt open educational resources.
 ---
 
 You don't need to build a complete open textbook to get started with OER. The most sustainable approach is to start small, build habits, and expand from there.

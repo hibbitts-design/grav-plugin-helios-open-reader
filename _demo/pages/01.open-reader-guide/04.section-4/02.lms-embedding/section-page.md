@@ -1,6 +1,5 @@
 ---
 title: 'LMS Embedding'
-description: 'Embedding reader pages in Canvas, Moodle, or Brightspace using URL parameters.'
 ---
 
 Append `?embedded=true` to any page URL to display only the page content – no sidebar, header, or pagination. Designed for embedding individual Helios Open Reader pages in an LMS iframe (Canvas, Moodle, Brightspace, etc.).

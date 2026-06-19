@@ -1,8 +1,8 @@
 {# Plugin override of Helios prev-next.html.twig
-   On section-page templates: suppresses bottom nav when hor_prev_next_position is 'top'.
-   On all other templates: always renders the nav (position setting is section-page-only).
+   On section and section-page templates: suppresses bottom nav when hor_prev_next_position is 'top'.
+   On all other templates: always renders the nav (position setting is section/section-page-only).
    Suppressed entirely when embedded (?embedded=true or ?chromeless=true). #}
-{% if not chromeless and (hor_prev_next_position|default('both') in ['bottom', 'both'] or page.template != 'section-page') %}
+{% if not chromeless and (hor_prev_next_position|default('both') in ['bottom', 'both'] or page.template not in ['section', 'section-page']) %}
 {% set prev = doc_prev|default(null) %}
 {% set next = doc_next|default(null) %}
 

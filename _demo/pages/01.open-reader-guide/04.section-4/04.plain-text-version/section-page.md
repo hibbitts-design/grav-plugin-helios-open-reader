@@ -1,6 +1,5 @@
 ---
 title: 'Plain Text Version'
-description: 'Exporting all reader content as a structured plain text file for portable, open access.'
 ---
 
 ## Overview

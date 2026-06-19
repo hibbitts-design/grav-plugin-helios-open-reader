@@ -1,6 +1,5 @@
 ---
 title: Maintaining an Open Reader
-description: Practical strategies for keeping your open reader up to date, handling contributions, and evolving your content over time.
 ---
 
 Publishing a reader is a beginning, not an end. The durability of open content comes from treating it as a living document – updated regularly, improved by its readers, and versioned transparently.

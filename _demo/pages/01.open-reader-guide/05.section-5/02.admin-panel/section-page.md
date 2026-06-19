@@ -1,12 +1,13 @@
 ---
 title: 'Templates & Assets'
-description: 'Available page templates and CSS/JavaScript assets for customizing your reader.'
 ---
 
 ## Templates
 
-- **reader** – Reader home template displaying the reader header, resume reading strip, and section card grid
-- **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content
+- **reader-list** – Readers home template displaying a card grid of all publications (multi-publication mode)
+- **section-list** – Reader home for single-publication mode and publication home in multi-publication mode; displays the reader header, resume reading strip, and section card grid
+- **section** – Section landing page with optional section number, Learning Objectives block, and card metadata (description, icon, image, badge); one per section folder
+- **section-page** – Individual section content page; no custom frontmatter — add content directly in the editor
 - **default-toc** – Content page with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
 > [!TIP]

@@ -1,6 +1,5 @@
 ---
 title: 'Requirements'
-description: 'Server and licensing requirements before installation.'
 ---
 
 ## Software Requirements

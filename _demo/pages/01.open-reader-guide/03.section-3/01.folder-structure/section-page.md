@@ -1,6 +1,5 @@
 ---
 title: 'Folder Structure'
-description: 'How reader content is organized, and how to show, hide, and add sections.'
 ---
 
 All reader content lives within `user/pages/`. The skeleton ships with a reader home page and pre-configured demo sections.

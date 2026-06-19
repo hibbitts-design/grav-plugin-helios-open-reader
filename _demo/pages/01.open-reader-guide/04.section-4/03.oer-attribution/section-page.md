@@ -1,6 +1,5 @@
 ---
 title: 'OER Attribution & Print'
-description: 'Displaying a CC license attribution block in the reader footer and producing a clean print output.'
 ---
 
 ## OER Attribution

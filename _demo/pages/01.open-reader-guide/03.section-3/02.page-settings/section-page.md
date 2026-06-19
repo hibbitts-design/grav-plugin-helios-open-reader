@@ -1,6 +1,5 @@
 ---
 title: 'Page Settings'
-description: 'Frontmatter fields for the reader home page and section pages.'
 ---
 
 ## Reader Home Settings
@@ -40,9 +39,9 @@ This text appears above the section cards.
 This text appears below the section cards.
 ```
 
-## Section Page Settings
+## Reader Section Settings
 
-The `section-page.md` frontmatter controls each section's landing page and card appearance.
+The `section.md` frontmatter controls each section's landing page and card appearance.
 
 | Field | Description |
 |-------|-------------|
@@ -51,9 +50,11 @@ The `section-page.md` frontmatter controls each section's landing page and card 
 | `icon` | Tabler icon path for the section card |
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
-| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the page |
+| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
+
+Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
 
 ```yaml
 ---

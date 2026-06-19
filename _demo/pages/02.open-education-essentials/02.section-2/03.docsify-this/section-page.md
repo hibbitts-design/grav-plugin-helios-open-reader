@@ -1,6 +1,5 @@
 ---
 title: Docsify-This for Instant Publishing
-description: How to publish any public Markdown file as a styled web page instantly – no account or configuration needed.
 ---
 
 [Docsify-This](https://docsify-this.net) solves a specific problem: you have a Markdown file in a public repository and you want to share it as a readable, styled web page – right now.

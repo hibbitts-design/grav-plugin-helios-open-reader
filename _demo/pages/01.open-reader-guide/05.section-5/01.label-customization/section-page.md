@@ -1,6 +1,5 @@
 ---
 title: 'Labels & Browser Tab Title'
-description: 'Customizing the reader title, section names, section label, and browser tab title format.'
 ---
 
 ## Reader Title

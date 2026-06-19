@@ -126,7 +126,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - Publication home page with cover image, title, subtitle, authors, edition, and CC license badge
 
 ### Callout Blocks
-- **Learning Objectives** — `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
+- **Learning Objectives** — `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section landing page
 - **Key Takeaways** — `[key-takeaways]...[/key-takeaways]` (blue)
 - **Example** — `[example]...[/example]` (purple)
 - **Exercise** — `[exercise]...[/exercise]` (amber)
@@ -185,9 +185,9 @@ The skeleton ships pre-configured in multi-publication mode with two demo public
 00.readers/              ← readers home (reader-list.md)
 01.open-reader-guide/         ← Publication 1 — Grav Helios Open Reader
   section-list.md             ← publication home
-  01.section-1/               ← section 1 (section-page.md)
+  01.section-1/               ← section 1 (section.md)
     01.intro/                 ← sub-page (section-page.md)
-  02.section-2/               ← section 2 (section-page.md)
+  02.section-2/               ← section 2 (section.md)
 02.open-education-essentials/ ← Publication 2 — Open Education Essentials
   section-list.md             ← publication home
   01.section-1/
@@ -213,10 +213,10 @@ If you only need a single publication and prefer a simpler root-level folder str
 
 ```
 00.my-publication/    ← reader home (section-list.md)
-01.section-1/         ← section 1 (section-page.md)
+01.section-1/         ← section 1 (section.md)
   01.intro/           ← sub-page (section-page.md)
-02.section-2/         ← section 2 (section-page.md)
-03.section-3/         ← section 3 (section-page.md)
+02.section-2/         ← section 2 (section.md)
+03.section-3/         ← section 3 (section.md)
 ```
 
 > [!TIP]
@@ -228,10 +228,10 @@ Parts grouping applies in single-publication mode. To group sections into parts 
 
 ```
 00.my-publication/
-01.part-1-section-1/    ← Part 1, Section 1 (section-page.md)
-02.part-1-section-2/    ← Part 1, Section 2 (section-page.md)
-03.part-2-section-1/    ← Part 2, Section 1 (section-page.md)
-04.part-2-section-2/    ← Part 2, Section 2 (section-page.md)
+01.part-1-section-1/    ← Part 1, Section 1 (section.md)
+02.part-1-section-2/    ← Part 1, Section 2 (section.md)
+03.part-2-section-1/    ← Part 2, Section 1 (section.md)
+04.part-2-section-2/    ← Part 2, Section 2 (section.md)
 ```
 
 Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only.
@@ -340,9 +340,9 @@ This text appears above the section cards.
 This text appears below the section cards.
 ```
 
-### Section Page Settings
+### Reader Section Settings
 
-The `section-page.md` frontmatter controls each section's landing page and card appearance.
+The `section.md` frontmatter controls each section's landing page and card appearance.
 
 | Field | Description |
 |-------|-------------|
@@ -351,9 +351,11 @@ The `section-page.md` frontmatter controls each section's landing page and card 
 | `icon` | Tabler icon path for the section card |
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
-| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the page |
+| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
+
+Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
 
 ```yaml
 ---
@@ -381,7 +383,8 @@ The **Part Label** (default: `Part`) can be customized via **Admin → Pages →
 
 - **reader-list** – Readers home template displaying a card grid of all publications (multi-publication mode)
 - **section-list** – Reader home for single-publication mode and publication home in multi-publication mode; displays the reader header, resume reading strip, and section card grid
-- **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content; extends the full Helios base with sidebar and Prev/Next navigation
+- **section** – Section landing page with optional section number, Learning Objectives block, and card metadata (description, icon, image, badge); one per section folder
+- **section-page** – Individual section content page; no custom frontmatter — add content directly in the editor
 - **default-toc** – Content page with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
 > [!TIP]
@@ -457,7 +460,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer. In multi-publication mode the link is scoped to the current publication; not shown on the readers list page. Only applies when Enable Plain Text Version is enabled |
 | Plain Text Version Link Label | `Plain text version (llms-full.txt)` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | `tabler/book.svg` | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
-| Include Page Templates | `section-page` | Only pages using these templates appear in the plain text version |
+| Include Page Templates | `section`, `section-page` | Only pages using these templates appear in the plain text version |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how image references appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to LLMs and AI tools), **Suppress images** (removes all image markdown for text-only output), or **Relative paths** (leaves paths unchanged; not recommended for remote LLM use) |
 
 > **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**. When using the skeleton, this preset is pre-configured automatically.

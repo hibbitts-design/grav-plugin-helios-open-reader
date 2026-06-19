@@ -393,7 +393,7 @@ class HeliosOpenReaderPlugin extends Plugin
                 if ($partKey !== '') {
                     $twig->twig_vars['current_publication_part'] = $partKey;
                 }
-            } elseif ($page->template() === 'section-page') {
+            } elseif (in_array($page->template(), ['section', 'section-page'], true)) {
                 // Flat mode: detect part from the section page route prefix.
                 $routeSegs   = explode('/', trim($page->route(), '/'));
                 $currentPart = $this->extractPartPrefix($routeSegs[0] ?? '');
@@ -479,7 +479,7 @@ class HeliosOpenReaderPlugin extends Plugin
         if ($isNestedPublication
             && $readerHome
             && $readerHome->template() === 'section-list'
-            && $page->template() === 'section-page'
+            && in_array($page->template(), ['section', 'section-page'], true)
         ) {
             $nSegs        = explode('/', trim($page->route(), '/'));
             $nSectionSlug = $nSegs[1] ?? '';
@@ -698,7 +698,7 @@ class HeliosOpenReaderPlugin extends Plugin
      */
     protected function injectCrossSectionNavigation($twig, $page, bool $isNestedPublication = false, string $publicationBasePath = ''): void
     {
-        if (!$page || $page->template() !== 'section-page') {
+        if (!$page || !in_array($page->template(), ['section', 'section-page'], true)) {
             return;
         }
 
@@ -800,7 +800,7 @@ class HeliosOpenReaderPlugin extends Plugin
      */
     protected function injectSectionProgress($twig, $page, bool $isNestedPublication = false, ?object $bookBasePage = null): void
     {
-        if (!$page || $page->template() !== 'section-page') {
+        if (!$page || !in_array($page->template(), ['section', 'section-page'], true)) {
             return;
         }
 
@@ -842,7 +842,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
         $sections = array_values(array_filter(
             $allPages,
-            fn($p) => $p->template() === 'section-page'
+            fn($p) => in_array($p->template(), ['section', 'section-page'], true)
         ));
 
         if (empty($sections)) {
@@ -954,7 +954,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $config    = $this->grav['config'];
         $title     = $config->get('site.title', 'Open Reader');
         $desc      = $config->get('site.metadata.description', '');
-        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section-page']);
+        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section', 'section-page']);
         $imageMode = $this->config->get('plugins.helios-open-reader.plain_text_images', 'absolute');
 
         $lines = [];

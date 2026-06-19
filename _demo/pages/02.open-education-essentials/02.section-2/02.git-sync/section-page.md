@@ -1,6 +1,5 @@
 ---
 title: Git Sync – Version-Controlled Content
-description: How to connect your Grav site to a GitHub or Codeberg repository for automatic two-way content sync.
 ---
 
 Git Sync turns your Grav pages folder into a version-controlled repository. Every save in the Admin Panel becomes a commit. Every commit in your repository becomes a page update.

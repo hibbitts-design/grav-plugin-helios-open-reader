@@ -1,6 +1,5 @@
 ---
 title: 'Plugin Settings'
-description: 'All Helios Open Reader plugin settings and their defaults.'
 ---
 
 The following settings are available in the Admin panel under **Plugins → Helios Open Reader**:

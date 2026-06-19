@@ -1,6 +1,5 @@
 ---
 title: 'Embedding Content'
-description: 'Embedding iFrames, Google Slides, PDFs, H5P interactive content, and Embedly cards.'
 ---
 
 Helios Open Reader includes shortcodes for embedding rich content responsively, with automatic dark/light theme detection where supported.

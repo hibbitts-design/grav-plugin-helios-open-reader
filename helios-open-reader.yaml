@@ -16,5 +16,6 @@ show_plain_text_link: true
 plain_text_link_label: 'Plain text version (llms-full.txt)'
 plain_text_link_icon: 'tabler/book.svg'
 plain_text_templates:
+  - section
   - section-page
 plain_text_images: absolute

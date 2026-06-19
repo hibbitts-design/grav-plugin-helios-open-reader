@@ -1,7 +1,5 @@
 ---
 title: A Spectrum of Openness
-section_number: 1.1
-description: Open education is not all-or-nothing – explore practical steps toward greater openness.
 ---
 
 Open education isn't all-or-nothing. You can start by making one module of your course openly accessible, or by publishing your syllabus as a public Markdown file. Every step toward openness makes your content more durable and more useful to others.

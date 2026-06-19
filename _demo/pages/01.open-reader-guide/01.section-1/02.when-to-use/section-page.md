@@ -1,6 +1,5 @@
 ---
 title: 'When to Use It'
-description: 'When Helios Open Reader is the right fit – and when other tools might serve you better.'
 ---
 
 Helios Open Reader is a strong fit when you:

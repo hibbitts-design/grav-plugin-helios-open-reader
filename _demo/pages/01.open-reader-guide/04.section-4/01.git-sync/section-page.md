@@ -1,6 +1,5 @@
 ---
 title: 'Git Sync & Open Editing'
-description: 'Keeping reader content automatically in sync with a GitHub or Codeberg repository.'
 ---
 
 The skeleton includes the [Git Sync plugin](https://github.com/trilbymedia/grav-plugin-git-sync), which keeps your site content automatically in sync with a GitHub or Codeberg repository. This enables a full open-authoring workflow:

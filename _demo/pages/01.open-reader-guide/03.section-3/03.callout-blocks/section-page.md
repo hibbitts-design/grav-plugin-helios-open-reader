@@ -1,6 +1,5 @@
 ---
 title: 'Callout Blocks'
-description: 'All eleven callout blocks demonstrated in context, with syntax and usage notes.'
 ---
 
 [objectives]

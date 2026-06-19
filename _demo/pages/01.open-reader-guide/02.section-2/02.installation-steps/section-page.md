@@ -1,6 +1,5 @@
 ---
 title: 'Installation Steps'
-description: 'Step-by-step instructions for getting Helios Open Reader running on your web server.'
 ---
 
 1. **Download** the [Grav Helios Open Reader Skeleton](https://github.com/hibbitts-design/grav-skeleton-helios-open-reader/releases/latest) package

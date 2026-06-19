@@ -2,7 +2,7 @@
  # Plugin override of partials/swap-body.html.twig (based on Helios theme v2.1.3)
  # Changes from theme original:
  #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (search: PLUGIN CHANGE 4)
- #   PLUGIN ADDITION — section-page template dispatch to partials/content/section-page.html.twig
+ #   PLUGIN ADDITION — section and section-page template dispatch to partials/content/section-page.html.twig
  #}
 
 {# Shared swap-target body — rendered both by base.html.twig (full page) and
@@ -58,7 +58,7 @@
 {# Page content — template-aware so HTMX swaps render the right body without
    needing to re-extend per-template files. #}
 <article id="htmx-article" class="prose dark:prose-invert max-w-none">
-    {% if page.template == 'section-page' %}
+    {% if page.template == 'section' or page.template == 'section-page' %}
         {% include 'partials/content/section-page.html.twig' %}
     {% elseif page.template == 'chapter' %}
         {% include 'partials/content/chapter.html.twig' %}

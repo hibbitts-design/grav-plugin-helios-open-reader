@@ -1,6 +1,5 @@
 ---
 title: Choosing a Git Platform
-description: A comparison of GitHub, Codeberg, and GitLab for hosting open course content and reader repositories.
 ---
 
 The Git platform you choose affects how contributors interact with your reader and how your content is discovered. All three major platforms support the fork-and-propose workflow, but with meaningful differences.

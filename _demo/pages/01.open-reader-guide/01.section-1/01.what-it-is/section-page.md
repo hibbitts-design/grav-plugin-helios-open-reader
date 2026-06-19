@@ -1,6 +1,5 @@
 ---
 title: 'What It Is'
-description: 'An overview of Helios Open Reader features: sections structure, callout blocks, and navigation.'
 sitemap:
     lastmod: '19-06-2026 21:22'
 ---

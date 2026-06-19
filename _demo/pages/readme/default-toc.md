@@ -47,7 +47,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - Reader home page with cover image, title, subtitle, authors, edition, and CC license badge
 
 ### Callout Blocks
-- **Learning Objectives** – `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section page
+- **Learning Objectives** – `[objectives]...[/objectives]` (green); also available as frontmatter (`learning_objectives:`) for automatic rendering at the top of a section landing page
 - **Key Takeaways** – `[key-takeaways]...[/key-takeaways]` (blue)
 - **Example** – `[example]...[/example]` (purple)
 - **Exercise** – `[exercise]...[/exercise]` (amber)
@@ -295,9 +295,9 @@ This text appears above the section cards.
 This text appears below the section cards.
 ```
 
-## Section Page Settings
+## Reader Section Settings
 
-The `section-page.md` frontmatter controls each section's landing page and card appearance.
+The `section.md` frontmatter controls each section's landing page and card appearance.
 
 | Field | Description |
 |-------|-------------|
@@ -306,9 +306,11 @@ The `section-page.md` frontmatter controls each section's landing page and card 
 | `icon` | Tabler icon path for the section card |
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
-| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the page |
+| `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
+
+Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
 
 ## Label Customization
 
@@ -387,7 +389,8 @@ Custom CSS, JavaScript, shortcodes, callout blocks, and Helios-inspired Admin Pa
 ### Templates
 - **reader-list** – Readers home template displaying a card grid of all publications (multi-publication mode)
 - **section-list** – Reader home for single-publication mode and publication home in multi-publication mode; displays the reader header, resume reading strip, and section card grid
-- **section-page** – Section reading page with configurable section N header, optional Learning Objectives block from frontmatter, and main content
+- **section** – Section landing page with optional section number, Learning Objectives block, and card metadata (description, icon, image, badge); one per section folder
+- **section-page** – Individual section content page; no custom frontmatter — add content directly in the editor
 - **default-toc** – Content page template with a right-column Table of Contents; set `template: default-toc` in any page's frontmatter to enable (requires the page-toc plugin, included)
 
 > [!TIP]
@@ -450,7 +453,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how images appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to AI tools), **Suppress images** (text-only output), or **Relative paths** (not recommended for remote LLM use) |
-| Include Page Templates | [raw]`section-page`[/raw] | Only pages using these templates appear in the plain text version |
+| Include Page Templates | [raw]`section`, `section-page`[/raw] | Only pages using these templates appear in the plain text version |
 
 > **Note:** The Helios-inspired Admin Panel 1.7 colour scheme (zinc nav, accessible blue links, muted purple accents) is pre-configured in this skeleton.
 ## Requirements
