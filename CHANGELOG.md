@@ -1,3 +1,9 @@
+# v0.9.18
+## 06/19/2026
+
+1. [](#improved)
+   *  Split section-page template into section (landing) and section-page (content), updating blueprints, PHP, Twig, demo pages, and docs to match
+
 # v0.9.17
 ## 06/19/2026
 
