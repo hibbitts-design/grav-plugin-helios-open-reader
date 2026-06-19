@@ -1,3 +1,9 @@
+# v0.9.17
+## 06/19/2026
+
+1. [](#improved)
+   *  Further revise blueprint tabs to improve field grouping
+
 # v0.9.16
 ## 06/19/2026
 
