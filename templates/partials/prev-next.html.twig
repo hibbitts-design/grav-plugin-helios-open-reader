@@ -7,7 +7,7 @@
 {% set next = doc_next|default(null) %}
 
 {% if section_progress_current is defined %}
-{% set progress_text = 'PLUGIN_HELIOS_OPEN_READER.PAGE_PROGRESS'|t([section_progress_current, section_progress_total]) %}
+{% set progress_text = 'PLUGIN_HELIOS_OPEN_READER.PAGE_PROGRESS'|t(section_progress_current, section_progress_total) %}
 {% if section_part_label is defined and section_part_label %}
     {% set progress_text = section_part_label ~ ' · ' ~ progress_text %}
 {% endif %}

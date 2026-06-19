@@ -13,10 +13,9 @@ class HeliosOpenReaderPlugin extends Plugin
     protected $themeMissing       = false;
     protected $themeInstalledOnly = false;
 
-    /** @var bool Guard against onShortcodeHandlers firing more than once */
     protected $shortcodesRegistered = false;
 
-    /** @var string|null Computed "Reader Title | Page Title | Site Title" browser title */
+    /** @var string|null "Page Title | Reader Title | Site Title" for browser tab */
     protected $browserTitle = null;
 
     public static function getSubscribedEvents()
@@ -42,8 +41,7 @@ class HeliosOpenReaderPlugin extends Plugin
             $this->themeInstalledOnly  = $themeInstalled && !$themeActive;
         }
 
-        // Register page blueprints in every context so they are discoverable
-        // from admin, frontend, CLI, and API requests alike.
+        // Register blueprints globally so they're discoverable from admin, frontend, and API contexts.
         $this->enable([
             'onGetPageBlueprints'         => ['onGetPageBlueprints', 0],
             'onApiDashboardNotifications' => ['onApiDashboardNotifications', 0],
@@ -281,20 +279,19 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig = $this->grav['twig'];
 
         // Integration settings
-        $twig->twig_vars['github_server']           = $this->config->get('plugins.helios-open-reader.github_server', 'github.com');
-        $twig->twig_vars['github_link_icon']        = $this->config->get('plugins.helios-open-reader.github_link_icon', 'tabler/file-text.svg');
-        $twig->twig_vars['github_link_mode']        = $this->config->get('plugins.helios-open-reader.github_link_mode', 'view');
-        $twig->twig_vars['show_github_header_icon'] = $this->config->get('plugins.helios-open-reader.show_github_header_icon', true);
-        $twig->twig_vars['show_site_icon']          = $this->config->get('plugins.helios-open-reader.show_site_icon', true);
+        $twig->twig_vars['github_server']             = $this->config->get('plugins.helios-open-reader.github_server', 'github.com');
+        $twig->twig_vars['github_link_icon']          = $this->config->get('plugins.helios-open-reader.github_link_icon', 'tabler/file-text.svg');
+        $twig->twig_vars['github_link_mode']          = $this->config->get('plugins.helios-open-reader.github_link_mode', 'view');
+        $twig->twig_vars['show_github_header_icon']   = $this->config->get('plugins.helios-open-reader.show_github_header_icon', true);
+        $twig->twig_vars['show_site_icon']            = $this->config->get('plugins.helios-open-reader.show_site_icon', true);
         $twig->twig_vars['plain_text_export_enabled'] = $this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false);
         $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', true);
         $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version (llms-full.txt)');
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');
-        $twig->twig_vars['site_icon']               = $this->config->get('plugins.helios-open-reader.site_icon', '');
-        $twig->twig_vars['show_plugin_credits']     = $this->config->get('plugins.helios-open-reader.show_plugin_credits', true);
-        $twig->twig_vars['helios_base_simple']      = 'partials/base-simple.html.twig';
+        $twig->twig_vars['site_icon']                 = $this->config->get('plugins.helios-open-reader.site_icon', '');
+        $twig->twig_vars['show_plugin_credits']       = $this->config->get('plugins.helios-open-reader.show_plugin_credits', true);
+        $twig->twig_vars['helios_base_simple']        = 'partials/base-simple.html.twig';
 
-        // Default logo URL to site root
         $twig->twig_vars['logo_url'] = $this->grav['base_url'] ?: '/';
 
         // URL parameter handling
@@ -304,11 +301,9 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['toc_url_param'] = ($tocParam !== null && $tocParam !== false) ? $tocParam : null;
         $twig->twig_vars['hide_git_link'] = $uri->query('edit_link') === 'false' || $uri->query('hidegitlink') === 'true';
 
-        // Section label (configurable; falls back to language default)
         $twig->twig_vars['section_label'] = $this->getSectionLabel();
 
-        // OER attribution and Prev/Next position default to off/both;
-        // overridden below from reader home frontmatter once the page is found.
+        // OER attribution and Prev/Next defaults — overridden below from reader home frontmatter.
         $twig->twig_vars['show_oer_attribution']   = false;
         $twig->twig_vars['hor_prev_next_position'] = 'both';
 
@@ -321,9 +316,9 @@ class HeliosOpenReaderPlugin extends Plugin
         $isNestedPublication = false;
         $publicationListPage = null;
 
-        // Pre-scan root for reader-list: must happen before the ancestor walk so that
-        // section-list pages encountered in the walk can be correctly identified as nested
-        // publication homes (multi-pub) vs. single-publication reader homes.
+        // Pre-scan root for reader-list first — must happen before the ancestor walk so
+        // section-list pages in the walk are correctly identified as nested publication
+        // homes (multi-pub) vs. single-publication reader homes.
         $root = $this->grav['pages']->root();
         foreach ($root->children() as $child) {
             if ($child->template() === 'reader-list') {
@@ -334,8 +329,6 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         // Ancestor walk: finds the reader home and detects nested publication context.
-        // In multi-publication mode, a section-list found during the walk is a nested
-        // publication home, not the top-level reader root.
         $candidate = $page;
         while ($candidate) {
             $tmpl = $candidate->template();
@@ -374,10 +367,10 @@ class HeliosOpenReaderPlugin extends Plugin
             ? $readerHome->route()
             : '';
 
-        $twig->twig_vars['is_multi_publication']    = $isMultiPublication;
+        $twig->twig_vars['is_multi_publication']   = $isMultiPublication;
         $twig->twig_vars['is_nested_publication']  = $isNestedPublication;
         $twig->twig_vars['publication_base_path']  = $publicationBasePath;
-$twig->twig_vars['reader_list_url']        = $isMultiPublication
+        $twig->twig_vars['reader_list_url']        = $isMultiPublication
             ? ($publicationListPage ? $publicationListPage->url() : ($readerHome ? $readerHome->url() : null))
             : null;
 
@@ -391,8 +384,7 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             }
 
             if ($isNestedPublication && $readerHome && $readerHome->template() === 'section-list') {
-                // Nested mode: only set the Back to Book Home link when we're INSIDE the
-                // book (i.e. the current page is not the book home itself).
+                // Nested mode: set Back to Book Home link only when not already on the book home.
                 if ($page->url() !== $readerHome->url()) {
                     $twig->twig_vars['publication_home_url']   = $readerHome->url();
                     $twig->twig_vars['publication_home_title'] = $readerHome->title();
@@ -420,25 +412,21 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
         $twig->twig_vars['publication_pages'] = $publicationPages;
 
         if ($readerHome) {
-            // In nested mode readerHome is the book home (book-home), which may not carry
-            // global settings like section_label or OER attribution. Fall back to book-list.
+            // In nested mode readerHome is the book home, which may not carry global settings
+            // like section_label or OER attribution. Fall back to the book-list page for those.
             $settingsFallback = ($isNestedPublication && $publicationListPage) ? $publicationListPage : null;
 
             $twig->twig_vars['reader_title']       = $readerHome->title();
-            $twig->twig_vars['reader_authors']     = $readerHome->header()->authors ?? ($settingsFallback ? ($settingsFallback->header()->authors ?? '') : '');
-            $twig->twig_vars['reader_edition']     = $readerHome->header()->edition ?? ($settingsFallback ? ($settingsFallback->header()->edition ?? '') : '');
-            $twig->twig_vars['reader_license']     = $readerHome->header()->license ?? ($settingsFallback ? ($settingsFallback->header()->license ?? '') : '');
-            $twig->twig_vars['reader_license_url'] = $readerHome->header()->license_url ?? ($settingsFallback ? ($settingsFallback->header()->license_url ?? '') : '');
-            $twig->twig_vars['reader_attribution'] = $readerHome->header()->attribution_text ?? ($settingsFallback ? ($settingsFallback->header()->attribution_text ?? '') : '');
+            $twig->twig_vars['reader_authors']     = $this->headerFallback($readerHome, $settingsFallback, 'authors');
+            $twig->twig_vars['reader_edition']     = $this->headerFallback($readerHome, $settingsFallback, 'edition');
+            $twig->twig_vars['reader_license']     = $this->headerFallback($readerHome, $settingsFallback, 'license');
+            $twig->twig_vars['reader_license_url'] = $this->headerFallback($readerHome, $settingsFallback, 'license_url');
+            $twig->twig_vars['reader_attribution'] = $this->headerFallback($readerHome, $settingsFallback, 'attribution_text');
 
-            // OER attribution and Prev/Next position — controlled from reader home frontmatter,
-            // falling back to book-list settings in nested mode.
-            $showOer = $readerHome->header()->show_oer_attribution ?? ($settingsFallback ? ($settingsFallback->header()->show_oer_attribution ?? false) : false);
-            $twig->twig_vars['show_oer_attribution']   = (bool) $showOer;
-            $prevNextPos = $readerHome->header()->prev_next_position ?? ($settingsFallback ? ($settingsFallback->header()->prev_next_position ?? 'both') : 'both');
-            $twig->twig_vars['hor_prev_next_position'] = (string) $prevNextPos;
+            $twig->twig_vars['show_oer_attribution']   = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_oer_attribution', false);
+            $twig->twig_vars['hor_prev_next_position'] = (string) $this->headerFallback($readerHome, $settingsFallback, 'prev_next_position', 'both');
 
-            // Section label: reader home page frontmatter overrides the language default,
+            // Section label: reader home frontmatter overrides the language default,
             // falling back to book-list in nested mode.
             $pageLabel = trim((string) ($readerHome->header()->section_label ?? ''));
             if ($pageLabel === '' && $settingsFallback) {
@@ -465,11 +453,11 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
 
             $twig->twig_vars['logo_url'] = $logoTarget->url();
 
-            // Build "Reader Title | Page Title | Site Title" for non-home pages
+            // Build browser title for non-home section pages
             if ($page->template() !== 'section-list' && $page->template() !== 'reader-list') {
                 $readerTitle = $readerHome->title();
-                $pageTitle = $page->title();
-                $siteTitle = $this->grav['config']->get('site.title', '');
+                $pageTitle   = $page->title();
+                $siteTitle   = $this->grav['config']->get('site.title', '');
                 if ($readerTitle && $pageTitle && $siteTitle) {
                     $this->browserTitle = $pageTitle . ' | ' . $readerTitle . ' | ' . $siteTitle;
                 }
@@ -483,11 +471,11 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             $twig->twig_vars['reader_attribution'] = '';
         }
 
-        // Nested multi-publication: Helios's versioning only scans root-level pages for version
-        // pattern matches. Because section pages live inside publication folders (not at root),
-        // Helios finds nothing and leaves doc_version_info unset — which causes the sidebar
-        // nav tree, cross-section Prev/Next, and progress counter to all bail out early.
-        // Build both doc_version_info and nav_tree from the publication's section hierarchy.
+        // Helios's versioning only scans root-level pages for version pattern matches.
+        // Because section pages live inside publication folders (not at root), Helios finds
+        // nothing and leaves doc_version_info unset — causing sidebar nav, cross-section
+        // Prev/Next, and progress counter to bail out early. Build both doc_version_info
+        // and nav_tree from the publication's section hierarchy instead.
         if ($isNestedPublication
             && $readerHome
             && $readerHome->template() === 'section-list'
@@ -524,19 +512,19 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
                     $nSubItems    = $this->buildNavTree($nSectionRoot->children()->visible(), $nCurrentUrl);
                     $nRootActive  = ($nSectionRoot->url() === $nCurrentUrl);
                     $twig->twig_vars['nav_tree'] = [[
-                        'url'          => $nSectionRoot->url(),
-                        'title'        => $nSectionRoot->title(),
-                        'route'        => $nSectionRoot->route(),
-                        'active'       => $nRootActive,
+                        'url'           => $nSectionRoot->url(),
+                        'title'         => $nSectionRoot->title(),
+                        'route'         => $nSectionRoot->route(),
+                        'active'        => $nRootActive,
                         'parent_active' => !$nRootActive && $this->hasActiveDescendant($nSubItems),
-                        'children'     => $nSubItems,
-                        'icon'         => $nSectionRoot->header()->icon ?? null,
-                        'api'          => [],
+                        'children'      => $nSubItems,
+                        'icon'          => $nSectionRoot->header()->icon ?? null,
+                        'api'           => [],
                     ]];
 
-                    // Helios overrides doc_prev/doc_next with cross-version (chapter-to-chapter)
-                    // links when it sees doc_version_info. Set them from section page order
-                    // instead; injectCrossSectionNavigation will bridge the nulls at boundaries.
+                    // Helios overrides doc_prev/doc_next with cross-version links when it sees
+                    // doc_version_info. Set them from section page order instead;
+                    // injectCrossSectionNavigation bridges the nulls at part boundaries.
                     $nAllPages = [];
                     $this->collectPagesDepthFirst($nSectionRoot, $nAllPages);
                     $nPos = null;
@@ -560,8 +548,7 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             }
         }
 
-        // Filter doc_version_info to remove unpublished parts from the dropdown.
-        // Runs at priority -100 so the theme has already populated this variable.
+        // Filter doc_version_info to remove unpublished sections from the dropdown.
         if (isset($twig->twig_vars['doc_version_info'])) {
             $pages       = $this->grav['pages'];
             $versionInfo = $twig->twig_vars['doc_version_info'];
@@ -587,9 +574,8 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
         }
 
         // Parts detection — optional feature using part-N-section-M folder naming.
-        // If any version IDs use the pattern, group them by part and expose part_groups,
-        // part_labels, and has_parts to Twig. When no part prefixes are found, has_parts
-        // is false and the reader home renders the standard flat card grid.
+        // If any version IDs match the pattern, group them by part and expose has_parts,
+        // part_groups, and part_labels to Twig.
         $hasParts   = false;
         $partGroups = [];
         $partLabels = [];
@@ -606,7 +592,6 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             }
 
             if ($hasParts) {
-                // Part label word: reader home frontmatter overrides the default "Part"
                 $rawPartLabel  = trim((string) ($readerHome ? ($readerHome->header()->part_label ?? '') : ''));
                 $partLabelWord = ($rawPartLabel !== '') ? ucfirst($rawPartLabel) : 'Part';
 
@@ -614,8 +599,6 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
                 // parts:
                 //   - id: part-1
                 //     label: 'Foundations of Open Education'
-                //   - id: part-2
-                //     label: 'Applying Open Practices'
                 $customPartLabels = [];
                 if ($readerHome) {
                     $partsHeader = $readerHome->header()->parts ?? [];
@@ -639,7 +622,6 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
                         $partGroups[$key] = [];
                         if ($partPrefix) {
                             if (isset($customPartLabels[$partPrefix])) {
-                                // Use custom label from frontmatter if provided
                                 $partLabels[$partPrefix] = $customPartLabels[$partPrefix];
                             } else {
                                 // Auto-label: "part-1" → "<PartLabel> 1" (e.g. "Part 1", "Theme 1")
@@ -692,22 +674,27 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             }
         }
 
-        // Cross-section Prev/Next: bridge navigation across section boundaries.
-        // Runs after Helios has set doc_prev/doc_next (priority 0 vs -100).
         $this->injectCrossSectionNavigation($twig, $page, $isNestedPublication, $publicationBasePath);
-
-        // Section reading progress (X of Y).
         $this->injectSectionProgress($twig, $page, $isNestedPublication, $isNestedPublication ? $readerHome : null);
     }
 
     /**
-     * Fill in cross-section Prev/Next links for section-page templates.
+     * Read a header field from $primary, falling back to $fallback when the field is absent.
+     * Used for reader home fields that may inherit from the book-list page in nested mode.
+     */
+    private function headerFallback($primary, $fallback, string $key, $default = '')
+    {
+        return $primary->header()->{$key} ?? ($fallback ? ($fallback->header()->{$key} ?? $default) : $default);
+    }
+
+    /**
+     * Bridge Prev/Next links across section boundaries for section-page templates.
      *
      * Three cases:
-     *   Next — doc_next is null (last sub-page of a section): set to the next section root page.
-     *   Prev A — doc_prev is null (section root page): set to last content page of previous section.
-     *   Prev B — doc_prev points to the parent section root (first sub-page): replace with last
-     *            content page of the previous section.
+     *   Next  — last page of a section: link to the next section root.
+     *   Prev A — section root page: link to the last page of the previous section.
+     *   Prev B — first sub-page of a section: replace the Helios-generated parent link
+     *            with the last page of the previous section.
      */
     protected function injectCrossSectionNavigation($twig, $page, bool $isNestedPublication = false, string $publicationBasePath = ''): void
     {
@@ -716,21 +703,16 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
         }
 
         $versionInfo = $twig->twig_vars['doc_version_info'] ?? null;
-        if (!$versionInfo) {
-            return;
-        }
-
-        $versions = $versionInfo['versions'] ?? [];
-        if (empty($versions)) {
+        if (!$versionInfo || empty($versionInfo['versions'])) {
             return;
         }
 
         $versionIds = array_values(array_map(
             fn($v) => is_array($v) ? ($v['id'] ?? '') : ($v->id ?? ''),
-            $versions
+            $versionInfo['versions']
         ));
 
-        // Current section: in flat mode the section slug is the first route segment;
+        // In flat mode the section slug is the first route segment;
         // in nested mode the first segment is the book folder, so use the second.
         $routeSegments    = explode('/', trim($page->route(), '/'));
         $currentSectionId = $isNestedPublication ? ($routeSegments[1] ?? '') : ($routeSegments[0] ?? '');
@@ -740,18 +722,14 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             return;
         }
 
-        $pages = $this->grav['pages'];
-
         $currentPartPrefix = $this->extractPartPrefix($currentSectionId);
 
-        // --- Next: last sub-page of a section → next section root page ---
-        // Part boundary check: only cross into the next section when it belongs to
-        // the same part (or when neither section uses part prefixes).
+        // --- Next: last page of a section → next section root ---
+        // Only cross into the next section when it belongs to the same part.
         if ($twig->twig_vars['doc_next'] === null && $currentIndex < count($versionIds) - 1) {
-            $nextSectionId  = $versionIds[$currentIndex + 1];
-            $nextPartPrefix = $this->extractPartPrefix($nextSectionId);
-            if ($currentPartPrefix === $nextPartPrefix) {
-                $nextSection = $pages->find($publicationBasePath . '/' . $nextSectionId);
+            $nextSectionId = $versionIds[$currentIndex + 1];
+            if ($this->extractPartPrefix($nextSectionId) === $currentPartPrefix) {
+                $nextSection = $this->grav['pages']->find($publicationBasePath . '/' . $nextSectionId);
                 if ($nextSection) {
                     $twig->twig_vars['doc_next'] = [
                         'title' => $nextSection->title(),
@@ -761,71 +739,64 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             }
         }
 
-        // --- Prev: section root page → last content page of previous section ---
-        // In flat mode the section root has a single-segment route; in nested mode two segments.
-        $parentPage        = $page->parent();
+        // --- Prev A: section root page → last page of previous section ---
         $pageIsSectionRoot = count($routeSegments) === ($isNestedPublication ? 2 : 1);
 
         if ($twig->twig_vars['doc_prev'] === null && $pageIsSectionRoot && $currentIndex > 0) {
-            $prevSectionId  = $versionIds[$currentIndex - 1];
-            $prevPartPrefix = $this->extractPartPrefix($prevSectionId);
-            if ($currentPartPrefix === $prevPartPrefix) {
-                $prevSection = $pages->find($publicationBasePath . '/' . $prevSectionId);
-                if ($prevSection) {
-                    $flatList = [];
-                    $this->collectPagesDepthFirst($prevSection, $flatList);
-                    if (!empty($flatList)) {
-                        $lastPage = end($flatList);
-                        $twig->twig_vars['doc_prev'] = [
-                            'title' => $lastPage->title(),
-                            'url'   => $lastPage->url(),
-                        ];
-                    }
+            $prevSectionId = $versionIds[$currentIndex - 1];
+            if ($this->extractPartPrefix($prevSectionId) === $currentPartPrefix) {
+                $lastPage = $this->lastPageOfSection($prevSectionId, $publicationBasePath);
+                if ($lastPage) {
+                    $twig->twig_vars['doc_prev'] = $lastPage;
                 }
             }
         }
 
-        // --- Prev: first sub-page of a section → last content page of previous section ---
-        $prevData = $twig->twig_vars['doc_prev'];
-        $prevUrl  = is_array($prevData) ? ($prevData['url'] ?? null) : null;
+        // --- Prev B: first sub-page of a section → last page of previous section ---
+        $prevData   = $twig->twig_vars['doc_prev'];
+        $prevUrl    = is_array($prevData) ? ($prevData['url'] ?? null) : null;
+        $parentPage = $page->parent();
 
-        // In flat mode, a section root's route is one of the version IDs (single segment).
-        // In nested mode, use the last path segment (basename) for the same check.
+        // In flat mode a section root's route matches a version ID (single segment).
+        // In nested mode, check the basename of the parent's route.
         $parentIsTopLevel = $parentPage && (
             $isNestedPublication
                 ? in_array(basename(trim($parentPage->route(), '/')), $versionIds, true)
                 : in_array(trim($parentPage->route(), '/'), $versionIds, true)
         );
 
-        if ($prevUrl
-            && $parentPage
-            && $parentIsTopLevel
-            && $parentPage->url() === $prevUrl
-            && $currentIndex > 0
-        ) {
-            $prevSectionId  = $versionIds[$currentIndex - 1];
-            $prevPartPrefix = $this->extractPartPrefix($prevSectionId);
-            if ($currentPartPrefix === $prevPartPrefix) {
-                $prevSection = $pages->find($publicationBasePath . '/' . $prevSectionId);
-                if ($prevSection) {
-                    $flatList = [];
-                    $this->collectPagesDepthFirst($prevSection, $flatList);
-                    if (!empty($flatList)) {
-                        $lastPage = end($flatList);
-                        $twig->twig_vars['doc_prev'] = [
-                            'title' => $lastPage->title(),
-                            'url'   => $lastPage->url(),
-                        ];
-                    }
+        if ($prevUrl && $parentPage && $parentIsTopLevel && $parentPage->url() === $prevUrl && $currentIndex > 0) {
+            $prevSectionId = $versionIds[$currentIndex - 1];
+            if ($this->extractPartPrefix($prevSectionId) === $currentPartPrefix) {
+                $lastPage = $this->lastPageOfSection($prevSectionId, $publicationBasePath);
+                if ($lastPage) {
+                    $twig->twig_vars['doc_prev'] = $lastPage;
                 }
             }
         }
     }
 
     /**
+     * Returns [title, url] for the last visible page of the given section, or null.
+     */
+    private function lastPageOfSection(string $sectionId, string $publicationBasePath): ?array
+    {
+        $section = $this->grav['pages']->find($publicationBasePath . '/' . $sectionId);
+        if (!$section) {
+            return null;
+        }
+        $pages = [];
+        $this->collectPagesDepthFirst($section, $pages);
+        if (empty($pages)) {
+            return null;
+        }
+        $last = end($pages);
+        return ['title' => $last->title(), 'url' => $last->url()];
+    }
+
+    /**
      * Inject section_progress_current and section_progress_total Twig vars.
      * When parts are active, counts only section-page templates within the current part.
-     * Without parts, counts across all sections (original behaviour).
      */
     protected function injectSectionProgress($twig, $page, bool $isNestedPublication = false, ?object $bookBasePage = null): void
     {
@@ -833,10 +804,8 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             return;
         }
 
-        // When parts are active, scope the progress counter to the current part only.
-        $hasParts = $twig->twig_vars['has_parts'] ?? false;
-        $routeSegments    = explode('/', trim($page->route(), '/'));
-        // In nested mode the section slug is the second segment (first is the book folder).
+        $hasParts          = $twig->twig_vars['has_parts'] ?? false;
+        $routeSegments     = explode('/', trim($page->route(), '/'));
         $currentSectionId  = $isNestedPublication ? ($routeSegments[1] ?? '') : ($routeSegments[0] ?? '');
         $currentPartPrefix = $this->extractPartPrefix($currentSectionId);
 
@@ -856,12 +825,10 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
 
         $allPages = [];
         if ($isNestedPublication && $bookBasePage) {
-            // Nested mode: collect only pages within the current book folder.
             foreach ($bookBasePage->children()->visible() as $section) {
                 $this->collectPagesDepthFirst($section, $allPages);
             }
         } else {
-            // Flat mode: collect from root, optionally scoped by part prefix.
             $root = $this->grav['pages']->root();
             foreach ($root->children()->visible() as $topLevel) {
                 if ($scopedSectionIds !== null
@@ -882,7 +849,7 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             return;
         }
 
-        $currentUrl = $page->url();
+        $currentUrl   = $page->url();
         $currentIndex = null;
         foreach ($sections as $i => $s) {
             if ($s->url() === $currentUrl) {
@@ -917,17 +884,17 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
             if (!$p->routable() || !$p->published()) {
                 continue;
             }
-            $children  = $this->buildNavTree($p->children()->visible(), $currentUrl);
-            $isActive  = ($p->url() === $currentUrl);
+            $children = $this->buildNavTree($p->children()->visible(), $currentUrl);
+            $isActive = ($p->url() === $currentUrl);
             $tree[] = [
-                'url'          => $p->url(),
-                'title'        => $p->title(),
-                'route'        => $p->route(),
-                'active'       => $isActive,
+                'url'           => $p->url(),
+                'title'         => $p->title(),
+                'route'         => $p->route(),
+                'active'        => $isActive,
                 'parent_active' => !$isActive && $this->hasActiveDescendant($children),
-                'children'     => $children,
-                'icon'         => $p->header()->icon ?? null,
-                'api'          => [],
+                'children'      => $children,
+                'icon'          => $p->header()->icon ?? null,
+                'api'           => [],
             ];
         }
         return $tree;
@@ -1109,6 +1076,5 @@ $twig->twig_vars['reader_list_url']        = $isMultiPublication
                 1
             );
         }
-
     }
 }

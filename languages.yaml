@@ -9,7 +9,7 @@ en:
     THEME_INACTIVE_NOTICE: "Helios Grav Premium theme is installed but not active. Please activate the Helios theme to use the Open Reader plugin. (Helios Open Reader Plugin)"
     CONTINUE_READING: "Continue reading"
     UPDATED_LABEL: "Updated"
-    PAGE_PROGRESS: "Page %1 of %2"
+    PAGE_PROGRESS: "Page %s of %s"
     SKIP_TO_CONTENT: "Skip to content"
     DATE_FORMAT: "M j, Y"
 
@@ -24,6 +24,6 @@ fr:
     THEME_INACTIVE_NOTICE: "Le thème premium Helios est installé mais non actif. Veuillez activer le thème Helios pour utiliser le plugin Open Reader. (Plugin Helios Open Reader)"
     CONTINUE_READING: "Continuer la lecture"
     UPDATED_LABEL: "Mis à jour"
-    PAGE_PROGRESS: "Page %1 sur %2"
+    PAGE_PROGRESS: "Page %s sur %s"
     SKIP_TO_CONTENT: "Aller au contenu"
     DATE_FORMAT: "d/m/Y"
