@@ -1,4 +1,4 @@
-title: Reader Home
+title: Reader Section List
 '@extends':
     type: default
     context: blueprints://pages
