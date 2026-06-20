@@ -1,3 +1,9 @@
+# v0.9.19
+## XX/XX/2026
+
+1. [](#improved)
+   * Align section-list blueprint title to template name (Reader Section List)
+
 # v0.9.18
 ## 06/19/2026
 
