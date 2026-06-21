@@ -63,18 +63,21 @@
   // Runs on initial load and re-runs on each HTMX content swap.
   // -------------------------------------------------------------------------
 
-  // Namespace the key by origin so different sites don't share resume state
-  var horLastPageKey = 'hor-last-page|' + window.location.origin;
+  // Per-publication key: namespaced by origin + publication path so each
+  // publication's saved place is stored independently.
+  function horPageKey(publicationPath) {
+    return 'hor-last-page|' + window.location.origin + '|' + (publicationPath || '');
+  }
 
   function horInitSavePlace(root) {
     // Save current page when on a section-page
     var savePlaceEl = root.querySelector('[data-hor-save-page]');
     if (savePlaceEl) {
+      var pubPath = savePlaceEl.dataset.horPublicationPath || '';
       try {
-        localStorage.setItem(horLastPageKey, JSON.stringify({
+        localStorage.setItem(horPageKey(pubPath), JSON.stringify({
           url: savePlaceEl.dataset.horUrl,
-          title: savePlaceEl.dataset.horTitle,
-          publicationPath: savePlaceEl.dataset.horPublicationPath || ''
+          title: savePlaceEl.dataset.horTitle
         }));
       } catch (e) {}
 
@@ -90,26 +93,23 @@
     // Populate and show the resume strip when on the reader home page
     var resumeStrip = root.querySelector('#hor-resume-reading');
     if (resumeStrip) {
+      var stripPubPath = resumeStrip.dataset.horPublicationPath || '';
       try {
-        var saved = localStorage.getItem(horLastPageKey);
+        var saved = localStorage.getItem(horPageKey(stripPubPath));
         if (saved) {
           var pageData = JSON.parse(saved);
-          var stripPath = resumeStrip.dataset.horPublicationPath || '';
-          var savedPath = pageData.publicationPath || '';
-          if (stripPath === savedPath) {
-            var resumeBtn   = root.querySelector('#hor-resume-btn');
-            var resumeTitle = root.querySelector('#hor-resume-title');
-            if (resumeBtn)   resumeBtn.href = pageData.url;
-            if (resumeTitle) resumeTitle.textContent = pageData.title;
-            resumeStrip.removeAttribute('hidden');
+          var resumeBtn   = root.querySelector('#hor-resume-btn');
+          var resumeTitle = root.querySelector('#hor-resume-title');
+          if (resumeBtn)   resumeBtn.href = pageData.url;
+          if (resumeTitle) resumeTitle.textContent = pageData.title;
+          resumeStrip.removeAttribute('hidden');
 
-            var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');
-            if (dismissBtn) {
-              dismissBtn.addEventListener('click', function () {
-                try { localStorage.removeItem(horLastPageKey); } catch (e) {}
-                resumeStrip.setAttribute('hidden', '');
-              });
-            }
+          var dismissBtn = resumeStrip.querySelector('.hor-resume-dismiss');
+          if (dismissBtn) {
+            dismissBtn.addEventListener('click', function () {
+              try { localStorage.removeItem(horPageKey(stripPubPath)); } catch (e) {}
+              resumeStrip.setAttribute('hidden', '');
+            });
           }
         }
       } catch (e) {}

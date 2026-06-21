@@ -23,6 +23,9 @@ THEME_HELIOS:
   LIGHT_MODE: Light
   DARK_MODE: Dark
   SYSTEM_MODE: System
+  THEME_SELECTION: Theme selection
+  VIEW_ON_GITHUB: View on GitHub
+  VIEW_ON_CODEBERG: View on Codeberg
   COPYRIGHT: "&copy; {{year}} {{name}}. All rights reserved."
   GO_BACK: Go Back
   BACK_TO_HOME: Back to Home
@@ -46,3 +49,6 @@ THEME_HELIOS:
   CONTACT_EMAIL_VALUE: hello@example.com
   CONTACT_RESPONSE_LABEL: Response Time
   CONTACT_RESPONSE_VALUE: Within 24-48 hours
+
+PLUGIN_HELIOS_OPEN_READER:
+  SKIP_TO_CONTENT: Skip to content

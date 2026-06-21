@@ -1,17 +1,14 @@
 {#
- # Base Simple Wide Template
- # A wider variant of the theme's base-simple.html.twig for pages that need
- # more horizontal space (e.g. a content column + page ToC side column).
- # Identical to base-simple.html.twig except:
- #   - The <main> uses max-width: 72rem instead of max-w-4xl (56rem)
- #   - PLUGIN CHANGE 1 — suppress header when chromeless=true
- #   - PLUGIN CHANGE 2 — suppress footer when chromeless=true
- #   - PLUGIN CHANGE 3 — propagate chromeless/embedded param to all internal links
+ # Plugin override of partials/base-simple.html.twig (helios theme)
+ # Changes from theme original:
+ #   PLUGIN CHANGE 1 — suppress header when chromeless=true
+ #   PLUGIN CHANGE 2 — suppress footer when chromeless=true
+ #   PLUGIN CHANGE 3 — propagate chromeless/embedded param to all internal links
  #
  # Derived from: user/themes/helios/templates/partials/base-simple.html.twig
  # Plugin copy — update when the theme's base-simple.html.twig changes.
  #}
-{% set theme_config = config.themes.helios %}
+{% set theme_config = theme %}
 {% set appearance = theme_config.appearance %}
 {% set is_htmx = is_htmx_request|default(false) %}
 
@@ -103,8 +100,8 @@
     {% include 'partials/header-simple.html.twig' %}
     {% endif %}
 
-    {# Main content — wider than base-simple: 48rem content + --helios-toc-width + gap-8 (2rem) #}
-    <main id="main-content" class="mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16" style="max-width: calc(48rem + var(--helios-toc-width, 15rem) + 2rem);">
+    {# Main content #}
+    <main id="main-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {% block content %}{% endblock %}
     </main>
 
