@@ -1,11 +1,8 @@
 # v0.9.19
 ## XX/XX/2026
 
-1. [](#bugfix)
-   * Fix Save My Place resetting when switching between publications — use per-publication localStorage keys instead of a single shared key
-   * Fix ?embedded=true not suppressing header/footer on default-toc, section-list, and reader-list pages — add chromeless support to base-simple-wide.html.twig and override base-simple.html.twig
-   * Fix missing Open Graph meta tags on section-list and reader-list pages
-   * Fix missing SKIP_TO_CONTENT i18n key causing raw key string to render on screen
+1. [](#improved)
+   * Align section-list blueprint title to template name (Reader Section List)
 
 # v0.9.18
 ## 06/19/2026
