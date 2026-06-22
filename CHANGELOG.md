@@ -1,5 +1,5 @@
 # v0.9.19
-## XX/XX/2026
+## 06/22/2026
 
 1. [](#bugfix)
    * Fix Save My Place resetting when switching between publications — use per-publication localStorage keys instead of a single shared key
