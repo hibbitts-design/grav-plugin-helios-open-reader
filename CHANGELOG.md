@@ -1,3 +1,9 @@
+# v0.9.20
+## 06/22/2026
+
+1. [](#improved)
+   * Add custom URL option for header git icon link, independent of Helios GitHub Integration
+
 # v0.9.19
 ## 06/22/2026
 

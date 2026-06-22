@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 0.9.19
+version: 0.9.20
 description: Adds reader sections, reading progress, Save My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -95,7 +95,7 @@ form:
     show_github_header_icon:
       type: toggle
       label: 'Show Repository Host Icon Link in Header'
-      help: 'Show a GitHub or Codeberg icon link to the reader repository in the site header. Only applies when GitHub Integration is enabled in the Helios theme settings.'
+      help: 'Show a repository icon link in the site header. When a Custom Header Icon URL is set below, the icon displays regardless of whether Helios GitHub Integration is enabled.'
       highlight: 1
       default: 1
       options:
@@ -103,6 +103,15 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    github_header_custom_url:
+      type: text
+      size: long
+      label: 'Custom URL for Header Icon Link'
+      help: 'Overrides the Helios theme repository URL for the header icon link, and works even without GitHub Integration enabled. Leave blank to use the Helios theme URL.'
+      placeholder: 'https://github.com/your-org/your-repo'
+      validate:
+        type: url
 
     github_link_icon:
       type: text
