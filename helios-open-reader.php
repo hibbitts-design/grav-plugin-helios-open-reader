@@ -282,7 +282,9 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['github_server']             = $this->config->get('plugins.helios-open-reader.github_server', 'github.com');
         $twig->twig_vars['github_link_icon']          = $this->config->get('plugins.helios-open-reader.github_link_icon', 'tabler/file-text.svg');
         $twig->twig_vars['github_link_mode']          = $this->config->get('plugins.helios-open-reader.github_link_mode', 'view');
-        $twig->twig_vars['show_github_header_icon']   = $this->config->get('plugins.helios-open-reader.show_github_header_icon', true);
+        $twig->twig_vars['show_github_header_icon']    = $this->config->get('plugins.helios-open-reader.show_github_header_icon', true);
+        $rawCustomUrl = trim($this->config->get('plugins.helios-open-reader.github_header_custom_url', ''));
+        $twig->twig_vars['github_header_custom_url']  = preg_match('#^https?://#i', $rawCustomUrl) ? $rawCustomUrl : '';
         $twig->twig_vars['show_site_icon']            = $this->config->get('plugins.helios-open-reader.show_site_icon', true);
         $twig->twig_vars['plain_text_export_enabled'] = $this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false);
         $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', true);

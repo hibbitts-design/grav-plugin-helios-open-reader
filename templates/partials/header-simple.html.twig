@@ -3,7 +3,7 @@
  # Changes from theme original:
  #   1. Site icon wrapped in show_site_icon toggle + custom icon support (search: PLUGIN CHANGE 1)
  #   2. Logo link uses logo_url to target single publication home when only one publication is active (search: PLUGIN CHANGE 2)
- #   3. Git header link URL and icon use github_server to support both GitHub and Codeberg (search: PLUGIN CHANGE 3)
+ #   3. Git header link resolves from custom URL or Helios theme GitHub Integration; icon inferred from URL (search: PLUGIN CHANGE 3)
  #}
 {% set theme_config = config.themes.helios %}
 {% set appearance = theme_config.appearance %}
@@ -91,10 +91,11 @@
         {% endif %}
 
         {# Git repository link #}{# PLUGIN CHANGE 3 #}
-        {% if theme_config.github.enabled and theme_config.github.repo and show_github_header_icon != false %}
-        {% set git_icon = (github_server == 'github.com') ? 'tabler/brand-github.svg' : 'tabler/brand-git.svg' %}
-        {% set git_label = (github_server == 'github.com') ? 'View on GitHub' : 'View on Codeberg' %}
-        <a href="https://{{ github_server }}/{{ theme_config.github.repo }}"
+        {% set resolved_git_url = github_header_custom_url ?: (theme_config.github.enabled and theme_config.github.repo ? 'https://' ~ github_server ~ '/' ~ theme_config.github.repo : null) %}
+        {% if resolved_git_url and show_github_header_icon != false %}
+        {% set git_icon = 'github.com' in resolved_git_url ? 'tabler/brand-github.svg' : ('codeberg.org' in resolved_git_url ? 'tabler/brand-codeberg.svg' : 'tabler/brand-git.svg') %}
+        {% set git_label = 'github.com' in resolved_git_url ? 'View on GitHub' : ('codeberg.org' in resolved_git_url ? 'View on Codeberg' : 'View Repository') %}
+        <a href="{{ resolved_git_url }}"
            target="_blank"
            rel="noopener noreferrer"
            class="p-2 rounded-lg flex items-center text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
