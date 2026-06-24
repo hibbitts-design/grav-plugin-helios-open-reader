@@ -28,6 +28,14 @@ form:
               label: Cover Image
               toggleable: true
               help: 'Optional cover image displayed on the reader home page.'
+            header.cover_image_layout:
+              type: select
+              label: Cover Image Layout
+              default: default
+              options:
+                default: 'Default (header)'
+                sidebar: 'Sidebar (alongside cards)'
+              help: 'How the cover image is positioned on the reader home page. "Sidebar" places the image in a left column alongside the section cards so cards remain visible without scrolling.'
             header.group:
               type: text
               label: 'Readers List Group'

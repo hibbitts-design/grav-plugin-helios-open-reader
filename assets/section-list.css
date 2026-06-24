@@ -80,6 +80,52 @@
 }
 
 /* -------------------------------------------------------------------------
+   Cover image sidebar layout
+   Two-column: fixed-width image column left, content + cards right.
+   Collapses to stacked on narrow screens.
+   ------------------------------------------------------------------------- */
+
+.hor-cover-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .hor-cover-sidebar {
+        flex-direction: row;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+}
+
+.hor-cover-sidebar__image {
+    flex-shrink: 0;
+    width: 8rem;
+}
+
+@media (min-width: 640px) {
+    .hor-cover-sidebar__image {
+        width: 12rem;
+    }
+}
+
+.hor-cover-sidebar__image img {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(229 231 235); /* gray-200 */
+}
+
+.dark .hor-cover-sidebar__image img {
+    border-color: rgb(55 65 81); /* gray-700 */
+}
+
+.hor-cover-sidebar__content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* -------------------------------------------------------------------------
    OER attribution block (footer)
    ------------------------------------------------------------------------- */
 
