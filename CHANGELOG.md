@@ -1,3 +1,9 @@
+# v0.9.21
+## 06/24/2026
+
+1. [](#improved)
+   * Update example pages
+
 # v0.9.20
 ## 06/22/2026
 
