@@ -1,3 +1,9 @@
+# v0.9.22
+## 06/24/2026
+
+1. [](#new)
+   * Add sidebar cover image layout option to section-list pages
+
 # v0.9.21
 ## 06/24/2026
 
