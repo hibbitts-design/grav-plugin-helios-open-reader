@@ -101,7 +101,7 @@
 
 .hor-cover-sidebar__image {
     flex-shrink: 0;
-    width: 8rem;
+    width: 100%;
 }
 
 @media (min-width: 640px) {
