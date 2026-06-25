@@ -61,7 +61,9 @@
     {% if page.header.cover_image %}
         {% set og_cover = page.media[page.header.cover_image] %}
         {% if og_cover %}
-        <meta property="og:image" content="{{ og_cover.url(true) }}">
+        {% set og_image_url = og_cover.url(true) %}
+        {% set og_origin = grav.uri.scheme ~ grav.uri.host ~ (grav.uri.port ? ':' ~ grav.uri.port : '') %}
+        <meta property="og:image" content="{{ og_image_url starts with 'http' ? og_image_url : og_origin ~ og_image_url }}">
         {% endif %}
     {% endif %}
 
