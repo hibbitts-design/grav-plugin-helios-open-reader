@@ -1,5 +1,5 @@
 # v0.9.23
-## XX/XX/2026
+## 06/25/2026
 
 1. [](#new)
    * Set cover image to full width on mobile in sidebar layout
