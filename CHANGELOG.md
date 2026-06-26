@@ -1,3 +1,9 @@
+# v0.9.25
+## 06/26/2026
+
+1. [](#bugfix)
+   * Fix redirect pages appearing as prev/next nav targets by filtering them from the depth-first page list in the plugin
+
 # v0.9.24
 ## 06/25/2026
 
