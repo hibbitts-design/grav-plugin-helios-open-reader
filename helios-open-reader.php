@@ -932,7 +932,7 @@ class HeliosOpenReaderPlugin extends Plugin
      */
     protected function collectPagesDepthFirst($page, array &$list): void
     {
-        if ($page->visible() && $page->routable()) {
+        if ($page->visible() && $page->routable() && !($page->header()->redirect ?? false)) {
             $list[] = $page;
         }
         foreach ($page->children()->visible() as $child) {
