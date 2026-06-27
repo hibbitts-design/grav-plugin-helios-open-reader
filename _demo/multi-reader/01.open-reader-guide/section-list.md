@@ -22,3 +22,7 @@ cover_image: olga-tutunaru-JMATuFkXeHU-unsplash.jpg
 Welcome to the **Grav Helios Open Reader** – a guide to publishing open textbooks and readers on the web with the Helios Open Reader plugin and [Grav Premium Helios theme](https://getgrav.org/premium/helios).
 
 Work through the sections in order, or jump to any topic from the cards below.
+
+===
+
+Powered by [Grav CMS](https://getgrav.org), the open-source platform it's built on. Want to learn more? Read the full [ReadMe](../readme) for setup instructions, features, and more.

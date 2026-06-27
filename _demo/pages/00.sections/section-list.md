@@ -20,3 +20,7 @@ Welcome to **Open Education Essentials** – a short, practical guide to underst
 This reader covers the foundational ideas, practical tools, and real-world examples you need to get started with open educational resources (OER) and open course design.
 
 Work through the sections in order, or jump to any topic from the list below.
+
+===
+
+Powered by [Grav CMS](https://getgrav.org), the open-source platform it's built on. Want to learn more? Read the full [ReadMe](../readme) for setup instructions, features, and more.
