@@ -276,6 +276,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $assets->addCss("$path/print.css", ['media' => 'print']);
         $assets->addJs("$path/helios.js", ['group' => 'bottom', 'loading' => 'defer']);
 
+
         $twig = $this->grav['twig'];
 
         // Integration settings
@@ -1068,6 +1069,39 @@ class HeliosOpenReaderPlugin extends Plugin
                     $event['output'] = str_replace('</head>', '<style>' . $css . '</style></head>', $event['output']);
                 }
             }
+            return;
+        }
+
+        // Custom Google Font — inject preconnect hints, stylesheet link, and scoped font-family/size override
+        $fontUrl    = trim($this->config->get('plugins.helios-open-reader.custom_font_url', ''));
+        $fontFamily = trim($this->config->get('plugins.helios-open-reader.custom_font_family', ''));
+        $fontSize   = $this->config->get('plugins.helios-open-reader.custom_font_size', 'medium');
+        if ($fontUrl && strpos($fontUrl, 'https://fonts.googleapis.com/css') === 0
+            && $fontFamily && preg_match('/^[\w\s,"\'.-]+$/', $fontFamily)) {
+            $textScales = [
+                'small'  => ['xs'=>'0.675rem','sm'=>'0.7875rem','base'=>'0.9rem','lg'=>'1.0125rem','xl'=>'1.125rem','2xl'=>'1.35rem','3xl'=>'1.6875rem','4xl'=>'2.025rem','5xl'=>'2.7rem'],
+                'medium' => ['xs'=>'0.75rem','sm'=>'0.875rem','base'=>'1rem','lg'=>'1.125rem','xl'=>'1.25rem','2xl'=>'1.5rem','3xl'=>'1.875rem','4xl'=>'2.25rem','5xl'=>'3rem'],
+                'large'  => ['xs'=>'0.825rem','sm'=>'0.9625rem','base'=>'1.1rem','lg'=>'1.2375rem','xl'=>'1.375rem','2xl'=>'1.65rem','3xl'=>'2.0625rem','4xl'=>'2.475rem','5xl'=>'3.3rem'],
+            ];
+            $scale  = $textScales[$fontSize] ?? $textScales['medium'];
+            $inject = '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n"
+                    . '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n"
+                    . '<link rel="stylesheet" href="' . htmlspecialchars($fontUrl, ENT_QUOTES, 'UTF-8') . '">' . "\n"
+                    . '<style>#main-content {'
+                    . ' --helios-font-body: ' . $fontFamily . ';'
+                    . ' --font-sans: ' . $fontFamily . ';'
+                    . ' font-family: ' . $fontFamily . ';'
+                    . ' --text-xs: ' . $scale['xs'] . ';'
+                    . ' --text-sm: ' . $scale['sm'] . ';'
+                    . ' --text-base: ' . $scale['base'] . ';'
+                    . ' --text-lg: ' . $scale['lg'] . ';'
+                    . ' --text-xl: ' . $scale['xl'] . ';'
+                    . ' --text-2xl: ' . $scale['2xl'] . ';'
+                    . ' --text-3xl: ' . $scale['3xl'] . ';'
+                    . ' --text-4xl: ' . $scale['4xl'] . ';'
+                    . ' --text-5xl: ' . $scale['5xl'] . ';'
+                    . ' }</style>' . "\n";
+            $event['output'] = str_replace('</head>', $inject . '</head>', $event['output']);
         }
 
         if ($this->browserTitle !== null) {
