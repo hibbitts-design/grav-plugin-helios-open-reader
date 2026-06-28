@@ -1083,6 +1083,18 @@ class HeliosOpenReaderPlugin extends Plugin
                 'medium' => ['xs'=>'0.75rem','sm'=>'0.875rem','base'=>'1rem','lg'=>'1.125rem','xl'=>'1.25rem','2xl'=>'1.5rem','3xl'=>'1.875rem','4xl'=>'2.25rem','5xl'=>'3rem'],
                 'large'  => ['xs'=>'0.825rem','sm'=>'0.9625rem','base'=>'1.1rem','lg'=>'1.2375rem','xl'=>'1.375rem','2xl'=>'1.65rem','3xl'=>'2.0625rem','4xl'=>'2.475rem','5xl'=>'3.3rem'],
             ];
+            $themeFontMap = [
+                'inter'                      => 'Inter, sans-serif',
+                'open-sans'                  => 'OpenSans, sans-serif',
+                'geom'                       => 'Geom, sans-serif',
+                'nunito-sans'                => 'NunitoSans, sans-serif',
+                'ubuntu-sans'                => 'UbuntuSans, sans-serif',
+                'work-sans'                  => 'WorkSans, sans-serif',
+                'public-sans'                => 'PublicSans, sans-serif',
+                'quicksand'                  => 'Quicksand, sans-serif',
+            ];
+            $themeBodyFont = $this->config->get('themes.helios.fonts.body', 'inter');
+            $themeFontFamily = $themeFontMap[$themeBodyFont] ?? 'Inter, sans-serif';
             $scale  = $textScales[$fontSize] ?? $textScales['medium'];
             $inject = '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n"
                     . '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n"
@@ -1100,6 +1112,11 @@ class HeliosOpenReaderPlugin extends Plugin
                     . ' --text-3xl: ' . $scale['3xl'] . ';'
                     . ' --text-4xl: ' . $scale['4xl'] . ';'
                     . ' --text-5xl: ' . $scale['5xl'] . ';'
+                    . ' }'
+                    . ' #main-content #htmx-prev-next, #main-content .prev-next-nav {'
+                    . ' --helios-font-body: ' . $themeFontFamily . ';'
+                    . ' --font-sans: ' . $themeFontFamily . ';'
+                    . ' font-family: ' . $themeFontFamily . ';'
                     . ' }</style>' . "\n";
             $event['output'] = str_replace('</head>', $inject . '</head>', $event['output']);
         }
