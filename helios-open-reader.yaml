@@ -2,6 +2,7 @@ enabled: true
 custom_font_url: ''
 custom_font_family: ''
 custom_font_size: medium
+custom_font_headings: false
 admin_styling_enhancements: true
 admin_font_size: large
 admin_label_alignment: true
