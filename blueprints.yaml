@@ -79,7 +79,7 @@ form:
       type: text
       size: long
       label: 'Custom Google Font URL'
-      help: 'Paste the stylesheet URL from the Google Fonts embed code (the href value from the third &lt;link&gt; tag). Leave empty to use the Helios theme font. Preconnect hints are added automatically.'
+      help: 'Stylesheet URL from the Google Fonts embed code (href of the third &lt;link&gt; tag). Leave empty to use the Helios theme font.'
       placeholder: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap'
 
     custom_font_family:
@@ -102,7 +102,7 @@ form:
     custom_font_headings:
       type: toggle
       label: 'Apply Custom Font to Headings'
-      help: 'When enabled, headings (H1–H6) also use the custom font. When disabled, headings keep the Helios theme font. Only applies when a Custom Google Font URL is set.'
+      help: 'Apply the custom font to headings. When disabled, headings use the Helios theme font.'
       highlight: 0
       default: 0
       options:
