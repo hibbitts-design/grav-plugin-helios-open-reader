@@ -1,6 +1,12 @@
 # v0.9.27
 ## 06/28/2026
 
+1. [](#new)
+   * Add custom Google Font support with font family, URL, and size options to Typography section
+
+# v0.9.27
+## 06/28/2026
+
 1. [](#improved)
    * Add [excerpt] shortcode for subtle grey border styling on multi-paragraph blockquotes
    * Update ReadMe
