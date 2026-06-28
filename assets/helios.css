@@ -66,6 +66,17 @@
     font-size: calc(0.75em * 0.8)
 }
 
+/* Excerpt blockquotes — subtle grey border, opt-in via [excerpt]...[/excerpt] shortcode */
+.prose blockquote.excerpt {
+    border-left-width: 2px;
+    border-left-color: #d1d5db;
+    background-color: transparent;
+    font-style: italic;
+}
+.dark .prose blockquote.excerpt {
+    border-left-color: #4b5563;
+}
+
 .prose :is(h1, h2, h3, h4, h5, h6) {
     margin: 0;
     line-height: 1.3
