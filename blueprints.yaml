@@ -70,6 +70,35 @@ form:
         publications_list: 'Publications Home Page'
         single_publication: 'Home of Only Listed Publication (default)'
 
+    typography_section:
+      type: section
+      title: 'Typography'
+      underline: true
+
+    custom_font_url:
+      type: text
+      size: long
+      label: 'Custom Google Font URL'
+      help: 'Paste the stylesheet URL from the Google Fonts embed code (the href value from the third &lt;link&gt; tag). Leave empty to use the Helios theme font. Preconnect hints are added automatically.'
+      placeholder: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap'
+
+    custom_font_family:
+      type: text
+      size: medium
+      label: 'Custom Font Family Name'
+      help: 'CSS font-family value to apply as the body font (e.g. "Lora", serif). Copy from the font-family line in the Google Fonts CSS class example.'
+      placeholder: '"Lora", serif'
+
+    custom_font_size:
+      type: select
+      label: 'Custom Font Size'
+      help: 'Base font size for the custom font. Defaults to Medium. Only applies when a Custom Google Font URL is set.'
+      default: 'medium'
+      options:
+        small: 'Small'
+        medium: 'Medium (default)'
+        large: 'Large'
+
     footer_section:
       type: section
       title: 'Footer'
