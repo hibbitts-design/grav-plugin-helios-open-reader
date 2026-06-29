@@ -92,7 +92,7 @@ form:
               options:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
-              help: 'Show a compact sticky navigation bar at the bottom of the screen when scrolling past the main prev/next controls.'
+              help: 'Always visible on mobile; appears on tablets and larger screens when the main nav scrolls out of view.'
         parts_tab:
           type: tab
           title: List Display

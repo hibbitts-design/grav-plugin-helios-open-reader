@@ -453,6 +453,19 @@ footer .plain-text-link svg {
     -webkit-line-clamp: 1;
 }
 
+/* On mobile: hide static nav blocks and always show the sticky bar instead */
+@media (max-width: 639px) {
+    .prev-next-nav--top,
+    #htmx-prev-next .prev-next-nav {
+        display: none;
+    }
+
+    .hor-sticky-nav {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
 /* Equal-height buttons so a wrapping title on one side doesn't make it taller */
 .prev-next-nav {
     align-items: stretch;
