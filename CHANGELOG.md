@@ -1,3 +1,9 @@
+# v0.9.33
+## 06/29/2026
+
+1. [](#improved)
+   * Add sticky prev/next bar to section pages with mobile-always-on and scroll-triggered behaviour on larger screens
+
 # v0.9.32
 ## 06/29/2026
 
