@@ -439,6 +439,11 @@ footer .plain-text-link svg {
     border: none;
     border-radius: 0;
     margin-left: 0;
+    justify-content: flex-start;
+}
+
+.hor-sticky-nav .nav-button.next {
+    justify-content: flex-end;
 }
 
 .hor-sticky-nav .nav-button.prev {
