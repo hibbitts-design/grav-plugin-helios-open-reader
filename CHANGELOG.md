@@ -1,3 +1,9 @@
+# v0.9.34
+## 06/29/2026
+
+1. [](#bugfix)
+   * Fix sticky nav button alignment — NEXT always right-aligned, remove empty placeholder div
+
 # v0.9.33
 ## 06/29/2026
 
