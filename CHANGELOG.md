@@ -1,3 +1,9 @@
+# v0.9.32
+## 06/29/2026
+
+1. [](#improved)
+   * Add sticky prev/next bar on mobile and address nav button height, alignment, and title truncation
+
 # v0.9.31
 ## 06/29/2026
 
