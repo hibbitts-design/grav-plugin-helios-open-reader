@@ -394,3 +394,26 @@ footer .plain-text-link svg {
 .doc-step {
     list-style: none;
 }
+
+/* Equal-height buttons so a wrapping title on one side doesn't make it taller */
+.prev-next-nav {
+    align-items: stretch;
+}
+
+/* Top-align icon and text so labels read from the same baseline regardless of title length */
+.prev-next-nav .nav-button {
+    align-items: flex-start;
+}
+
+/* Re-centre the chevron icons vertically within the button */
+.prev-next-nav .nav-button > svg {
+    align-self: center;
+}
+
+/* Clamp nav button titles to 3 lines */
+.nav-button .title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
