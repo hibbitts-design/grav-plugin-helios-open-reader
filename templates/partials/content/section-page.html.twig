@@ -63,3 +63,6 @@
 <article class="prose prose-lg dark:prose-invert max-w-none">
     {{ page.content|raw }}
 </article>
+
+{# Sticky prev/next bar — visible via JS when main nav blocks are off-screen #}
+{% include 'partials/sticky-prev-next.html.twig' %}

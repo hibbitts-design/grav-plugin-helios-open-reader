@@ -85,6 +85,14 @@ form:
                 top: 'Top only'
                 bottom: 'Bottom only'
               help: 'Where to display the Previous/Next page navigation on section pages.'
+            header.show_sticky_nav:
+              type: toggle
+              label: 'Show Sticky Prev/Next Bar'
+              default: true
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Show a compact sticky navigation bar at the bottom of the screen when scrolling past the main prev/next controls.'
         parts_tab:
           type: tab
           title: List Display

@@ -1,0 +1,37 @@
+{# Sticky compact prev/next bar — mirrors nav-button structure from prev-next.html.twig.
+   Shown via JS (IntersectionObserver) when both main nav blocks are off-screen.
+   Suppressed in chromeless/embedded mode. #}
+{% if not chromeless and hor_show_sticky_nav|default(true) %}
+{% set prev = doc_prev|default(null) %}
+{% set next = doc_next|default(null) %}
+{% if prev or next %}
+<div class="hor-sticky-nav not-prose" id="hor-sticky-nav" aria-hidden="true">
+    <nav class="prev-next-nav" aria-label="Page navigation, sticky">
+        {% if prev %}
+        <a href="{{ prev.url }}" class="nav-button prev group" tabindex="-1">
+            <svg class="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            <div>
+                <span class="label">{{ 'THEME_HELIOS.PREVIOUS'|t }}</span>
+                <span class="title block">{{ prev.title }}</span>
+            </div>
+        </a>
+        {% else %}
+        <div></div>
+        {% endif %}
+        {% if next %}
+        <a href="{{ next.url }}" class="nav-button next group" tabindex="-1">
+            <div>
+                <span class="label">{{ 'THEME_HELIOS.NEXT'|t }}</span>
+                <span class="title block">{{ next.title }}</span>
+            </div>
+            <svg class="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </a>
+        {% endif %}
+    </nav>
+</div>
+{% endif %}
+{% endif %}

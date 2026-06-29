@@ -428,6 +428,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
             $twig->twig_vars['show_oer_attribution']   = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_oer_attribution', false);
             $twig->twig_vars['hor_prev_next_position'] = (string) $this->headerFallback($readerHome, $settingsFallback, 'prev_next_position', 'both');
+            $twig->twig_vars['hor_show_sticky_nav']    = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_sticky_nav', true);
 
             // Section label: reader home frontmatter overrides the language default,
             // falling back to book-list in nested mode.

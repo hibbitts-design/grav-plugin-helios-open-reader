@@ -123,4 +123,58 @@
     if (container) horInitSavePlace(container);
   });
 
+  // -------------------------------------------------------------------------
+  // Sticky prev/next nav
+  // Shows a compact fixed bar when both main nav blocks are off-screen.
+  // Observes .prev-next-nav--top (top nav) and #htmx-prev-next .prev-next-nav
+  // (bottom nav); bar appears only when neither is visible in the viewport.
+  // -------------------------------------------------------------------------
+  function horInitStickyNav() {
+    var stickyNav = document.getElementById('hor-sticky-nav');
+    if (!stickyNav) return;
+
+    var navBlocks = Array.prototype.slice.call(document.querySelectorAll(
+      '.prev-next-nav--top, #htmx-prev-next .prev-next-nav'
+    ));
+    if (navBlocks.length === 0) return;
+
+    var visible = new Set();
+
+    function updateStickyNav() {
+      var show = visible.size === 0;
+      stickyNav.classList.toggle('hor-sticky-nav--visible', show);
+      stickyNav.setAttribute('aria-hidden', show ? 'false' : 'true');
+      var links = stickyNav.querySelectorAll('a');
+      for (var i = 0; i < links.length; i++) {
+        links[i].tabIndex = show ? 0 : -1;
+      }
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          visible.add(entry.target);
+        } else {
+          visible.delete(entry.target);
+        }
+      });
+      updateStickyNav();
+    });
+
+    navBlocks.forEach(function (block) {
+      observer.observe(block);
+    });
+
+    // Disconnect before the next HTMX swap; horInitStickyNav re-runs after
+    window.addEventListener('htmx:beforeSwap', function () {
+      observer.disconnect();
+    }, { once: true });
+  }
+
+  horInitStickyNav();
+
+  window.addEventListener('helios:content-loaded', function () {
+    horInitStickyNav();
+  });
+
 })();
