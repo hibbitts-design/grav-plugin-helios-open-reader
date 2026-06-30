@@ -1,6 +1,9 @@
 # v0.9.35
 ## 06/30/2026
 
+1. [](#improved)
+   * Port HTMX history-miss fix from Helios theme v2.1.9 to plugin base templates
+
 1. [](#bugfix)
    * Fix WCAG 2.1 critical and serious accessibility issues in templates and shortcodes
 
