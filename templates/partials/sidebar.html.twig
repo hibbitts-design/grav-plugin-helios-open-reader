@@ -109,7 +109,8 @@
                     :aria-expanded="open"
                     aria-haspopup="listbox"
                     aria-label="{{ 'THEME_HELIOS.VERSION'|t }}"
-                    class="flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    class="flex items-start justify-between w-full px-3 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    style="text-align: left">
                 <span class="font-medium text-gray-900 dark:text-white">
                     {% set current_version_data = doc_version_info.versions|filter(v => v.is_current)|first %}
                     {{ current_version_data.label ?: doc_version }}
@@ -138,7 +139,7 @@
                        @click="mobileNavOpen = false"
                        role="option"
                        aria-selected="{{ version.is_current ? 'true' : 'false' }}"
-                       class="flex items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
+                       class="flex items-start justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
                               {{ version.is_current ? 'text-primary font-medium bg-gray-50 dark:bg-gray-700/50' : 'text-gray-700 dark:text-gray-300' }}">
                         <span>{{ version.label }}</span>
                         <span class="flex items-center gap-2">
