@@ -1,3 +1,9 @@
+# v0.9.35
+## 06/30/2026
+
+1. [](#bugfix)
+   * Fix WCAG 2.1 critical and serious accessibility issues in templates and shortcodes
+
 # v0.9.34
 ## 06/29/2026
 
