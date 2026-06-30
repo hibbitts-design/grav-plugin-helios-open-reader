@@ -1,3 +1,9 @@
+# v0.9.36
+## 06/30/2026
+
+1. [](#bugfix)
+   * Fix version dropdown label alignment for long wrapping text
+
 # v0.9.35
 ## 06/30/2026
 
