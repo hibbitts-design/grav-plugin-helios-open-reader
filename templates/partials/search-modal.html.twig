@@ -39,7 +39,7 @@
 
     <div class="search-dialog"
          x-data="searchComponent()"
-         x-effect="if (searchOpen) $nextTick(() => $refs.searchInput?.focus())"
+         x-init="(() => { let _searchOpener = null; $watch('searchOpen', val => { if (val) { _searchOpener = document.activeElement; $nextTick(() => $refs.searchInput?.focus()); } else if (_searchOpener) { $nextTick(() => { _searchOpener.focus(); _searchOpener = null; }); } }); })()"
          @keydown.arrow-up.prevent="selectPrevious()"
          @keydown.arrow-down.prevent="selectNext()"
          @keydown.enter.prevent="goToSelected()">
@@ -55,6 +55,7 @@
                    x-model="query"
                    @input.debounce.150ms="search()"
                    placeholder="{{ current_publication_part is defined and current_publication_part ? 'Search ' ~ (publication_home_title ?? 'this guide') ~ '...' : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
+                   aria-label="{{ current_publication_part is defined and current_publication_part ? 'Search ' ~ (publication_home_title ?? 'this guide') : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
                    autocomplete="off"
                    autocorrect="off"
                    autocapitalize="off"
@@ -67,6 +68,10 @@
 
         {# Search results #}
         <div class="search-results">
+            {# Live region for screen reader result announcements #}
+            <div aria-live="polite" aria-atomic="true" class="sr-only"
+                 x-text="!loading && query.length >= {{ search_config.min_chars ?: 2 }} ? (resultCount > 0 ? resultCount + ' result' + (resultCount !== 1 ? 's' : '') + ' for ' + query : 'No results for ' + query) : ''"></div>
+
             {# Results count header #}
             <div x-show="!loading && resultCount > 0"
                  x-transition:enter="transition-opacity duration-100"

@@ -20,7 +20,7 @@ class FeedbackRequestedShortcode extends Shortcode
             $icon    = GravExtension::svgImageFunction($iconUri);
 
             $output  = '<div class="md-alert md-alert--important hor-feedback-requested">';
-            $output .= '<p class="md-alert-title">' . ($icon ? $icon . ' ' : '') . $title . '</p>';
+            $output .= '<p class="md-alert-title">' . ($icon ? '<span aria-hidden="true">' . $icon . '</span> ' : '') . $title . '</p>';
             $output .= '<div class="md-alert-body">' . $content . '</div>';
             $output .= '</div>';
 

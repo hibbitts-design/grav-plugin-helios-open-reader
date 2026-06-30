@@ -105,7 +105,10 @@
             </label>
             <button @click="open = !open"
                     @click.outside="open = false"
+                    @keydown.escape.window="open = false"
                     :aria-expanded="open"
+                    aria-haspopup="listbox"
+                    aria-label="{{ 'THEME_HELIOS.VERSION'|t }}"
                     class="flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                 <span class="font-medium text-gray-900 dark:text-white">
                     {% set current_version_data = doc_version_info.versions|filter(v => v.is_current)|first %}
@@ -127,11 +130,14 @@
                  x-transition:leave-start="opacity-100 scale-100"
                  x-transition:leave-end="opacity-0 scale-95"
                  class="absolute left-0 right-0 mt-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10 z-10 max-h-64 overflow-y-auto"
+                 role="listbox"
                  x-cloak>
                 <div class="py-1">
                     {% for version in dropdown_versions %}
                     <a href="{{ version.url }}"
                        @click="mobileNavOpen = false"
+                       role="option"
+                       aria-selected="{{ version.is_current ? 'true' : 'false' }}"
                        class="flex items-center justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
                               {{ version.is_current ? 'text-primary font-medium bg-gray-50 dark:bg-gray-700/50' : 'text-gray-700 dark:text-gray-300' }}">
                         <span>{{ version.label }}</span>
@@ -219,9 +225,10 @@
                {{ item.external ? 'target="_blank" rel="noopener noreferrer"' : '' }}>
                 {{ item.label }}
                 {% if item.external %}
-                <svg class="w-3 h-3 ml-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-3 h-3 ml-auto opacity-50" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                 </svg>
+                <span class="sr-only"> (opens in new tab)</span>
                 {% endif %}
             </a>
             {% endfor %}

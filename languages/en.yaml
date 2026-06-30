@@ -52,3 +52,5 @@ THEME_HELIOS:
 
 PLUGIN_HELIOS_OPEN_READER:
   SKIP_TO_CONTENT: Skip to content
+  CLOSE_NAVIGATION: Close navigation
+  NAVIGATION: Navigation

@@ -5,7 +5,7 @@
 {% set prev = doc_prev|default(null) %}
 {% set next = doc_next|default(null) %}
 {% if prev or next %}
-<div class="hor-sticky-nav not-prose" id="hor-sticky-nav" aria-hidden="true">
+<div class="hor-sticky-nav not-prose" id="hor-sticky-nav" aria-hidden="true" inert>
     <nav class="prev-next-nav" aria-label="Page navigation, sticky">
         {% if prev %}
         <a href="{{ prev.url }}" class="nav-button prev group" tabindex="-1">

@@ -154,6 +154,11 @@
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
          @click="mobileNavOpen = false"
+         @keydown.enter="mobileNavOpen = false"
+         @keydown.space.prevent="mobileNavOpen = false"
+         role="button"
+         tabindex="0"
+         aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.CLOSE_NAVIGATION'|t }}"
          class="mobile-nav-overlay lg:hidden"
          x-cloak></div>
 
@@ -166,6 +171,10 @@
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="-translate-x-full"
          class="mobile-nav-panel lg:hidden"
+         role="dialog"
+         aria-modal="true"
+         aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.NAVIGATION'|t }}"
+         x-effect="if (mobileNavOpen) { $nextTick(() => { const first = $el.querySelector('a, button, [tabindex]:not([tabindex=\'-1\'])'); if (first) first.focus(); }) }"
          x-cloak>
         {% include 'partials/sidebar.html.twig' with { mobile: true } %}
     </div>

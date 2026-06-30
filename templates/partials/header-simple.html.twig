@@ -57,9 +57,10 @@
            {{ item.external ? 'target="_blank" rel="noopener noreferrer"' : '' }}>
             {{ item.label }}
             {% if item.external %}
-            <svg class="inline-block w-3 h-3 ml-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="inline-block w-3 h-3 ml-1 opacity-50" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
+            <span class="sr-only"> (opens in new tab)</span>
             {% endif %}
         </a>
         {% endfor %}
@@ -76,7 +77,7 @@
         {% if theme_config.search.enabled %}
         <button @click="searchOpen = true" data-ys-open
                 class="search-trigger"
-                aria-label="Search">
+                aria-label="Search documentation">
             <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>

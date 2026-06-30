@@ -144,6 +144,11 @@
       var show = visible.size === 0;
       stickyNav.classList.toggle('hor-sticky-nav--visible', show);
       stickyNav.setAttribute('aria-hidden', show ? 'false' : 'true');
+      if (show) {
+        stickyNav.removeAttribute('inert');
+      } else {
+        stickyNav.setAttribute('inert', '');
+      }
       var links = stickyNav.querySelectorAll('a');
       for (var i = 0; i < links.length; i++) {
         links[i].tabIndex = show ? 0 : -1;
