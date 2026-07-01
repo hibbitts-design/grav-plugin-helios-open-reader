@@ -1,8 +1,13 @@
+# v0.9.38
+## 07/01/2026
+
+1. [](#new)
+   * Add per-section section_label override for custom labels or hiding individual section labels
+
 # v0.9.37
 ## 07/01/2026
 
 1. [](#new)
-   * Add show_section_label toggle to hide section label on cards and page headers
    * Add per-section section_label override for custom labels or hiding individual section labels
 
 # v0.9.36
