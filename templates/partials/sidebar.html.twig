@@ -3,6 +3,7 @@
  # Changes from theme original:
  #   1. Site icon wrapped in show_site_icon toggle + custom icon support (search: PLUGIN CHANGE 1)
  #   2. nav_items macro: active branch persisted to localStorage + aria-expanded binding (search: PLUGIN CHANGE 2)
+ #   8. Version dropdown: keyboard navigation (WCAG 2.1 §4.1.2) — Up/Down arrow moves focus between options; Escape closes and returns focus to trigger (search: PLUGIN CHANGE 8)
  #   3. Logo link uses logo_url to navigate to reader/publication home page (search: PLUGIN CHANGE 3)
  #   4. Section sidebar image banner shown below logo header (search: PLUGIN ADDITION 1)
  #   5. Section label shown above nav when version dropdown is hidden (search: PLUGIN ADDITION 2)
@@ -99,13 +100,36 @@
     {% endif %}
     {% if theme_config.versioning.enabled and theme_config.versioning.show_dropdown and doc_version_info is defined and dropdown_versions|length > 1 %}
     <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-800">
-        <div x-data="{ open: false }" class="relative">
+        <div x-data="{
+            open: false,
+            openDropdown() {
+                this.open = true;
+                this.$nextTick(() => {
+                    const sel = this.$el.querySelector('[role=option][aria-selected=true]') || this.$el.querySelector('[role=option]');
+                    if (sel) sel.focus();
+                });
+            },
+            closeDropdown() {
+                this.open = false;
+                this.$nextTick(() => this.$el.querySelector('button[aria-haspopup]').focus());
+            },
+            focusOption(dir) {
+                const opts = Array.from(this.$el.querySelectorAll('[role=option]'));
+                const cur = opts.indexOf(document.activeElement);
+                const next = dir === 'down'
+                    ? (cur < opts.length - 1 ? cur + 1 : 0)
+                    : (cur > 0 ? cur - 1 : opts.length - 1);
+                opts[next]?.focus();
+            }
+        }" class="relative">
             <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">
                 {{ 'THEME_HELIOS.VERSION'|t }}
             </label>
-            <button @click="open = !open"
-                    @click.outside="open = false"
-                    @keydown.escape.window="open = false"
+            <button @click="open ? closeDropdown() : openDropdown()"
+                    @click.outside="if (open) closeDropdown()"
+                    @keydown.escape.prevent="if (open) closeDropdown()"
+                    @keydown.arrow-down.prevent="open ? focusOption('down') : openDropdown()"
+                    @keydown.arrow-up.prevent="open ? focusOption('up') : openDropdown()"
                     :aria-expanded="open"
                     aria-haspopup="listbox"
                     aria-label="{{ 'THEME_HELIOS.VERSION'|t }}"
@@ -118,7 +142,7 @@
                         <span class="ml-1 text-xs text-green-600 dark:text-green-400">({{ 'THEME_HELIOS.VERSION_LATEST'|t }})</span>
                     {% endif %}
                 </span>
-                <svg class="w-4 h-4 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
@@ -132,14 +156,21 @@
                  x-transition:leave-end="opacity-0 scale-95"
                  class="absolute left-0 right-0 mt-1 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 dark:ring-white/10 z-10 max-h-64 overflow-y-auto"
                  role="listbox"
+                 @keydown.arrow-down.prevent="focusOption('down')"
+                 @keydown.arrow-up.prevent="focusOption('up')"
+                 @keydown.home.prevent="$el.querySelector('[role=option]')?.focus()"
+                 @keydown.end.prevent="Array.from($el.querySelectorAll('[role=option]')).at(-1)?.focus()"
+                 @keydown.escape.prevent="closeDropdown()"
+                 @keydown.tab="open = false"
                  x-cloak>
                 <div class="py-1">
                     {% for version in dropdown_versions %}
                     <a href="{{ version.url }}"
                        @click="mobileNavOpen = false"
                        role="option"
+                       tabindex="-1"
                        aria-selected="{{ version.is_current ? 'true' : 'false' }}"
-                       class="flex items-start justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors
+                       class="flex items-start justify-between px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 focus:bg-gray-100 dark:focus:bg-gray-700 focus:outline-none transition-colors
                               {{ version.is_current ? 'text-primary font-medium bg-gray-50 dark:bg-gray-700/50' : 'text-gray-700 dark:text-gray-300' }}">
                         <span>{{ version.label }}</span>
                         <span class="flex items-center gap-2">
@@ -147,7 +178,7 @@
                                 <span class="text-xs px-1.5 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400">{{ 'THEME_HELIOS.VERSION_LATEST'|t }}</span>
                             {% endif %}
                             {% if version.is_current %}
-                                <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-4 h-4 text-primary" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                 </svg>
                             {% endif %}
