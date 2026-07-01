@@ -1,3 +1,9 @@
+# v0.9.39
+## 07/01/2026
+
+1. [](#bugfix)
+   * Use page.template check to prevent section-list's section_label from hiding chapter numbers on section landing pages
+
 # v0.9.38
 ## 07/01/2026
 
