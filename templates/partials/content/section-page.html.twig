@@ -26,7 +26,9 @@
    Falls back to the page's own section_number for section landing pages, which
    have no parent with a section_number. #}
 {% set display_section_number = page.parent.header.section_number ?? page.header.section_number ?? null %}
-{% set per_section_label = page.parent.header.section_label ?? null %}
+{% set per_section_label = page.template == 'section-page'
+    ? (page.parent.header.section_label ?? null)
+    : (page.header.section_label ?? null) %}
 {% set page_icon = page.header.icon ?? null %}
 <header class="mb-6">
     {% if per_section_label is not null %}
