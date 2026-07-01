@@ -62,6 +62,16 @@
         break-inside: avoid;
     }
 
+    /* Prevent figures and their images from overflowing the print area */
+    figure {
+        max-width: 100% !important;
+    }
+
+    figure img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
     /* Avoid breaking inside lists and individual list items */
     ul, ol, li {
         break-inside: avoid;

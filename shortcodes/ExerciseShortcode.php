@@ -15,13 +15,21 @@ class ExerciseShortcode extends Shortcode
                 return '';
             }
 
-            $title   = htmlspecialchars($sc->getParameter('title', 'Exercise'), ENT_QUOTES, 'UTF-8');
-            $iconUri = 'plugin://github-markdown-alerts/assets/icons/octicon-warning.svg';
+            $title   = htmlspecialchars($sc->getParameter('title', 'Interactive Activity'), ENT_QUOTES, 'UTF-8');
+            $iconUri = 'plugin://github-markdown-alerts/assets/icons/octicon-tip.svg';
             $icon    = GravExtension::svgImageFunction($iconUri);
 
-            $output  = '<div class="md-alert md-alert--warning hor-exercise">';
+            // Render the first link in the content as a prominent button
+            if (preg_match('/<a\s[^>]*href=["\']([^"\']+)["\'][^>]*>/i', $content, $match)) {
+                $href = htmlspecialchars(html_entity_decode($match[1], ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+                $body = '<p><a class="hor-h5p-btn" href="' . $href . '" target="_blank" rel="noopener">Open Interactive Activity ↗</a></p>';
+            } else {
+                $body = $content;
+            }
+
+            $output  = '<div class="md-alert md-alert--tip hor-h5p-exercise">';
             $output .= '<p class="md-alert-title">' . ($icon ? '<span aria-hidden="true">' . $icon . '</span> ' : '') . $title . '</p>';
-            $output .= '<div class="md-alert-body">' . $content . '</div>';
+            $output .= '<div class="md-alert-body">' . $body . '</div>';
             $output .= '</div>';
 
             return $output;
