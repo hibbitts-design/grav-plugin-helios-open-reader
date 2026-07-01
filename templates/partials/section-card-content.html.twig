@@ -1,5 +1,5 @@
 {# Inner content for section-card - section number, icon, title, arrow, description, author, edition, lastmod, badge, license #}
-{% if section_number %}
+{% if section_number and show_section_label is not same as(false) %}
 <p class="text-xs font-medium text-primary uppercase tracking-wider mb-2">{{ section_label|default('Section') }} {{ section_number }}</p>
 {% endif %}
 <div class="flex items-center gap-3 text-base font-semibold text-gray-900 dark:text-white {{ link ? 'group-hover:text-primary' : '' }} transition-colors">

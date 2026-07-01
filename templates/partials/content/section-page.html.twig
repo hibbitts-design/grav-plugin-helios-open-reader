@@ -28,7 +28,7 @@
 {% set display_section_number = page.parent.header.section_number ?? page.header.section_number ?? null %}
 {% set page_icon = page.header.icon ?? null %}
 <header class="mb-6">
-    {% if display_section_number and not chromeless %}
+    {% if display_section_number and not chromeless and show_section_label is not same as(false) %}
     <p class="text-sm font-medium text-primary uppercase tracking-wider mb-1">
         {{ section_label }} {{ display_section_number }}
     </p>

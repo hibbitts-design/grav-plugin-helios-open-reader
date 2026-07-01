@@ -76,6 +76,14 @@ form:
               toggleable: true
               placeholder: 'e.g. Chapter, Project, Unit, Module'
               help: 'Label for sections in page headers, cards, and sidebar. Leave empty to use the language default (e.g. "Section").'
+            header.show_section_label:
+              type: toggle
+              label: 'Show Section Label'
+              default: true
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Show the section label and number (e.g. "Chapter 1") on section cards and page headers. Disable when section titles already include numbering.'
             header.prev_next_position:
               type: select
               label: 'Prev/Next Page Controls Position'
