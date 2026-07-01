@@ -23,6 +23,13 @@ form:
               toggleable: true
               placeholder: 'e.g. 1 or 1.2'
               help: 'Optional section number displayed in the page header and inherited by all pages within this section. Leave empty to omit.'
+            header.section_label:
+              type: text
+              size: medium
+              label: 'Section Label Override'
+              toggleable: true
+              placeholder: 'e.g. Appendix 1, Introduction, Conclusion'
+              help: 'Custom label shown above this section card and page header. Overrides the publication section label and number. Leave empty to hide the label for this section only.'
             header.learning_objectives:
               type: textarea
               label: Learning Objectives
