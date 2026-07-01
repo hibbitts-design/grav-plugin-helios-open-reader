@@ -1,3 +1,9 @@
+# v0.9.40
+## 07/01/2026
+
+1. [](#improved)
+   * Use system sans-serif for section-list cards, resume strip, Start Reading button, and page footer
+
 # v0.9.39
 ## 07/01/2026
 
