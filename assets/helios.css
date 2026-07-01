@@ -493,3 +493,11 @@ footer .plain-text-link svg {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+/* Use system sans-serif for section-list UI elements and page footer */
+.section-card-grid,
+.hor-resume-strip,
+.doc-btn,
+footer {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
