@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 0.9.36
+version: 0.9.37
 description: Adds reader sections, reading progress, Save My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:

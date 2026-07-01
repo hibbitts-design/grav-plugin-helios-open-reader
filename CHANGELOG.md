@@ -1,3 +1,9 @@
+# v0.9.37
+## 07/01/2026
+
+1. [](#improved)
+   * Add show_section_label toggle to hide section label on cards and page headers
+
 # v0.9.36
 ## 06/30/2026
 
