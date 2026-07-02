@@ -1,14 +1,9 @@
-# v0.9.44
-## 07/02/2026
-
-1. [](#improved)
-   * Render full body content in exercise shortcode when block elements are present
-
 # v0.9.43
 ## 07/02/2026
 
 1. [](#improved)
    * Add [references] shortcode, improve H5P exercise blocks, and add figcaption styling
+   * Render full body content in exercise shortcode when block elements are present
 
 # v0.9.42
 ## 07/01/2026
