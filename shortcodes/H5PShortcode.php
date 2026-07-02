@@ -32,7 +32,8 @@ class H5PShortcode extends Shortcode
                 return '<p><iframe src="' . htmlspecialchars($embedurl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen"></iframe>' . $resizer . '</p>';
 
             } elseif ($h5purl) {
-                return '<p><iframe src="' . htmlspecialchars($h5purl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen"></iframe>' . $resizer . '</p>';
+                $h5purl = htmlspecialchars(html_entity_decode($h5purl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+                return '<p><iframe src="' . $h5purl . '" title="' . $title . '" width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen"></iframe>' . $resizer . '</p>';
             }
 
         });
