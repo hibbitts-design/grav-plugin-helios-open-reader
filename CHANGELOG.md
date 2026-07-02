@@ -1,8 +1,14 @@
+# v0.9.43
+## 07/02/2026
+
+1. [](#improved)
+   * Add [references] shortcode, improve H5P exercise blocks, and add figcaption styling
+
 # v0.9.42
 ## 07/01/2026
 
 1. [](#improved)
-   * Add [references] shortcode, improve H5P exercise blocks, and add figcaption styling.
+   * Add [references] shortcode, improve H5P exercise blocks, and add figcaption styling
 
 # v0.9.41
 ## 07/01/2026
