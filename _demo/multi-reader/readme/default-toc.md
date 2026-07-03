@@ -26,7 +26,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - Ready in minutes – a complete, pre-configured package with demo content included
 - Structured – supports sections with sub-pages, auto-detected from folder naming, with a configurable section label (Chapter, Project, Unit, Module, or any custom term)
 - Callout blocks – Learning Objectives, Key Takeaways, Examples, Exercises, Definitions, Reflections, and Case Studies, all without coding
-- Save My Place – readers can return to where they left off — a feature most open textbook platforms don't offer
+- Keep My Place – readers can return to where they left off — a feature most open textbook platforms don't offer
 - Reading progress – accessible progress indicator shows current page position (e.g. Page 4 of 22)
 - LMS-ready – embed any page cleanly in Canvas, Moodle, or Brightspace with a single URL parameter — no LTI configuration required
 - No build pipeline – edit in the browser and changes go live immediately; nothing to install locally
@@ -36,7 +36,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 
 ## Features
 
-Helios Open Reader provides a ready-built site for open educational content – open textbooks, readers, and student projects – using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built site for open educational content – open textbooks, readers, and student projects – using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Keep My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ### Reader Structure
 - **Sections structure** – top-level folders named `section-N` are auto-detected as sections and render as cards on the reader home
@@ -62,7 +62,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
+- **Keep My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
 - **Reading progress indicator** – shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** – configurable position: top, bottom, or both
 - **TOC scroll spy** – active heading highlighted in the Table of Contents as the reader scrolls
@@ -399,7 +399,7 @@ Custom CSS, JavaScript, shortcodes, callout blocks, and Helios-inspired Admin Pa
 ### Assets
 - **helios.css** – Theme styling (announcement blockquotes, heading typography, Font Awesome spacing, responsive containers)
 - **reader.css** – Reader-specific styles (callout block spacing, resume reading strip, reading progress indicator, top Prev/Next navigation styling)
-- **helios.js** – Embedly dark/light theme support, Save My Place localStorage logic, HTMX content-loaded integration
+- **helios.js** – Embedly dark/light theme support, Keep My Place localStorage logic, HTMX content-loaded integration
 - **print.css** – Print stylesheet (hides navigation chrome, resets colors for light and dark themes, controls page breaks, displays absolute link URLs, sets consistent page margins)
 - **admin.css** – Helios-inspired Admin Panel styling (conditionally loaded based on the Helios-inspired Admin Styling setting)
 - **admin.js** – Admin panel JavaScript customizations

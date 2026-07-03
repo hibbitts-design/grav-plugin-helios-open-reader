@@ -15,7 +15,7 @@ A free, open-source plugin that transforms the [Grav Premium Helios theme](https
 ## What Sets It Apart
 
 - **Built for open education from the ground up** — CC license display, OER attribution footer, callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises), and a section structure designed for open textbooks, course readers, and OER.
-- **Readers never lose their place** — Save My Place records the last page visited and surfaces a "Continue reading" strip on return. Most open textbook and reader platforms don't offer this at all.
+- **Readers never lose their place** — Keep My Place records the last page visited and surfaces a "Continue reading" strip on return. Most open textbook and reader platforms don't offer this at all.
 - **Content you own and can take anywhere** — everything lives as portable Markdown files on your server, fully independent of any platform or service. Switch tools, migrate hosts, or open a pull request — your content travels with you, not with the platform.
 - **Embeds cleanly into any LMS** — one URL parameter displays content only, without surrounding navigation; internal links carry it forward automatically. No LTI configuration or institutional integration required.
 - **No build pipeline, ever** — edit in the browser-based Admin panel and changes go live immediately. Unlike static site generators for open textbooks, there's nothing to install locally and no commit → push → build → deploy cycle.
@@ -115,7 +115,7 @@ search:
 
 ## Features
 
-Helios Open Reader provides a ready-built site for open educational content — open textbooks, readers, and student projects — using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built site for open educational content — open textbooks, readers, and student projects — using portable Markdown files you fully control. Highlights include a configurable sections structure, multi-publication support, a full set of callout blocks, Keep My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ### Reader Structure
 - **Sections structure** — top-level folders named `section-N` are auto-detected as sections and render as section cards on the reader home
@@ -141,7 +141,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - Five built-in GitHub-style callouts via the github-markdown-alerts plugin: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Save My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
+- **Keep My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
 - **Reading progress indicator** — shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** — configurable position: top, bottom, or both
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
@@ -394,7 +394,7 @@ The **Part Label** (default: `Part`) can be customized via **Admin → Pages →
 
 - **helios.css** – Theme styling (announcement blockquotes, heading typography, Font Awesome spacing, responsive containers)
 - **reader.css** – Reader-specific styles (callout block spacing, resume reading strip, reading progress indicator, top Prev/Next navigation styling)
-- **helios.js** – Embedly dark/light theme support, Save My Place localStorage logic, HTMX content-loaded integration
+- **helios.js** – Embedly dark/light theme support, Keep My Place localStorage logic, HTMX content-loaded integration
 - **print.css** – Print stylesheet (hides navigation chrome, resets colors for light and dark themes, controls page breaks, displays absolute link URLs, sets consistent page margins)
 - **admin.css** – Helios-inspired Admin Panel styling (conditionally loaded based on the Helios-inspired Admin Styling setting)
 - **admin.js** – Admin panel JavaScript customizations

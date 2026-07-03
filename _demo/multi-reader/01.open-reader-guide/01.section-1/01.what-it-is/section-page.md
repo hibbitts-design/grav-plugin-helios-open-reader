@@ -4,7 +4,7 @@ sitemap:
     lastmod: '19-06-2026 21:22'
 ---
 
-Helios Open Reader provides a ready-built open textbook or reader site using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Save My Place navigation, and optional Git Sync for open collaborative authoring.
+Helios Open Reader provides a ready-built open textbook or reader site using portable Markdown files you fully control. Highlights include a configurable sections structure, a full set of callout blocks, Keep My Place navigation, and optional Git Sync for open collaborative authoring.
 
 ## Reader Structure
 
@@ -76,7 +76,7 @@ Helios Open Reader provides a ready-built open textbook or reader site using por
 
 ## Navigation & Reading Experience
 
-- **Save My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
+- **Keep My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
 - **Reading progress indicator** – shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** – configurable position: top, bottom, or both
 - **TOC scroll spy** – active heading highlighted in the Table of Contents as the reader scrolls
@@ -86,6 +86,6 @@ Helios Open Reader provides a ready-built open textbook or reader site using por
 [key-takeaways]
 - Content lives in portable Markdown files you own and control
 - Sections structure is auto-detected from folder naming – no configuration needed
-- Callout blocks, Save My Place, and reading progress are all built in
+- Callout blocks, Keep My Place, and reading progress are all built in
 - The reader works standalone or embedded in any LMS
 [/key-takeaways]

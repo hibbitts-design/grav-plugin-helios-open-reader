@@ -8,7 +8,7 @@ Helios Open Reader is a strong fit when you:
 - Need a structured reader layout with sections and sub-pages, auto-detected from your folder naming
 - Want callout blocks (Learning Objectives, Key Takeaways, Examples, Exercises, Definitions, Reflections, Case Studies) without coding
 - Need to embed reader pages directly into an LMS (Canvas, Moodle, Brightspace) as clean iframes, with flexible Table of Contents positioning
-- Want a Save My Place feature so readers can return to where they left off
+- Want a Keep My Place feature so readers can return to where they left off
 - Want collaborative open authoring – invite readers to view source and suggest improvements via GitHub or Codeberg
 - Need rich content embedding (H5P, iFrames, Google Slides, PDFs, Embedly) without coding
 - Value keeping content in portable Markdown files with full ownership and hosting control
