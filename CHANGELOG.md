@@ -1,3 +1,12 @@
+# v0.9.44
+## 07/03/2026
+
+1. [](#improved)
+   * Remove mobile breadcrumb title div from header
+
+1. [](#bugfix)
+   * Fix URL double-encoding and H5P mobile layout in embed shortcodes
+
 # v0.9.43
 ## 07/02/2026
 
