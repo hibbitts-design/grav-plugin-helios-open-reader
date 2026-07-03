@@ -27,7 +27,8 @@ class PDFShortcode extends Shortcode
             }
 
             if ($pdfurl) {
-                $output = '<div class="responsive-container' . $ratioClass . '"><iframe src="https://docs.google.com/gview?url=' . htmlspecialchars($pdfurl, ENT_QUOTES, 'UTF-8') . '&amp;embedded=true" title="' . $title . '"></iframe></div>';
+                $pdfurl = htmlspecialchars(html_entity_decode($pdfurl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+                $output = '<div class="responsive-container' . $ratioClass . '"><iframe src="https://docs.google.com/gview?url=' . $pdfurl . '&amp;embedded=true" title="' . $title . '"></iframe></div>';
 
                 return $output;
             }

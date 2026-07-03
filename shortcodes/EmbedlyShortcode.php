@@ -16,8 +16,9 @@ class EmbedlyShortcode extends Shortcode
             $embedlycardurl = $sc->getParameter('url', $sc->getBbCode()) ?: $sc->getContent();
 
             if ($embedlycardurl) {
-                $host = parse_url($embedlycardurl, PHP_URL_HOST) ?: $embedlycardurl;
-                return '<a class="embedly-card" data-card-controls="0" data-card-align="left" href="' . htmlspecialchars($embedlycardurl, ENT_QUOTES, 'UTF-8') . '" aria-label="' . htmlspecialchars('Embedded content from ' . $host, ENT_QUOTES, 'UTF-8') . '">View embedded content</a>';
+                $embedlycardurl = htmlspecialchars(html_entity_decode($embedlycardurl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
+                $host = parse_url(html_entity_decode($embedlycardurl, ENT_QUOTES, 'UTF-8'), PHP_URL_HOST) ?: $embedlycardurl;
+                return '<a class="embedly-card" data-card-controls="0" data-card-align="left" href="' . $embedlycardurl . '" aria-label="' . htmlspecialchars('Embedded content from ' . $host, ENT_QUOTES, 'UTF-8') . '">View embedded content</a>';
             }
 
         });
