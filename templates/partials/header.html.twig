@@ -22,15 +22,6 @@
         </svg>
     </button>
 
-    {# Breadcrumbs (mobile) - show on smaller screens #}
-    <div class="lg:hidden flex-1 min-w-0">
-        {% if doc_breadcrumbs is defined and doc_breadcrumbs|length > 0 %}
-            <span class="text-sm font-medium text-gray-900 dark:text-white truncate">
-                {{ doc_breadcrumbs|last.title }}
-            </span>
-        {% endif %}
-    </div>
-
     {# Page title area (desktop) - version badge on left #}
     <div class="hidden lg:flex lg:items-center flex-1">
         {# Version badge #}
