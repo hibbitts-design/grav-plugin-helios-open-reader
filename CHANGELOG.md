@@ -1,3 +1,9 @@
+# v0.9.45
+## XX/XX/2026
+
+1. [](#improved)
+   * Changed "Save My Place" to "Keep My Place"
+
 # v0.9.44
 ## 07/03/2026
 
