@@ -1,3 +1,9 @@
+# v0.9.46
+## XX/XX/2026
+
+1. [](#improved)
+   * Restored PDF shortcode default ratio to 16:9
+
 # v0.9.45
 ## 07/05/2026
 
