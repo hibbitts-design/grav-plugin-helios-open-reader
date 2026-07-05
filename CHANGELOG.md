@@ -1,3 +1,9 @@
+# v0.9.48
+## 07/05/2026
+
+1. [](#improved)
+   * Suppress sidebar section label when nested_section_nav is enabled, as the collapsible nav parent already provides that context
+
 # v0.9.47
 ## 07/05/2026
 
