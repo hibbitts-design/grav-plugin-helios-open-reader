@@ -76,9 +76,9 @@
     {% endif %}
     {# END PLUGIN ADDITION 1 #}
 
-    {# PLUGIN ADDITION 2: Section label — shown above nav when version dropdown is hidden #}
+    {# PLUGIN ADDITION 2: Section label — shown above nav when version dropdown is hidden and nested_section_nav is off #}
     {% set show_version_dropdown = theme_config.versioning.enabled and theme_config.versioning.show_dropdown and doc_version_info is defined and doc_version_info.count > 1 %}
-    {% if not show_version_dropdown and doc_version_info is defined and doc_version_info.count >= 1 %}
+    {% if not show_version_dropdown and doc_version_info is defined and doc_version_info.count >= 1 and not (nested_section_nav is defined and nested_section_nav) %}
         {% set current_section = doc_version_info.versions|filter(v => v.is_current)|first %}
         {% if current_section %}
         <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
