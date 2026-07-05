@@ -1,3 +1,9 @@
+# v0.9.47
+## 07/05/2026
+
+1. [](#new)
+   * Add nested_section_nav option and position it with other section fields in the Content tab blueprint
+
 # v0.9.46
 ## 07/05/2026
 
