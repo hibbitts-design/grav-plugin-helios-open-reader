@@ -14,10 +14,10 @@ class PDFShortcode extends Shortcode
 
             // Get shortcode content and parameters
             $pdfurl = $sc->getParameter('url', $sc->getBbCode()) ?: $sc->getContent();
-            $ratio  = $sc->getParameter('ratio', '16:9');
+            $ratio  = $sc->getParameter('ratio', 'portrait');
             $title  = htmlspecialchars($sc->getParameter('title', 'PDF document'), ENT_QUOTES, 'UTF-8');
 
-            // Map ratio parameter to CSS modifier class; default is 16:9
+            // Map ratio parameter to CSS modifier class; default is portrait
             if ($ratio === '4:3') {
                 $ratioClass = ' responsive-container--4x3';
             } elseif ($ratio === 'portrait') {

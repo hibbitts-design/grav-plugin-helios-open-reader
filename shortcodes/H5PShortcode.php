@@ -29,11 +29,11 @@ class H5PShortcode extends Shortcode
                     ? $h5proot . $h5pid . '/embed'
                     : $h5proot . $h5pid;
 
-                return '<div class="responsive-container"><iframe src="' . htmlspecialchars($embedurl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
+                return '<div class="h5p-container"><iframe src="' . htmlspecialchars($embedurl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
 
             } elseif ($h5purl) {
                 $h5purl = htmlspecialchars(html_entity_decode($h5purl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
-                return '<div class="responsive-container"><iframe src="' . $h5purl . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
+                return '<div class="h5p-container"><iframe src="' . $h5purl . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
             }
 
         });
