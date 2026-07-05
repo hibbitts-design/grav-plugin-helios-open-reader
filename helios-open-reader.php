@@ -381,7 +381,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $publicationPages = [];
         if ($isMultiPublication) {
             foreach ($root->children() as $child) {
-                if ($child->template() === 'section-list' && $child->visible()) {
+                if ($child->template() === 'section-list' && $child->visible() && $child->published()) {
                     $publicationPages[] = $child;
                 }
             }
@@ -516,16 +516,21 @@ class HeliosOpenReaderPlugin extends Plugin
                     $nCurrentUrl  = $page->url();
                     $nSubItems    = $this->buildNavTree($nSectionRoot->children()->visible(), $nCurrentUrl);
                     $nRootActive  = ($nSectionRoot->url() === $nCurrentUrl);
-                    $twig->twig_vars['nav_tree'] = [[
-                        'url'           => $nSectionRoot->url(),
-                        'title'         => $nSectionRoot->title(),
-                        'route'         => $nSectionRoot->route(),
-                        'active'        => $nRootActive,
-                        'parent_active' => !$nRootActive && $this->hasActiveDescendant($nSubItems),
-                        'children'      => $nSubItems,
-                        'icon'          => $nSectionRoot->header()->icon ?? null,
-                        'api'           => [],
-                    ]];
+                    if (!($readerHome->header()->nested_section_nav ?? false)) {
+                        // Flat mode: list chapters directly without the section home as a parent nav item
+                        $twig->twig_vars['nav_tree'] = $nSubItems;
+                    } else {
+                        $twig->twig_vars['nav_tree'] = [[
+                            'url'           => $nSectionRoot->url(),
+                            'title'         => $nSectionRoot->title(),
+                            'route'         => $nSectionRoot->route(),
+                            'active'        => $nRootActive,
+                            'parent_active' => !$nRootActive && $this->hasActiveDescendant($nSubItems),
+                            'children'      => $nSubItems,
+                            'icon'          => $nSectionRoot->header()->icon ?? null,
+                            'api'           => [],
+                        ]];
+                    }
 
                     // Helios overrides doc_prev/doc_next with cross-version links when it sees
                     // doc_version_info. Set them from section page order instead;

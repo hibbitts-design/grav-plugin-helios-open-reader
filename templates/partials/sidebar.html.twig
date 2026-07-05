@@ -111,7 +111,6 @@
             },
             closeDropdown() {
                 this.open = false;
-                this.$nextTick(() => this.$el.querySelector('button[aria-haspopup]').focus());
             },
             focusOption(dir) {
                 const opts = Array.from(this.$el.querySelectorAll('[role=option]'));
@@ -192,7 +191,7 @@
     {% endif %}
 
     {# PLUGIN ADDITION 3: Back to Readers list link — shown in multi-publication mode #}
-    {% if is_multi_publication is defined and is_multi_publication and reader_list_url and not (publication_home_url is defined and publication_home_url) %}
+    {% if is_multi_publication is defined and is_multi_publication and reader_list_url and publication_pages|length > 1 and not (publication_home_url is defined and publication_home_url) %}
     <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
         <a href="{{ reader_list_url }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">
             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -205,7 +204,7 @@
     {# END PLUGIN ADDITION 3 #}
 
     {# PLUGIN ADDITION 4: Back to Reader Home link — shown on section pages in multi-publication mode #}
-    {% if publication_home_url is defined and publication_home_url %}
+    {% if publication_home_url is defined and publication_home_url and publication_pages|length > 1 %}
     <div class="px-4 py-1 border-b border-gray-200 dark:border-gray-800">
         <a href="{{ publication_home_url }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" @click="mobileNavOpen = false">
             <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

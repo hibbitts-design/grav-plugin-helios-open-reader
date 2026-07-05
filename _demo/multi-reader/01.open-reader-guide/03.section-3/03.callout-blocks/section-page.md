@@ -3,9 +3,10 @@ title: 'Callout Blocks'
 ---
 
 [objectives]
-- Identify the eleven callout blocks available in Helios Open Reader
+- Identify the callout blocks and blockquote shortcode available in Helios Open Reader
 - Apply callout blocks in your own reader content
 - Choose the appropriate callout type for different instructional purposes
+- Use `[excerpt]` for multi-paragraph quoted passages that need subtler styling
 [/objectives]
 
 Callout blocks are structured, visually styled instructional elements you can drop into any page. All callouts follow the same syntax:
@@ -135,3 +136,35 @@ Originally planned four sections mirroring the course schedule, but the third an
 [/process-note]
 
 Use [raw]`[process-note]`[/raw] (blue) in student project pages to document iterations, pivots, and decisions made during the work — showing the process as well as the outcome.
+
+## Blockquotes and Excerpts
+
+For short pull quotes, use standard Markdown blockquote syntax:
+
+[raw]
+```
+> "A short quoted passage."
+```
+[/raw]
+
+For longer multi-paragraph passages where the default bold accent border would be visually heavy, use [raw]`[excerpt]`[/raw]:
+
+[raw]
+```
+[excerpt]
+First paragraph of the passage.
+
+Second paragraph of the passage.
+[/excerpt]
+```
+[/raw]
+
+[excerpt]
+"Overheard in a coffee shop near campus:
+
+Hey, Frank, you don't look too happy.
+
+Yeah, I'm mad as hell..."
+[/excerpt]
+
+[raw]`[excerpt]`[/raw] renders with a subtle grey left border and italic text — closer to how long quotations appear in print. To revert to the default blockquote style, replace [raw]`[excerpt]...[/excerpt]`[/raw] with standard Markdown `> text`.

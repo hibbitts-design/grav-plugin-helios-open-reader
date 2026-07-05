@@ -84,6 +84,14 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Show the section label and number (e.g. "Chapter 1") on section cards and page headers. Disable when section titles already include numbering.'
+            header.nested_section_nav:
+              type: toggle
+              label: 'Nested Section Nav'
+              default: false
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Show a collapsible section home parent in the sidebar above the chapter list. By default chapters list directly in the sidebar.'
             header.prev_next_position:
               type: select
               label: 'Prev/Next Page Controls Position'
