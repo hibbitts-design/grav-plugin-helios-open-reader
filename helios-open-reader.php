@@ -293,6 +293,7 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');
         $twig->twig_vars['site_icon']                 = $this->config->get('plugins.helios-open-reader.site_icon', '');
         $twig->twig_vars['show_plugin_credits']       = $this->config->get('plugins.helios-open-reader.show_plugin_credits', true);
+        $twig->twig_vars['content_text_size']         = $this->config->get('plugins.helios-open-reader.content_text_size', 'comfortable');
         $twig->twig_vars['helios_base_simple']        = 'partials/base-simple.html.twig';
 
         $twig->twig_vars['logo_url'] = $this->grav['base_url'] ?: '/';

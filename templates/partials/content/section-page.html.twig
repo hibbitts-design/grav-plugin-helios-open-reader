@@ -67,7 +67,8 @@
 {% endif %}
 
 {# Main page content #}
-<article class="prose prose-lg dark:prose-invert max-w-none">
+{# PLUGIN ADDITION — content_text_size setting toggles prose-lg (default: comfortable) #}
+<article class="prose {{ content_text_size == 'standard' ? '' : 'prose-lg' }} dark:prose-invert max-w-none">
     {{ page.content|raw }}
 </article>
 

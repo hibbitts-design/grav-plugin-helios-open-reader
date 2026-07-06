@@ -75,6 +75,15 @@ form:
       title: 'Typography'
       underline: true
 
+    content_text_size:
+      type: select
+      label: 'Content Text Scaling'
+      help: 'Body text size for section/reading page content. Defaults to Comfortable. "Standard" reduces reading text size by one step (approx. 16px vs 18px at the theme''s default Medium font size).'
+      default: 'comfortable'
+      options:
+        standard: 'Standard (Smaller Reading Text)'
+        comfortable: 'Comfortable (Larger Reading Text, default)'
+
     custom_font_url:
       type: text
       size: long
