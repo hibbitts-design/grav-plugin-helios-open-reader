@@ -1,8 +1,8 @@
-# v0.9.49
-## XX/XX/2026
+# v1.0.0
+## 07/12/2026
 
 1. [](#new)
-   * Add Content Text Scaling setting to toggle comfortable (18px) reading size for module/chapter and course pages
+   * Add Content Text Scaling setting to toggle comfortable (18px) reading size for section/module pages
 
 # v0.9.48
 ## 07/05/2026
