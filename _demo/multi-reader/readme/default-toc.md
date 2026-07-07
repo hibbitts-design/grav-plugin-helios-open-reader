@@ -420,6 +420,7 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - [raw]`[project-brief]...[/project-brief]`[/raw] – Project Brief block (amber); frames the assignment or challenge prompt
 - [raw]`[feedback-requested]...[/feedback-requested]`[/raw] – Feedback Requested block (purple); flags content awaiting review — useful in student projects and draft OER alike
 - [raw]`[process-note]...[/process-note]`[/raw] – Process Note block (blue); documents iterations, decisions, or pivots during a project
+- [raw]`[excerpt]...[/excerpt]`[/raw] – For long multi-paragraph quoted passages; renders with a subtler grey left border and italic text than the standard Markdown blockquote, closer to how long quotations appear in print
 - [raw]`[iframe url="..."]`[/raw] – Responsive iframe embed, 16:9 by default
 - [raw]`[googleslides url="..."]`[/raw] – Responsive Google Slides embed, 16:9 by default
 - [raw]`[pdf url="..."]`[/raw] – PDF viewer via Google Docs, 16:9 by default
@@ -453,7 +454,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how images appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to AI tools), **Suppress images** (text-only output), or **Relative paths** (not recommended for remote LLM use) |
-| Include Page Templates | [raw]`section`, `section-page`[/raw] | Only pages using these templates appear in the plain text version |
+| Include Page Templates | [raw]`section-page`[/raw] | Only pages using these templates appear in the plain text version |
 
 > **Note:** The Helios-inspired Admin Panel 1.7 colour scheme (zinc nav, accessible blue links, muted purple accents) is pre-configured in this skeleton.
 ## Requirements

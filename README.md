@@ -422,6 +422,11 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 > [!TIP]
 > For simple notices, the standard Markdown callout `> [!IMPORTANT]` is a zero-friction alternative to the `[announcement]` shortcode.
 
+### Blockquotes and Excerpts
+
+- Standard Markdown blockquote (`> text`) – short pull quotes with the default bold accent border
+- `[excerpt]...[/excerpt]` – for longer multi-paragraph passages; renders with a subtler grey left border and italic text, closer to how long quotations appear in print
+
 ### Embedding
 
 - `[iframe url="..."]` – Responsive iframe embed, 16:9 by default
@@ -460,7 +465,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer. In multi-publication mode the link is scoped to the current publication; not shown on the readers list page. Only applies when Enable Plain Text Version is enabled |
 | Plain Text Version Link Label | `Plain text version (llms-full.txt)` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | `tabler/book.svg` | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
-| Include Page Templates | `section`, `section-page` | Only pages using these templates appear in the plain text version |
+| Include Page Templates | `section-page` | Only pages using these templates appear in the plain text version |
 | Image URLs in Plain Text Version | `Absolute URLs` | Controls how image references appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to LLMs and AI tools), **Suppress images** (removes all image markdown for text-only output), or **Relative paths** (leaves paths unchanged; not recommended for remote LLM use) |
 
 > **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**. When using the skeleton, this preset is pre-configured automatically.
