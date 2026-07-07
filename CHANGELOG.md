@@ -4,6 +4,10 @@
 1. [](#new)
    * Add Content Text Scaling setting to toggle comfortable (18px) reading size for section/module pages
 
+1. [](#improved)
+   * Update ReadMe
+   * Update example pages
+
 # v0.9.48
 ## 07/05/2026
 
