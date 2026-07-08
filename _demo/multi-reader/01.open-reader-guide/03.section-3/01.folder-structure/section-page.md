@@ -2,43 +2,50 @@
 title: 'Folder Structure'
 ---
 
-All reader content lives within `user/pages/`. The skeleton ships with a reader home page and pre-configured demo sections.
+All reader content lives within `user/pages/`. This skeleton ships pre-configured in **multi-publication mode**, with two demo publications — this guide is Publication 1:
 
 ```
 user/pages/
-├── 00.sections/              # Reader home page
-│   └── section-list.md           # Reader title, subtitle, authors, edition, license, cover image
-├── 01.section-1/           # Section 1 (published by default)
-│   ├── section-page.md     # Section settings (section_number, description, icon, learning_objectives)
-│   ├── 01.section-one/     # Sub-page (also uses section-page.md)
-│   └── 02.section-two/     # Sub-page (also uses section-page.md)
-├── 02.section-2/
-├── 03.section-3/
+├── 00.readers/                    # Readers home
+│   └── reader-list.md                 # Readers list title, subtitle, shared settings
+├── 01.open-reader-guide/          # Publication 1 (this guide)
+│   ├── section-list.md            # Publication home: title, authors, edition, license, cover image
+│   ├── 01.section-1/              # Section 1 (published by default)
+│   │   ├── section.md             # Section settings (section_number, description, icon, learning_objectives)
+│   │   ├── 01.what-it-is/         # Sub-page (uses section-page.md)
+│   │   └── 02.when-to-use/        # Sub-page (uses section-page.md)
+│   ├── 02.section-2/
+│   └── ...
+├── 02.open-education-essentials/  # Publication 2
+│   ├── section-list.md
+│   └── ...
 └── readme/
 ```
 
-Rename section folders to match your content, either in the Admin Panel or via FTP. The number prefix on each folder (e.g. `01.section-1/`) controls the order in the sidebar navigation.
+The readers home auto-detects all publication folders at root level and displays them as cards. Rename section folders to match your content, either in the Admin Panel or via FTP. The number prefix on each folder (e.g. `01.section-1/`) controls the order in the sidebar navigation.
+
+Section names in the sidebar and browser tab title are drawn from each section's `title` field — no `versioning.labels` configuration is needed in multi-publication mode.
 
 > [!TIP]
-> After adding, renaming, or removing a section folder, update `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) to add the new folder name as a key – this sets the section name shown in the sidebar and browser tab title.
+> If you only need a single publication, you can convert to a simpler single-publication mode: remove `00.readers/`, move the publication folder's contents to root level, and point `home.alias` in `user/config/system.yaml` to your reader home. In single-publication mode, add a `versioning.labels` entry in `user/config/themes/helios.yaml` for each section folder — this sets the section name shown in the sidebar and browser tab title.
 
 ## Grouping Sections into Parts
 
-To group sections into parts on the reader home page, use the `part-N-section-M` folder naming pattern instead of `section-N`:
+To group sections into parts, use the `part-N-section-M` folder naming pattern instead of `section-N` within a publication folder (or at root level in single-publication mode):
 
 ```
-user/pages/
-├── 00.sections/
+01.open-reader-guide/
+├── section-list.md
 ├── 01.part-1-section-1/    # Part 1, Section 1
 ├── 02.part-1-section-2/    # Part 1, Section 2
 ├── 03.part-2-section-1/    # Part 2, Section 1
 ├── 04.part-2-section-2/    # Part 2, Section 2
-└── readme/
+└── ...
 ```
 
 Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only.
 
-Update `versioning.labels` in `user/config/themes/helios.yaml` to use the new folder names as keys:
+In single-publication mode, update `versioning.labels` in `user/config/themes/helios.yaml` to use the new folder names as keys:
 
 ```yaml
 versioning:
@@ -50,7 +57,7 @@ versioning:
 ```
 
 > [!TIP]
-> The `version_pattern` in `user/config/themes/helios.yaml` detects both `section-N` and `part-N-section-M` folder names automatically — no change to the pattern is needed when switching to parts.
+> This isn't needed in multi-publication mode, where section names come from each page's `title` field. The `version_pattern` in `user/config/themes/helios.yaml` detects both `section-N` and `part-N-section-M` folder names automatically — no change to the pattern is needed when switching to parts.
 
 To use custom titles for individual parts instead of the auto-generated "Part 1", "Part 2" labels, add a `parts` block to the `section-list.md` frontmatter:
 
@@ -73,7 +80,7 @@ Once you have set up your own content, you can safely delete any unused demo sec
 
 ## Adding a New Section
 
-To add a section, copy an existing section folder (e.g. `01.section-1/`) via FTP or the Admin panel (when using the Admin panel, open the section page, click the copy icon, then update the **Page Title** field to a valid new section ID such as `section-4`). Ensure the folder name follows the `section-N` convention, then add the new folder name as a key in `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**). Finally, set **Published** to **Yes** in the Admin panel to make it visible.
+To add a section, copy an existing section folder (e.g. `01.section-1/`) into the same publication's folder via FTP or the Admin panel (when using the Admin panel, open the section page, click the copy icon, then update the **Page Title** field to a valid new section ID such as `section-4`). Ensure the folder name follows the `section-N` convention, then set **Published** to **Yes** in the Admin panel to make it visible.
 
 > [!TIP]
-> After duplicating and renaming a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel if the new section does not appear immediately.
+> In single-publication mode, also add the new folder name as a key in `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) — this isn't needed in multi-publication mode, where section names come from each page's `title` field. After duplicating and renaming a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel if the new section does not appear immediately.

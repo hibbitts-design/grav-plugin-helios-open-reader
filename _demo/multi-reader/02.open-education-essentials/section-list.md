@@ -1,6 +1,6 @@
 ---
 title: 'Open Education Essentials'
-nested_section_nav: true
+nested_section_nav: '1'
 subtitle: 'A Practical Guide for Educators'
 authors: 'Your Name'
 edition: 'First Edition, 2026'
@@ -28,7 +28,7 @@ Welcome to **Open Education Essentials** – a short, practical guide to underst
 
 This reader covers the foundational ideas, practical tools, and real-world examples you need to get started with open educational resources (OER) and open course design.
 
-Work through the sections in order, or jump to any topic from the list below.
+Work through the sections in order, or jump to any topic from the cards below.
 
 ===
 

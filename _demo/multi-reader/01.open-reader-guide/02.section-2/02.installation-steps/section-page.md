@@ -13,13 +13,10 @@ title: 'Installation Steps'
 > [!TIP]
 > When copying the Grav Helios Open Reader folder to your web server, copy the **entire folder** – it contains hidden files (such as `.htaccess`) that are not selected by default. Omitting these hidden files can cause problems when running Grav.
 
-> [!TIP]
-> If changes don't appear immediately after publishing pages or updating settings, clear the Grav cache via the **Clear Cache** button in the Admin panel.
-
 [announcement title="Next Steps After Installation"]
 Once the reader is running, replace the demo content with your own:
 
-1. Open **Admin → Pages → Reader Home** and update the title, subtitle, and authors
+1. Open **Admin → Pages → Reader Home** and update the title, subtitle, and authors for each publication
 2. Rename or replace the demo sections under `user/pages/`
-3. Update section names in **Admin → Themes → Helios → Versioning → Version Labels**
+3. In single-publication mode, update section names in **Admin → Themes → Helios → Versioning → Version Labels** (not needed in multi-publication mode, where section names come from each page's `title` field)
 [/announcement]

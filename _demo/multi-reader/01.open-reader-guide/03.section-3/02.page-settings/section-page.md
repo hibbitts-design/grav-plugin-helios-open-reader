@@ -2,9 +2,26 @@
 title: 'Page Settings'
 ---
 
-## Reader Home Settings
+## Readers List Settings
 
-The `section-list.md` frontmatter controls the reader identity and card layout on the home page. These fields can be set in the Admin Panel by opening the reader home page.
+In multi-publication mode (the skeleton default), the `reader-list.md` frontmatter in `00.readers/` controls the readers home page shown before any publication is opened. Global settings for section label, Prev/Next position, and OER attribution set here apply to all publications, and can be overridden per publication in its own `section-list.md`.
+
+| Field | Description |
+|-------|-------------|
+| `title` | Publications list title displayed in the header |
+| `subtitle` | Optional collection tagline displayed below the title |
+| `prev_next_position` | Prev/Next position on section pages: `both` (default), `top`, or `bottom` |
+| `show_oer_attribution` | Show CC license footer on all pages |
+| `section_label` | Section label for all publications (e.g. `Chapter`). Overridable per publication. |
+| `license` / `license_url` / `attribution_text` | CC license label, URL, and full attribution statement |
+| `cards_per_row` | Publication cards per row (1–3); default is 2 |
+| `card_icon` | Default icon for reader cards |
+| `card_image_layout` | Card image position: `side` or `top` (default: `top`) |
+| `card_description_lines` | Max description lines per card |
+
+## Publication Home Settings
+
+The `section-list.md` frontmatter controls the publication identity and card layout on its home page. In single-publication mode it is the reader home; in multi-publication mode it is the publication home inside each publication folder. These fields can be set in the Admin Panel by opening the relevant page.
 
 | Field | Description |
 |-------|-------------|
