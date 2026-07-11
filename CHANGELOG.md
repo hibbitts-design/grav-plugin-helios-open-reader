@@ -1,5 +1,5 @@
-# v1.0.2
-## XX/XX/2026
+# v1.1.0
+## 07/11/2026
 
 1. [](#new)
    * Add self-hosted [linkpreviewcard] shortcode as a working replacement for legacy Embedly card
