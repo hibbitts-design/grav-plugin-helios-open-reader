@@ -1,3 +1,12 @@
+# v1.0.2
+## XX/XX/2026
+
+1. [](#new)
+   * Add self-hosted [linkpreviewcard] shortcode as a working replacement for legacy Embedly card
+
+1. [](#improved)
+   * Fix Grav 2 tagfilter escaping in H5PShortcode by moving the resizer script to the Assets API
+
 # v1.0.1
 ## 07/08/2026
 
