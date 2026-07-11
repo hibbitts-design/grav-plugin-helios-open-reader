@@ -19,7 +19,7 @@ class H5PShortcode extends Shortcode
             $title  = htmlspecialchars($sc->getParameter('title', 'H5P content'), ENT_QUOTES, 'UTF-8');
 
             // H5P resizer script handles iframe sizing dynamically
-            $resizer = '<script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script>';
+            Grav::instance()['assets']->addJs('https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js');
 
             if ($h5pid) {
                 $config  = Grav::instance()['config'];
@@ -29,11 +29,11 @@ class H5PShortcode extends Shortcode
                     ? $h5proot . $h5pid . '/embed'
                     : $h5proot . $h5pid;
 
-                return '<div class="h5p-container"><iframe src="' . htmlspecialchars($embedurl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
+                return '<div class="h5p-container"><iframe src="' . htmlspecialchars($embedurl, ENT_QUOTES, 'UTF-8') . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>';
 
             } elseif ($h5purl) {
                 $h5purl = htmlspecialchars(html_entity_decode($h5purl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
-                return '<div class="h5p-container"><iframe src="' . $h5purl . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>' . $resizer;
+                return '<div class="h5p-container"><iframe src="' . $h5purl . '" title="' . $title . '" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>';
             }
 
         });
