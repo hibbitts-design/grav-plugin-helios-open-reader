@@ -32,6 +32,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - No build pipeline – edit in the browser and changes go live immediately; nothing to install locally
 - CMS and Git together – browser-based editing and automatic Git Sync; no need to choose between them
 - Content you own – your content lives as portable Markdown files, fully independent of any platform or service
+- Bring existing content – the companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) turns a Pressbooks export into a ready-to-use Open Reader in minutes
 - Support open source – your Grav Premium Helios theme purchase directly supports ongoing development of the open-source Grav CMS
 
 ## Features
@@ -428,6 +429,7 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - [raw]`[h5p url="..."]`[/raw] – H5P interactive content via full embed URL
 - [raw]`[h5p id="..."]`[/raw] – H5P interactive content via Content ID (requires H5P Content Embed Source URL to be set in plugin settings)
 - [raw]`[embedly url="..."]`[/raw] – Embedly card with dark mode support
+- [raw]`[linkpreviewcard url="..."]`[/raw] – Self-hosted link preview card (image, title, description) scraped directly from the page; an alternative to [raw]`[embedly]`[/raw] that doesn't rely on the [embed.ly](https://embed.ly/) service
 
 > [!TIP]
 > For simple notices, the standard Markdown callout `> [!IMPORTANT]` is a zero-friction alternative to the [raw]`[announcement]`[/raw] shortcode.
@@ -462,6 +464,10 @@ The following settings are available in the Admin panel under **Plugins → Heli
 - PHP >= 8.0
 - Grav CMS >= 1.7.0
 - [Grav Premium Helios Theme](https://getgrav.org/premium/helios) – one license per site ([Standard or Team](https://getgrav.org/premium/license))
+
+## Bring Your Pressbooks Content With You
+
+The companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
 
 ## Support
 
