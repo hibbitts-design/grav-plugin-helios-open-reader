@@ -1,3 +1,10 @@
+# v1.1.2
+## 08/02/2026
+
+1. [](#bugfix)
+   * Handle unreachable Embedly URLs with a clear "no longer available" link instead of vague fallback text
+   * Fix extra spacing around link preview cards caused by Tailwind prose overriding unset image margins
+
 # v1.1.1
 ## 08/01/2026
 
