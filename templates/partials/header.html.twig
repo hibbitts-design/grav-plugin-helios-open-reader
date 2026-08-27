@@ -61,8 +61,8 @@
     {# Right side actions #}
     <div class="flex items-center gap-2 sm:gap-4">
 
-        {# Language switcher #}
-        {% include 'partials/langswitcher.html.twig' %}
+        {# Language switcher (only when langswitcher plugin is active — carried over from Helios theme v2.1.5) #}
+        {% if langswitcher is defined %}{% include 'partials/langswitcher.html.twig' %}{% endif %}
 
         {# Search trigger #}
         {% if theme_config.search.enabled %}

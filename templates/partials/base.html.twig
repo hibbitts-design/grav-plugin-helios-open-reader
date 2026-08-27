@@ -294,6 +294,8 @@
     </div>
 
     {% block bottom %}
+        {# Head-group JS (core/plugin scripts like the PHP debug bar and its jQuery) — carried over from Helios theme v2.1.15. #}
+        {{ assets.js('head')|raw }}
         {{ assets.js('bottom')|raw }}
     {% endblock %}
 
