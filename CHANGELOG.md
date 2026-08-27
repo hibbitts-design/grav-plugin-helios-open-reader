@@ -1,3 +1,9 @@
+# v1.1.5
+## XX/XX/2026
+
+1. [](#improved)
+   * Changed plugin demo URL to open reader skeleton demo
+
 # v1.1.4
 ## 08/27/2026
 
