@@ -1,8 +1,14 @@
+# v1.1.4
+## 08/27/2026
+
+1. [](#improved)
+   * Carry over Helios theme fixes: head-group JS output (v2.1.15) in base templates and langswitcher compile guard (v2.1.5) in header partials
+
 # v1.1.3
 ## 08/24/2026
 
 1. [](#improved)
-   * * Update ReadMe and example pages
+   * Update ReadMe and example pages
 
 # v1.1.2
 ## 08/02/2026
