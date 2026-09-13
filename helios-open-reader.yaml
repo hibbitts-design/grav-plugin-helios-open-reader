@@ -17,11 +17,6 @@ github_link_mode: view
 show_github_header_icon: true
 github_header_custom_url: ''
 h5pembedrootpath: 'https://h5p.org/h5p/embed/'
-plain_text_export_enabled: false
 show_plain_text_link: true
 plain_text_link_label: 'Plain text version (llms-full.txt)'
 plain_text_link_icon: 'tabler/book.svg'
-plain_text_templates:
-  - section
-  - section-page
-plain_text_images: absolute

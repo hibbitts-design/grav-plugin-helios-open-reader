@@ -70,12 +70,6 @@ class HeliosOpenReaderPlugin extends Plugin
             'onOutputGenerated'   => ['onOutputGenerated', 0],
             'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
         ]);
-
-        if ($this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false)) {
-            $this->enable([
-                'onPagesInitialized' => ['onLlmsRoute', 0],
-            ]);
-        }
     }
 
     protected function getSectionLabel(): string
@@ -287,7 +281,10 @@ class HeliosOpenReaderPlugin extends Plugin
         $rawCustomUrl = trim($this->config->get('plugins.helios-open-reader.github_header_custom_url', ''));
         $twig->twig_vars['github_header_custom_url']  = preg_match('#^https?://#i', $rawCustomUrl) ? $rawCustomUrl : '';
         $twig->twig_vars['show_site_icon']            = $this->config->get('plugins.helios-open-reader.show_site_icon', true);
-        $twig->twig_vars['plain_text_export_enabled'] = $this->config->get('plugins.helios-open-reader.plain_text_export_enabled', false);
+        $markdownOutputEnabled = (bool) $this->config->get('system.pages.markdown_output.enabled', true);
+        $sitemapEnabled        = (bool) $this->config->get('plugins.sitemap.enabled', true);
+        $llmsFullEnabled       = (bool) $this->config->get('plugins.sitemap.llms_full_txt', false);
+        $twig->twig_vars['llms_full_available']       = $markdownOutputEnabled && $sitemapEnabled && $llmsFullEnabled;
         $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', true);
         $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version (llms-full.txt)');
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');
@@ -947,123 +944,6 @@ class HeliosOpenReaderPlugin extends Plugin
         }
         foreach ($page->children()->visible() as $child) {
             $this->collectPagesDepthFirst($child, $list);
-        }
-    }
-
-    public function onLlmsRoute(): void
-    {
-        $path = $this->grav['uri']->route();
-        if ($path === '/llms') {
-            $this->outputLlms(false);
-        } elseif ($path === '/llms-full') {
-            $pub = $this->grav['uri']->query('pub');
-            $this->outputLlms(true, $pub ? '/' . ltrim((string) $pub, '/') : null);
-        }
-    }
-
-    private function outputLlms(bool $full, ?string $pubPath = null): void
-    {
-        $config    = $this->grav['config'];
-        $title     = $config->get('site.title', 'Open Reader');
-        $desc      = $config->get('site.metadata.description', '');
-        $templates = (array) $this->config->get('plugins.helios-open-reader.plain_text_templates', ['section', 'section-page']);
-        $imageMode = $this->config->get('plugins.helios-open-reader.plain_text_images', 'absolute');
-
-        $lines = [];
-
-        if ($pubPath) {
-            $pubPage = $this->grav['pages']->find($pubPath);
-            if ($pubPage && $pubPage->published() && $pubPage->visible()) {
-                $lines[] = '# ' . $pubPage->title();
-                if ($desc) {
-                    $lines[] = '> ' . $desc;
-                }
-                $lines[] = '';
-                $this->walkPages($pubPage, [], $lines, $full, $templates, $imageMode);
-            }
-        } else {
-            $lines[] = '# ' . $title;
-            if ($desc) {
-                $lines[] = '> ' . $desc;
-            }
-            $lines[] = '';
-            foreach ($this->grav['pages']->root()->children()->published()->visible() as $child) {
-                $this->walkPages($child, [], $lines, $full, $templates, $imageMode);
-            }
-        }
-
-        header('Content-Type: text/plain; charset=utf-8');
-        echo implode("\n", $lines);
-        exit();
-    }
-
-    /**
-     * Process image references in markdown according to the configured mode:
-     *   absolute  — rewrite relative paths to absolute URLs (default; best for LLM access)
-     *   suppress  — remove all image markdown (text-only output)
-     *   relative  — leave image paths unchanged
-     */
-    private function resolveImageUrls(string $markdown, $page, string $mode): string
-    {
-        if ($mode === 'suppress') {
-            return preg_replace('/!\[[^\]]*\]\([^)]+\)\n?/', '', $markdown);
-        }
-
-        if ($mode !== 'absolute') {
-            return $markdown;
-        }
-
-        $pageDir  = rtrim($page->url(true), '/') . '/';
-        $siteBase = rtrim($this->grav['base_url_absolute'], '/');
-
-        return preg_replace_callback(
-            '/!\[([^\]]*)\]\(([^)]+)\)/',
-            function ($m) use ($pageDir, $siteBase) {
-                $url = $m[2];
-                // Skip already-absolute URLs and data URIs
-                if (preg_match('/^(https?:\/\/|\/\/|data:)/', $url)) {
-                    return $m[0];
-                }
-                // Root-relative paths — prepend scheme+host only
-                if ($url[0] === '/') {
-                    return '![' . $m[1] . '](' . $siteBase . $url . ')';
-                }
-                // Relative paths — prepend the page's directory URL
-                return '![' . $m[1] . '](' . $pageDir . $url . ')';
-            },
-            $markdown
-        );
-    }
-
-    private function walkPages($page, array $crumbs, array &$lines, bool $full, array $templates, string $imageMode = 'absolute'): void
-    {
-        if (!$page->published() || !$page->visible()) {
-            return;
-        }
-
-        $template = $page->template();
-
-        if (in_array($template, $templates, true)) {
-            $crumbs[]    = $page->title();
-            $prefix      = implode(' > ', $crumbs);
-            $description = $page->header()->description ?? '';
-
-            $lines[] = '## ' . $prefix;
-            $lines[] = '- [' . $page->title() . '](' . $page->url(true) . ')'
-                       . ($description ? ' — ' . $description : '');
-
-            if ($full) {
-                $lines[] = '';
-                $lines[] = $this->resolveImageUrls(trim($page->rawMarkdown()), $page, $imageMode);
-            }
-
-            $lines[] = '';
-        } else {
-            $crumbs[] = $page->title();
-        }
-
-        foreach ($page->children()->published()->visible() as $child) {
-            $this->walkPages($child, $crumbs, $lines, $full, $templates, $imageMode);
         }
     }
 

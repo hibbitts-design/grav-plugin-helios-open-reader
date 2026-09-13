@@ -96,7 +96,7 @@ Append `?embedded=true` to any page URL to display only the page content – no 
 - Git Sync plugin included for syncing reader content with GitHub, Codeberg, or similar Git hosting
 - Automatic "Edit this Page" link via the Helios theme, defaulting to **View Page Markdown** for open access to reader content; optionally configurable to direct editing for contributors with repository access
 - OER attribution block – display a CC license statement in the footer, drawn from reader home page frontmatter
-- Plain text version (disabled by default) – optionally generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools; a "Plain text version" footer link is included
+- Plain text version link (shown when the Sitemap plugin's "Serve llms-full.txt" setting is enabled, requires Grav 2.1+) – a "Plain text version" footer link pointing to `/llms-full.txt`, Grav's native full-content Markdown export, for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools
 - Customize CSS and JavaScript via the bundled plugin assets
 - Print stylesheet with page break control, absolute link URLs displayed inline, and consistent page margins across browsers
 
@@ -451,12 +451,9 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
 | Repository Host | [raw]`github.com`[/raw] | Repository hosting service for the Helios GitHub Integration ([raw]`github.com`[/raw] or [raw]`codeberg.org`[/raw]) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with [raw]`[h5p id="..."]`[/raw]) |
-| Enable Plain Text Version | Disabled | Generate `/llms.txt` (structured index) and `/llms-full.txt` (full content) endpoints containing all reader content in plain text |
-| Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer. In multi-publication mode the link is scoped to the current publication; not shown on the readers list page. Only applies when Enable Plain Text Version is enabled |
+| Show Plain Text Version Link in Footer | Enabled | Show a plain text version link in the page footer, pointing at `/llms-full.txt`. Shown only when the Sitemap plugin's "Serve llms-full.txt" setting is enabled (requires Grav 2.1+ and the Sitemap plugin); not shown on the readers list page |
 | Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
-| Image URLs in Plain Text Version | `Absolute URLs` | Controls how images appear in the plain text version: **Absolute URLs** (recommended — makes images accessible to AI tools), **Suppress images** (text-only output), or **Relative paths** (not recommended for remote LLM use) |
-| Include Page Templates | [raw]`section-page`[/raw] | Only pages using these templates appear in the plain text version |
 
 > **Note:** The Helios-inspired Admin Panel 1.7 colour scheme (zinc nav, accessible blue links, muted purple accents) is pre-configured in this skeleton.
 ## Requirements
