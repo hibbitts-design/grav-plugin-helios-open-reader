@@ -1,8 +1,9 @@
 # v1.1.5
-## XX/XX/2026
+## 09/13/2026
 
 1. [](#improved)
-   * Changed plugin demo URL to open reader skeleton demo
+   * Plain text version footer link now points to Grav 2.1 + Sitemap plugin's native `/llms-full.txt` output, and only appears when Sitemap's "Serve llms-full.txt" setting is enabled
+   * Removed the plugin's own `/llms.txt` and `/llms-full.txt` generation — superseded by Grav 2.1's native Markdown output and Sitemap 5.3.0.
 
 # v1.1.4
 ## 08/27/2026

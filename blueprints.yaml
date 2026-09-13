@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 1.1.4
+version: 1.1.5
 description: Adds reader sections, reading progress, Keep My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -8,7 +8,7 @@ author:
   email: paul@hibbittsdesign.org
   url: https://hibbittsdesign.org
 homepage: https://github.com/hibbitts-design/grav-plugin-helios-open-reader
-demo: https://demo.hibbittsdesign.org/grav-helios-open-reader
+demo: https://demo.hibbittsdesign.org/grav-plugin-helios-open-reader
 keywords: grav, helios, reader, oer, open education
 bugs: https://github.com/hibbitts-design/grav-plugin-helios-open-reader/issues
 license: MIT
@@ -199,25 +199,13 @@ form:
 
     plain_text_section:
       type: section
-      title: 'Plain Text Version'
+      title: 'Plain Text Version Link'
       underline: true
-
-    plain_text_export_enabled:
-      type: toggle
-      label: 'Enable Plain Text Version'
-      help: 'Publish reader content as structured plain text for open access in a portable, format-neutral form — useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. Once enabled, visit /llms.txt (index) and /llms-full.txt (full content) from your site root.'
-      highlight: 0
-      default: 0
-      options:
-        1: PLUGIN_ADMIN.ENABLED
-        0: PLUGIN_ADMIN.DISABLED
-      validate:
-        type: bool
 
     show_plain_text_link:
       type: toggle
       label: 'Show Plain Text Version Link in Footer'
-      help: 'Show a "Plain text version" link in the page footer linking to /llms-full.txt. Only applies when Enable Plain Text Version is enabled.'
+      help: 'Show a "Plain text version" link in the page footer linking to /llms-full.txt. Shown only when the Sitemap plugin''s "Serve llms-full.txt" setting is enabled (requires Grav 2.1+ and the Sitemap plugin).'
       highlight: 1
       default: 1
       options:
@@ -239,29 +227,6 @@ form:
       label: 'Plain Text Version Link Icon'
       help: 'Tabler icon path shown before the plain text version link label (e.g. tabler/file-type-txt.svg). Leave empty to show no icon.'
       placeholder: 'tabler/book.svg'
-
-    plain_text_images:
-      type: select
-      label: 'Image URLs in Plain Text Version'
-      help: 'How images appear in the plain text version. Absolute URLs (recommended) makes images accessible to AI tools. Suppress images removes image markdown for text-only output. Relative paths leaves paths unchanged.'
-      default: 'absolute'
-      options:
-        absolute: 'Absolute URLs (recommended)'
-        suppress: 'Suppress images'
-        relative: 'Relative paths'
-
-    plain_text_templates:
-      type: selectize
-      label: 'Include Page Templates'
-      help: 'Only pages using these templates will appear in the plain text version.'
-      default:
-        - section-page
-      options:
-        section-page: 'Section Page'
-        default: 'Default'
-        default-toc: 'Default with TOC'
-      validate:
-        type: commalist
 
     admin_panel_section:
       type: section
