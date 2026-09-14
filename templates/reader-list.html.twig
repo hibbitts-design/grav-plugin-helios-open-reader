@@ -1,8 +1,11 @@
 {% extends helios_base_simple %}
 
 {% block content %}
-    {# Library home header — title and optional collection tagline only #}
-    <header class="mb-8 pb-6 border-b border-gray-200 dark:border-gray-800">
+    {# Library home header — title and optional collection tagline only.
+       Matches course-hub's course-list.html.twig header exactly (mb-8 pb-8)
+       so the divider lines up when no subtitle is set; with a subtitle, the
+       header simply grows to fit it. #}
+    <header class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
         <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ page.title }}
         </h1>
