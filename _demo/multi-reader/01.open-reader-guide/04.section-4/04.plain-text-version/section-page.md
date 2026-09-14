@@ -7,7 +7,7 @@ title: 'Plain Text Version'
 Grav 2.1's native Markdown output, together with the Sitemap plugin (5.3.0+), can publish your reader content as a structured plain-text file — a single URL that always reflects current content, readable by people and tools alike. This is useful for:
 
 - **Open access** — share one stable link to all reader content in a portable, format-neutral form
-- **Ebook generation** — use `/llms-full.txt` as input for tools like [Pandoc](https://pandoc.org/) to produce EPUB, DOCX, or PDF output (note: shortcode syntax will appear as literal text)
+- **Ebook generation** — use `/llms-full.txt` as input for tools like [Pandoc](https://pandoc.org/) to produce EPUB, DOCX, or PDF output
 - **Search and indexing** — machine-readable content that any tool can consume without parsing HTML
 - **Compatible with AI tools** — the plain text format can be read by AI tools if instructors or students choose to use them
 
@@ -32,10 +32,19 @@ Once enabled, both endpoints are immediately available at your site's root URL.
 
 ## Footer Link
 
-Helios Open Reader can show a **Plain text version** link in the page footer, pointing visitors at `/llms-full.txt`. The link appears automatically once the Sitemap plugin's **Serve llms-full.txt** setting is on — go to **Admin → Plugins → Helios Open Reader → Plain Text Version Link** to further control it:
+Helios Open Reader can show a **Plain text version** link in the page footer, pointing visitors at `/llms-full.txt`. Go to **Admin → Plugins → Helios Open Reader → Plain Text Version Link** to turn it on:
 
-- **Show Plain Text Version Link in Footer** — hide the link even when the underlying setting is on
+- **Show Plain Text Version Link in Footer** — disabled by default; turn it on to show the link (also requires the Sitemap plugin's **Serve llms-full.txt** setting on single-publication sites)
 - **Plain Text Version Link Label** and **Plain Text Version Link Icon** — customise the link's text and icon
 
 > [!TIP]
-> The Markdown behind `/llms-full.txt` includes shortcode syntax (e.g. `[definition]…[/definition]`), which will appear as literal text in Pandoc output and most other tools.
+> Shortcodes and Twig content run before the Markdown is produced, so `/llms-full.txt` contains rendered content, not literal shortcode syntax like `[definition]…[/definition]`.
+
+## Multi-Publication Sites
+
+On a site like this one, with more than one reader listed on the readers home page, Sitemap's `/llms-full.txt` is site-wide — it merges every reader into a single file, which usually isn't what you want when a visitor is reading one specific book.
+
+Helios Open Reader handles this automatically: on a multi-publication site, each reader's `/<publication>/llms-full.txt` is generated with no separate setting to turn on — just enable **Show Plain Text Version Link in Footer** to surface it, and the link uses that per-publication file whenever it's viewed from inside a reader. Sitemap's site-wide `/llms-full.txt` (if also enabled) is untouched and still available separately at the site root.
+
+> [!NOTE]
+> This only applies to multi-publication sites. A single-publication site has nothing to disambiguate, so its footer link always uses Sitemap's site-wide file.

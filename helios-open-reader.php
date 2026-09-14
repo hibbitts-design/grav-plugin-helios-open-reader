@@ -69,6 +69,7 @@ class HeliosOpenReaderPlugin extends Plugin
             'onTwigSiteVariables' => ['onTwigSiteVariables', -100],
             'onOutputGenerated'   => ['onOutputGenerated', 0],
             'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
+            'onPagesInitialized'  => ['onPublicationLlmsRoute', 0],
         ]);
     }
 
@@ -285,7 +286,8 @@ class HeliosOpenReaderPlugin extends Plugin
         $sitemapEnabled        = (bool) $this->config->get('plugins.sitemap.enabled', true);
         $llmsFullEnabled       = (bool) $this->config->get('plugins.sitemap.llms_full_txt', false);
         $twig->twig_vars['llms_full_available']       = $markdownOutputEnabled && $sitemapEnabled && $llmsFullEnabled;
-        $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', true);
+        $twig->twig_vars['publication_llms_full_available'] = $markdownOutputEnabled;
+        $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', false);
         $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version (llms-full.txt)');
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');
         $twig->twig_vars['site_icon']                 = $this->config->get('plugins.helios-open-reader.site_icon', '');
@@ -945,6 +947,59 @@ class HeliosOpenReaderPlugin extends Plugin
         foreach ($page->children()->visible() as $child) {
             $this->collectPagesDepthFirst($child, $list);
         }
+    }
+
+    /**
+     * Serve /<publication>/llms-full.txt for a single publication's own subtree —
+     * scoped alternative to the Sitemap plugin's site-wide /llms-full.txt, needed
+     * on multi-publication sites where that site-wide file would merge every
+     * reader together. Never matches the site root, so it can't collide with
+     * Sitemap's own /llms-full route.
+     */
+    public function onPublicationLlmsRoute(): void
+    {
+        $route = $this->grav['uri']->route();
+        if (!str_ends_with($route, '/llms-full')) {
+            return;
+        }
+
+        $pubRoute = substr($route, 0, -strlen('/llms-full'));
+        if ($pubRoute === '') {
+            return;
+        }
+
+        $page = $this->grav['pages']->find($pubRoute);
+        if (!$page || $page->template() !== 'section-list' || $page->home()) {
+            return;
+        }
+
+        $this->outputPublicationLlmsFull($page);
+    }
+
+    private function outputPublicationLlmsFull($pubPage): void
+    {
+        if (!isset($this->grav['markdown_output'])) {
+            return;
+        }
+
+        $cache    = $this->grav['cache'];
+        $cacheId  = md5('hor-llms-full-' . $this->grav['pages']->getPagesCacheId() . $pubPage->route() . $this->grav['config']->checksum());
+        $content  = $cache->fetch($cacheId);
+
+        if (!is_string($content)) {
+            $list = [];
+            $this->collectPagesDepthFirst($pubPage, $list);
+
+            $output    = $this->grav['markdown_output'];
+            $documents = array_map(static fn($p) => rtrim($output->render($p)), $list);
+
+            $content = implode("\n\n", $documents) . "\n";
+            $cache->save($cacheId, $content);
+        }
+
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $content;
+        exit();
     }
 
     public function onOutputGenerated($event)
