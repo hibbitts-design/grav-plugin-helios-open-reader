@@ -1,3 +1,9 @@
+# v1.1.7
+## 09/15/2026
+
+1. [](#new)
+   * Add Serve Per-Publication llms-full.txt setting — per-publication `/<publication>/llms-full.txt` on multi-publication sites is now opt-in rather than always generated
+
 # v1.1.6
 ## 09/14/2026
 
