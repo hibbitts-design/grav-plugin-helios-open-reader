@@ -1,3 +1,9 @@
+# v1.1.8
+## XX/XX/2026
+
+1. [](#bugfix)
+   * Fix homepage header divider to match course-hub spacing when no subtitle is set
+
 # v1.1.7
 ## 09/14/2026
 
