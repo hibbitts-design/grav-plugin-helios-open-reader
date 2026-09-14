@@ -69,8 +69,13 @@ class HeliosOpenReaderPlugin extends Plugin
             'onTwigSiteVariables' => ['onTwigSiteVariables', -100],
             'onOutputGenerated'   => ['onOutputGenerated', 0],
             'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
-            'onPagesInitialized'  => ['onPublicationLlmsRoute', 0],
         ]);
+
+        if ($this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false)) {
+            $this->enable([
+                'onPagesInitialized' => ['onPublicationLlmsRoute', 0],
+            ]);
+        }
     }
 
     protected function getSectionLabel(): string
@@ -286,7 +291,8 @@ class HeliosOpenReaderPlugin extends Plugin
         $sitemapEnabled        = (bool) $this->config->get('plugins.sitemap.enabled', true);
         $llmsFullEnabled       = (bool) $this->config->get('plugins.sitemap.llms_full_txt', false);
         $twig->twig_vars['llms_full_available']       = $markdownOutputEnabled && $sitemapEnabled && $llmsFullEnabled;
-        $twig->twig_vars['publication_llms_full_available'] = $markdownOutputEnabled;
+        $twig->twig_vars['publication_llms_full_available'] = $markdownOutputEnabled
+            && (bool) $this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false);
         $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', false);
         $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version (llms-full.txt)');
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');

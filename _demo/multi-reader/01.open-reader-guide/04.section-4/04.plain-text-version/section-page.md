@@ -34,7 +34,7 @@ Once enabled, both endpoints are immediately available at your site's root URL.
 
 Helios Open Reader can show a **Plain text version** link in the page footer, pointing visitors at `/llms-full.txt`. Go to **Admin → Plugins → Helios Open Reader → Plain Text Version Link** to turn it on:
 
-- **Show Plain Text Version Link in Footer** — disabled by default; turn it on to show the link (also requires the Sitemap plugin's **Serve llms-full.txt** setting on single-publication sites)
+- **Show Plain Text Version Link in Footer** — disabled by default; turn it on to show the link (also requires **Serve Per-Publication llms-full.txt** on multi-publication sites, or the Sitemap plugin's **Serve llms-full.txt** setting on single-publication sites)
 - **Plain Text Version Link Label** and **Plain Text Version Link Icon** — customise the link's text and icon
 
 > [!TIP]
@@ -44,7 +44,7 @@ Helios Open Reader can show a **Plain text version** link in the page footer, po
 
 On a site like this one, with more than one reader listed on the readers home page, Sitemap's `/llms-full.txt` is site-wide — it merges every reader into a single file, which usually isn't what you want when a visitor is reading one specific book.
 
-Helios Open Reader handles this automatically: on a multi-publication site, each reader's `/<publication>/llms-full.txt` is generated with no separate setting to turn on — just enable **Show Plain Text Version Link in Footer** to surface it, and the link uses that per-publication file whenever it's viewed from inside a reader. Sitemap's site-wide `/llms-full.txt` (if also enabled) is untouched and still available separately at the site root.
+Helios Open Reader can answer each reader's own `/<publication>/llms-full.txt` instead. Turn on **Serve Per-Publication llms-full.txt** and **Show Plain Text Version Link in Footer** (both in **Admin → Plugins → Helios Open Reader → Plain Text Version Link**), and the footer link uses that per-publication file whenever it's viewed from inside a reader. Sitemap's site-wide `/llms-full.txt` (if also enabled) is untouched and still available separately at the site root.
 
 > [!NOTE]
 > This only applies to multi-publication sites. A single-publication site has nothing to disambiguate, so its footer link always uses Sitemap's site-wide file.

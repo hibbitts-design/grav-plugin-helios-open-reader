@@ -168,7 +168,7 @@ Append `?embedded=true` (or `?chromeless=true`) to any page URL to display only 
 - Git Sync plugin for syncing reader content with GitHub, Codeberg, or similar Git hosting
 - Automatic "Edit this Page" link via the Helios theme, defaulting to **View Page Markdown** for open access to reader content; optionally configurable to direct editing for contributors with repository access
 - OER attribution block — display a CC license statement in the footer, drawn from reader home page frontmatter
-- Plain text version link — a configurable footer link with optional icon pointing to `/llms-full.txt`, Grav's native full-content Markdown export, for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. On multi-publication sites, each reader automatically gets its own `/<publication>/llms-full.txt` (requires Grav 2.1+); on single-publication sites, it's Sitemap's site-wide file (shown when the Sitemap plugin's "Serve llms-full.txt" setting is enabled)
+- Plain text version link — a configurable footer link with optional icon pointing to `/llms-full.txt`, Grav's native full-content Markdown export, for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. On multi-publication sites, turning on Serve Per-Publication llms-full.txt gives each reader its own `/<publication>/llms-full.txt` (requires Grav 2.1+); on single-publication sites, it's Sitemap's site-wide file (shown when the Sitemap plugin's "Serve llms-full.txt" setting is enabled)
 - Customize CSS and JavaScript via the bundled plugin assets
 - Print stylesheet with page break control, absolute link URLs displayed inline, and consistent page margins across browsers
 
@@ -463,7 +463,8 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
 | Repository Host | `github.com` | Repository hosting service for the Helios GitHub Integration (`github.com` or `codeberg.org`) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with `[h5p id="..."]`) |
-| Show Plain Text Version Link in Footer | Disabled | Show a plain text version link in the page footer, pointing at `/llms-full.txt`. On multi-publication sites, each reader automatically gets its own file (requires Grav 2.1+ with Markdown Output enabled); on single-publication sites, uses the Sitemap plugin's site-wide file when its "Serve llms-full.txt" setting is enabled; not shown on the readers list page |
+| Serve Per-Publication llms-full.txt | Disabled | On multi-publication sites, answers each reader's own `/<publication>/llms-full.txt` with that reader's full Markdown (requires Grav 2.1+ with Markdown Output enabled). Has no effect on single-publication sites, which use the Sitemap plugin's site-wide file instead |
+| Show Plain Text Version Link in Footer | Disabled | Show a plain text version link in the page footer, pointing at `/llms-full.txt`. On multi-publication sites, requires Serve Per-Publication llms-full.txt above; on single-publication sites, uses the Sitemap plugin's site-wide file when its "Serve llms-full.txt" setting is enabled; not shown on the readers list page |
 | Plain Text Version Link Label | `Plain text version (llms-full.txt)` | Label for the plain text version footer link |
 | Plain Text Version Link Icon | `tabler/book.svg` | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 
