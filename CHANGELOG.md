@@ -1,9 +1,18 @@
+# v1.1.6
+## 09/14/2026
+
+1. [](#new)
+   * Add automatic per-publication `/<publication>/llms-full.txt` on multi-publication sites, so each reader gets its own file instead of one site-wide file merging every reader together
+2. [](#improved)
+   * "Show Plain Text Version Link in Footer" now defaults to disabled
+
 # v1.1.5
 ## 09/13/2026
 
 1. [](#improved)
-   * Plain text version footer link now points to Grav 2.1 + Sitemap plugin's native `/llms-full.txt` output, and only appears when Sitemap's "Serve llms-full.txt" setting is enabled
-   * Removed the plugin's own `/llms.txt` and `/llms-full.txt` generation — superseded by Grav 2.1's native Markdown output and Sitemap 5.3.0.
+   * Plain text version footer link now points to Grav 2.1 + Sitemap's native `/llms-full.txt`, shown only when Sitemap's "Serve llms-full.txt" setting is enabled
+2. [](#removed)
+   * Removed the plugin's own `/llms.txt`/`/llms-full.txt` generation and related settings — superseded by Grav 2.1's native Markdown output and Sitemap 5.3.0
 
 # v1.1.4
 ## 08/27/2026
