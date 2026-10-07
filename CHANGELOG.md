@@ -1,3 +1,9 @@
+# v1.1.9
+## 10/07/2026
+
+1. [](#bugfix)
+   * Exercise boxes keep their content, with only a link on its own shown as the activity button
+
 # v1.1.8
 ## 09/15/2026
 
