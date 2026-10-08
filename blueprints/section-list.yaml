@@ -109,6 +109,14 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Always visible on mobile; appears on tablets and larger screens when the main nav scrolls out of view.'
+            header.keep_my_place:
+              type: toggle
+              label: 'Keep My Place'
+              default: true
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Remember the last page each reader visited (in their own browser), and show a "Continue reading" bar on this page when they return.'
         parts_tab:
           type: tab
           title: List Display

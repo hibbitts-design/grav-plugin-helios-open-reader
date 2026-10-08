@@ -74,12 +74,15 @@
     var savePlaceEl = root.querySelector('[data-hor-save-page]');
     if (savePlaceEl) {
       var pubPath = savePlaceEl.dataset.horPublicationPath || '';
-      try {
-        localStorage.setItem(horPageKey(pubPath), JSON.stringify({
-          url: savePlaceEl.dataset.horUrl,
-          title: savePlaceEl.dataset.horTitle
-        }));
-      } catch (e) {}
+      // Only save the page when the Keep My Place setting is on (data-hor-keep-place is "false" when it's off)
+      if (savePlaceEl.dataset.horKeepPlace !== 'false') {
+        try {
+          localStorage.setItem(horPageKey(pubPath), JSON.stringify({
+            url: savePlaceEl.dataset.horUrl,
+            title: savePlaceEl.dataset.horTitle
+          }));
+        } catch (e) {}
+      }
 
       // Update footer git link — footer is rendered from the section landing page and
       // cannot update itself on HTMX navigation; use the pre-built URL from section-page.html.twig

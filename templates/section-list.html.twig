@@ -91,6 +91,8 @@
         </article>
     {% endif %}
 
+    {# (only when the Keep My Place setting is on) #}
+    {% if hor_keep_my_place is not defined or hor_keep_my_place %}
     {# Resume Reading strip — populated by helios.js from localStorage if a section page was previously visited #}
     <div id="hor-resume-reading" class="hor-resume-strip" data-hor-publication-path="{{ publication_base_path is defined ? publication_base_path : '' }}" hidden>
         <svg class="hor-resume-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -99,6 +101,7 @@
         <span class="hor-resume-text"><a id="hor-resume-btn" href="#">{{ 'PLUGIN_HELIOS_OPEN_READER.CONTINUE_READING'|t }}: <span id="hor-resume-title"></span></a></span>
         <button type="button" class="hor-resume-dismiss" aria-label="Dismiss Continue Reading strip">&#x2715;</button>
     </div>
+    {% endif %}
 
     {# Section card grid #}
     {% set cpr = page.header.cards_per_row|default(1)|int %}
