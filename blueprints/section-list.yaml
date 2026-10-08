@@ -100,6 +100,7 @@ form:
                 both: 'Top and bottom'
                 top: 'Top only'
                 bottom: 'Bottom only'
+                none: 'Hidden'
               help: 'Where to display the Previous/Next page navigation on section pages.'
             header.show_sticky_nav:
               type: toggle
@@ -109,6 +110,14 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Always visible on mobile; appears on tablets and larger screens when the main nav scrolls out of view.'
+            header.show_reading_progress:
+              type: toggle
+              label: 'Show Reading Progress'
+              default: true
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Show the reading progress (e.g. "Page 3 of 8") with the Previous/Next navigation on section pages.'
             header.keep_my_place:
               type: toggle
               label: 'Keep My Place'

@@ -1,7 +1,8 @@
 {# Sticky compact prev/next bar — mirrors nav-button structure from prev-next.html.twig.
    Shown via JS (IntersectionObserver) when both main nav blocks are off-screen.
    Suppressed in chromeless/embedded mode. #}
-{% if not chromeless and hor_show_sticky_nav|default(true) %}
+{# (an explicit check, as |default(true) would also turn a false setting into true) #}
+{% if not chromeless and (hor_show_sticky_nav is not defined or hor_show_sticky_nav) %}
 {% set prev = doc_prev|default(null) %}
 {% set next = doc_next|default(null) %}
 {% if prev or next %}

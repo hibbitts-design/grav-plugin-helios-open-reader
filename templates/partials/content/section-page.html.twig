@@ -16,7 +16,7 @@
 {# (data-hor-keep-place="false" tells helios.js not to save this page when the Keep My Place setting is off) #}
 <div data-hor-save-page data-hor-keep-place="{{ (hor_keep_my_place is not defined or hor_keep_my_place) ? 'true' : 'false' }}" data-hor-url="{{ page.url }}" data-hor-title="{{ page.title }}" data-hor-publication-path="{{ publication_base_path is defined ? publication_base_path : '' }}"{% if _git_url is defined and _git_url %} data-hor-git-url="{{ _git_url }}"{% endif %} hidden></div>
 
-{# Prev/Next navigation — top (shown when hor_prev_next_position is 'top' or 'both') #}
+{# Prev/Next navigation – top (shown when hor_prev_next_position is 'top' or 'both'; not when it's 'none') #}
 {% if hor_prev_next_position|default('both') in ['top', 'both'] %}
     {% include 'partials/prev-next-top.html.twig' %}
 {% endif %}

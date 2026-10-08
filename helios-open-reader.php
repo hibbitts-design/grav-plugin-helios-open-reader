@@ -319,6 +319,8 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['hor_prev_next_position'] = 'both';
         // Keep My Place: on unless the reader home turns it off
         $twig->twig_vars['hor_keep_my_place'] = true;
+        // Reading progress ("Page 3 of 8"): on unless the reader home turns it off
+        $twig->twig_vars['hor_show_reading_progress'] = true;
 
         // Find the reader home page to pull attribution fields, logo URL, and favicon.
         // Strategy: pre-scan root for reader-list (sets multi-publication mode before
@@ -441,6 +443,17 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['hor_prev_next_position'] = (string) $this->headerFallback($readerHome, $settingsFallback, 'prev_next_position', 'both');
             $twig->twig_vars['hor_show_sticky_nav']    = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_sticky_nav', true);
             $twig->twig_vars['hor_keep_my_place']      = (bool) $this->headerFallback($readerHome, $settingsFallback, 'keep_my_place', true);
+            // show_reading_progress has the same name as in Grav Open Publishing Space, so a moved guide keeps its choice
+            $twig->twig_vars['hor_show_reading_progress'] = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_reading_progress', true);
+
+            // Prev/Next can be hidden: with the position set to "Hidden" (none), or with Grav Open Publishing Space's
+            // hide_next_prev_page_buttons setting, so a moved guide keeps its choice. The sticky bar is hidden with them.
+            if ((bool) $this->headerFallback($readerHome, $settingsFallback, 'hide_next_prev_page_buttons', false)) {
+                $twig->twig_vars['hor_prev_next_position'] = 'none';
+            }
+            if ($twig->twig_vars['hor_prev_next_position'] === 'none') {
+                $twig->twig_vars['hor_show_sticky_nav'] = false;
+            }
             $twig->twig_vars['show_section_label']     = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_section_label', true);
 
             // Section label: reader home frontmatter overrides the language default,

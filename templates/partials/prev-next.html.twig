@@ -1,12 +1,13 @@
 {# Plugin override of Helios prev-next.html.twig
-   On section and section-page templates: suppresses bottom nav when hor_prev_next_position is 'top'.
+   On section and section-page templates: suppresses bottom nav when hor_prev_next_position is 'top' or 'none'.
    On all other templates: always renders the nav (position setting is section/section-page-only).
    Suppressed entirely when embedded (?embedded=true or ?chromeless=true). #}
 {% if not chromeless and (hor_prev_next_position|default('both') in ['bottom', 'both'] or page.template not in ['section', 'section-page']) %}
 {% set prev = doc_prev|default(null) %}
 {% set next = doc_next|default(null) %}
 
-{% if section_progress_current is defined %}
+{# (only when the Show Reading Progress setting is on) #}
+{% if section_progress_current is defined and (hor_show_reading_progress is not defined or hor_show_reading_progress) %}
 {% set progress_text = 'PLUGIN_HELIOS_OPEN_READER.PAGE_PROGRESS'|t(section_progress_current, section_progress_total) %}
 {% if section_part_label is defined and section_part_label %}
     {% set progress_text = section_part_label ~ ' · ' ~ progress_text %}
