@@ -68,7 +68,9 @@ class HeliosOpenReaderPlugin extends Plugin
             'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
             'onTwigSiteVariables' => ['onTwigSiteVariables', -100],
             'onOutputGenerated'   => ['onOutputGenerated', 0],
-            'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
+            // -10: after Shortcode Core registers its own sample shortcodes (such as a starter [badge]), so this plugin's
+            // shortcodes with the same name replace them
+            'onShortcodeHandlers' => ['onShortcodeHandlers', -10],
         ]);
 
         if ($this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false)) {
