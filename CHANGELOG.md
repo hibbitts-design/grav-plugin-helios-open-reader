@@ -1,3 +1,15 @@
+# v1.1.10
+## 10/08/2026
+
+1. [](#new)
+   * Keep My Place setting for each publication (on by default), to turn off the saved reading position and "Continue reading" bar
+   * [badge], [button] and [markdownfile] shortcodes from the free Grav projects, so moved content works unchanged
+   * Show Reading Progress setting and a Hidden option for Prev/Next, using the same setting names as Grav Open Publishing Space, so a moved guide keeps its choices
+1. [](#bugfix)
+   * Section cards with just a label and title have equal space above and below the title
+   * This plugin's shortcodes now replace any starter shortcode of the same name from Shortcode Core
+   * The Show Sticky Prev/Next Bar setting now turns the sticky bar off when set to No
+
 # v1.1.9
 ## 10/07/2026
 
