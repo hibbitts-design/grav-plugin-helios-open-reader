@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 1.1.10
+version: 1.1.11
 description: Adds reader sections, reading progress, Keep My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -9,6 +9,7 @@ author:
   url: https://hibbittsdesign.org
 homepage: https://github.com/hibbitts-design/grav-plugin-helios-open-reader
 demo: https://demo.hibbittsdesign.org/grav-plugin-helios-open-reader
+docs: https://github.com/hibbitts-design/grav-plugin-helios-open-reader/blob/main/README.md
 keywords: grav, helios, reader, oer, open education
 bugs: https://github.com/hibbitts-design/grav-plugin-helios-open-reader/issues
 license: MIT
