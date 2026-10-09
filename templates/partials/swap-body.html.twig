@@ -3,6 +3,7 @@
  # Changes from theme original:
  #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (search: PLUGIN CHANGE 4)
  #   PLUGIN ADDITION — section and section-page template dispatch to partials/content/section-page.html.twig
+ #   PLUGIN ADDITION – data-hor-markdown-url marker for the footer's "This page as Markdown" link
  #}
 
 {# Shared swap-target body — rendered both by base.html.twig (full page) and
@@ -72,6 +73,12 @@
         {{ page.content|raw }}
     {% endif %}
 </article>
+
+{# The page's Markdown address, read by helios.js to update the footer's "This page as Markdown" link after HTMX
+   navigation (PLUGIN ADDITION) #}
+{% if show_markdown_link %}
+<div data-hor-markdown-url="{{ include('partials/markdown-url.html.twig')|trim }}" hidden></div>
+{% endif %}
 
 {# Previous/Next navigation #}
 {# PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless #}

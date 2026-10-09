@@ -121,9 +121,29 @@
 
   horInitSavePlace(document);
 
+  // "This page as Markdown" link in the footer: the footer isn't re-rendered on HTMX navigation, so update the
+  // link from the new page's data-hor-markdown-url marker, and hide it where the page has none
+  function horUpdateMarkdownLink(root) {
+    var marker = root.querySelector('[data-hor-markdown-url]');
+    var wrap = document.querySelector('.hor-markdown-link-wrap');
+    if (!marker || !wrap) return;
+    // dataset.horMarkdownUrl reads the marker's data-hor-markdown-url attribute (empty where there's no link)
+    var url = marker.dataset.horMarkdownUrl;
+    var link = wrap.querySelector('a');
+    if (url) {
+      link.href = url;
+      wrap.hidden = false;
+    } else {
+      wrap.hidden = true;
+    }
+  }
+
   window.addEventListener('helios:content-loaded', function (evt) {
     var container = evt.detail && evt.detail.container;
-    if (container) horInitSavePlace(container);
+    if (container) {
+      horInitSavePlace(container);
+      horUpdateMarkdownLink(container);
+    }
   });
 
   // -------------------------------------------------------------------------

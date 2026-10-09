@@ -19,5 +19,8 @@ github_header_custom_url: ''
 h5pembedrootpath: 'https://h5p.org/h5p/embed/'
 publication_llms_full_enabled: false
 show_plain_text_link: false
-plain_text_link_label: 'Plain text version (llms-full.txt)'
+plain_text_link_label: 'Full text (llms-full.txt)'
 plain_text_link_icon: 'tabler/book.svg'
+show_markdown_link: false
+markdown_link_label: 'This page as Markdown (.md)'
+markdown_link_icon: 'tabler/markdown.svg'

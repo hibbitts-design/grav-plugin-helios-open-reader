@@ -296,8 +296,15 @@ class HeliosOpenReaderPlugin extends Plugin
         $twig->twig_vars['publication_llms_full_available'] = $markdownOutputEnabled
             && (bool) $this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false);
         $twig->twig_vars['show_plain_text_link']      = $this->config->get('plugins.helios-open-reader.show_plain_text_link', false);
-        $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Plain text version (llms-full.txt)');
+        $twig->twig_vars['plain_text_link_label']     = $this->config->get('plugins.helios-open-reader.plain_text_link_label', 'Full text (llms-full.txt)');
         $twig->twig_vars['plain_text_link_icon']      = $this->config->get('plugins.helios-open-reader.plain_text_link_icon', 'tabler/book.svg');
+        // "This page as Markdown" link: only offered when Grav serves pages as Markdown. The markdown_output
+        // service only exists in Grav 2.1 and later, so on Grav 1.7 (where the setting above is missing and
+        // reads as on) the link is never shown
+        $markdownOutputAvailable = $markdownOutputEnabled && isset($this->grav['markdown_output']);
+        $twig->twig_vars['show_markdown_link']        = $markdownOutputAvailable && $this->config->get('plugins.helios-open-reader.show_markdown_link', false);
+        $twig->twig_vars['markdown_link_label']       = $this->config->get('plugins.helios-open-reader.markdown_link_label', 'This page as Markdown (.md)');
+        $twig->twig_vars['markdown_link_icon']        = $this->config->get('plugins.helios-open-reader.markdown_link_icon', 'tabler/markdown.svg');
         $twig->twig_vars['site_icon']                 = $this->config->get('plugins.helios-open-reader.site_icon', '');
         $twig->twig_vars['show_plugin_credits']       = $this->config->get('plugins.helios-open-reader.show_plugin_credits', true);
         $twig->twig_vars['content_text_size']         = $this->config->get('plugins.helios-open-reader.content_text_size', 'comfortable');

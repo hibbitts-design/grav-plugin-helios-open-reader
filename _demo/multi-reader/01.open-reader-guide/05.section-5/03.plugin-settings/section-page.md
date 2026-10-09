@@ -17,9 +17,12 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
 | Repository Host | `github.com` | Repository hosting service for the Helios GitHub Integration (`github.com` or `codeberg.org`) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with `[h5p id="..."]`) |
+| Show This Page as Markdown Link in Footer | Disabled | Show a link to just the current page's Markdown (`<page>.md`) in the page footer. Requires Grav 2.1+ with its Serve Pages as Markdown setting on |
+| This Page as Markdown Link Label | `This page as Markdown (.md)` | Label for the "This page as Markdown" footer link |
+| This Page as Markdown Link Icon | `tabler/markdown.svg` | Tabler icon path shown before the link label. Leave empty for no icon |
 | Serve Per-Publication llms-full.txt | Disabled | On multi-publication sites, answers each reader's own `/<publication>/llms-full.txt` with that reader's full Markdown (requires Grav 2.1+ with Markdown Output enabled). Has no effect on single-publication sites, which use the Sitemap plugin's site-wide file instead |
 | Show Plain Text Version Link in Footer | Disabled | Show a link to `/llms-full.txt` in the page footer. On multi-publication sites, requires Serve Per-Publication llms-full.txt above; on single-publication sites, uses the Sitemap plugin's site-wide file when its "Serve llms-full.txt" setting is enabled |
-| Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
+| Plain Text Version Link Label | `Full text (llms-full.txt)` | Label for the plain text version footer link (the whole publication) |
 | Plain Text Version Link Icon | `tabler/book.svg` | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 
 > **Note:** To apply the Helios-inspired Admin Panel colour scheme (zinc nav, accessible blue links, muted purple accents), go to **Admin → Customization → Presets**, select **Helios**, and click **Save**.

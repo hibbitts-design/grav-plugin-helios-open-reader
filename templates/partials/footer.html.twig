@@ -10,6 +10,10 @@
  #   6. Plain text version link with optional icon, linking to /llms-full.txt; hidden on reader-list page.
  #      Links to that reader's own file on multi-publication sites, or Sitemap's site-wide file on
  #      single-publication sites when its "Serve llms-full.txt" setting is enabled (PLUGIN ADDITION)
+ #   7. "This page as Markdown" link to the page's own Markdown (page address + .md), updated by helios.js on HTMX
+ #      navigation (PLUGIN ADDITION)
+ #   8. The page links and credits are asides (secondary information, which Grav 2's Markdown output leaves out),
+ #      so a page's .md has its content and attribution only (PLUGIN CHANGE 8)
  #}
 <footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
 
@@ -22,7 +26,7 @@
     {% endif %}
     {% if file_path starts with 'user/' %}{% set file_path = file_path[5:] %}{% endif %}{# PLUGIN CHANGE 5 #}
     {% set git_path_prefix = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}{# PLUGIN CHANGE 1 #}
-    <div class="mb-4 text-center">
+    <aside class="mb-4 text-center" aria-label="Page source">
         <a href="https://{{ github_server }}/{{ theme_config.github.repo|trim('/') }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
            target="_blank"
            rel="noopener noreferrer"
@@ -30,7 +34,22 @@
             <span aria-hidden="true">{{ svg_icon(github_link_icon ?: 'tabler/file-text.svg', 'w-4 h-4')|raw }}</span>
             {{ theme_config.github.edit_text ?: 'THEME_HELIOS.EDIT_PAGE'|t }}<span class="sr-only"> (opens in new tab)</span>
         </a>
-    </div>
+    </aside>
+    {% endif %}
+
+    {# "This page as Markdown" link: just this page's Markdown (the full text link below covers the whole
+       publication). The footer isn't re-rendered when readers move between pages, so it's always here when
+       turned on (hidden where it doesn't apply), and helios.js updates its address from the
+       data-hor-markdown-url marker in each page's content #}{# PLUGIN ADDITION #}
+    {% if show_markdown_link %}
+    {% set hor_markdown_url = include('partials/markdown-url.html.twig')|trim %}
+    <aside class="hor-markdown-link-wrap mb-4 text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ markdown_link_label }}"{% if not hor_markdown_url %} hidden{% endif %}>
+        {# the hover text shares a tip: any page's Markdown is at its address with .md added #}
+        <a href="{{ hor_markdown_url }}" title="Add .md to any page's address to get its Markdown" class="page-markdown-link plain-text-link inline-flex items-center gap-1 hover:underline">
+            {% if markdown_link_icon %}<span aria-hidden="true">{{ svg_icon(markdown_link_icon, 'w-4 h-4')|raw }}</span>{% endif %}
+            {{ markdown_link_label }}
+        </a>
+    </aside>
     {% endif %}
 
     {# Plain text version link — hidden on readers-list page; per-publication file on multi-pub sites,
@@ -44,12 +63,12 @@
     {% endif %}
     {% if llms_available and show_plain_text_link and not chromeless and page.template != 'reader-list' %}
     {% set show_oer = show_oer_attribution and reader_attribution %}
-    <p class="mt-4 {{ not show_oer ? 'mb-4' : '' }} text-center text-sm text-gray-500 dark:text-gray-400">
+    <aside class="mt-4 {{ not show_oer ? 'mb-4' : '' }} text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ plain_text_link_label }}">
         <a href="{{ llms_url }}" class="plain-text-link inline-flex items-center gap-1 hover:underline">
             {% if plain_text_link_icon %}<span aria-hidden="true">{{ svg_icon(plain_text_link_icon, 'w-4 h-4')|raw }}</span>{% endif %}
             {{ plain_text_link_label }}
         </a>
-    </p>
+    </aside>
     {% endif %}
 
     {# OER attribution block #}{# PLUGIN CHANGE 2 #}
@@ -72,6 +91,6 @@
 
     {# Plugin credits #}{# PLUGIN CHANGE 3 #}
     {% if show_plugin_credits and not chromeless %}
-    <p class="text-center text-sm text-gray-500 dark:text-gray-400">Built with <a href="https://getgrav.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav<span class="sr-only"> (opens in new tab)</span></a> · <a href="https://getgrav.org/premium/helios" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav Premium Helios<span class="sr-only"> (opens in new tab)</span></a> theme · <a href="https://github.com/hibbitts-design/grav-plugin-helios-open-reader" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Helios Open Reader<span class="sr-only"> (opens in new tab)</span></a> by <a href="https://hibbittsdesign.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">hibbittsdesign.org<span class="sr-only"> (opens in new tab)</span></a></p>
+    <aside class="text-center text-sm text-gray-500 dark:text-gray-400" aria-label="Credits">Built with <a href="https://getgrav.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav<span class="sr-only"> (opens in new tab)</span></a> · <a href="https://getgrav.org/premium/helios" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav Premium Helios<span class="sr-only"> (opens in new tab)</span></a> theme · <a href="https://github.com/hibbitts-design/grav-plugin-helios-open-reader" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Helios Open Reader<span class="sr-only"> (opens in new tab)</span></a> by <a href="https://hibbittsdesign.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">hibbittsdesign.org<span class="sr-only"> (opens in new tab)</span></a></aside>
     {% endif %}
 </footer>

@@ -1,0 +1,39 @@
+{# The address of the page's Markdown, for the "This page as Markdown" link in the footer: the page's address
+   with ".md" added (Grav 2.1's Markdown output), or /index.md for the home page. Empty where the link isn't
+   useful (the reader list and reader home pages, error pages) or when the page sets hide_markdown_link: true,
+   which hides the link - hibbittsdesign.org #}
+{# Step 1: decide whether this page gets the link #}
+{% set show_link = true %}
+
+{# embedded pages (for example in an LMS) are mostly read by students, so the link is left out there #}
+{% if chromeless %}
+    {% set show_link = false %}
+{% endif %}
+
+{# an error page ("page not found") has no route, and no Markdown #}
+{% if not page.route %}
+    {% set show_link = false %}
+{% endif %}
+
+{# the readers list, reader home and error pages don't get the link #}
+{% if page.template in ['reader-list', 'section-list', 'error'] %}
+    {% set show_link = false %}
+{% endif %}
+
+{# the page itself hides it, with hide_markdown_link: true in its settings #}
+{% if page.header.hide_markdown_link %}
+    {% set show_link = false %}
+{% endif %}
+
+{# Step 2: the address #}
+{% set markdown_url = '' %}
+{% if show_link %}
+    {# the home page's address is just the site's address, so its Markdown is at /index.md #}
+    {% if page.home %}
+        {% set markdown_url = base_url_relative ~ '/index.md' %}
+    {% else %}
+        {% set markdown_url = page.url ~ '.md' %}
+    {% endif %}
+{% endif %}
+{# the address only (the templates that include this file trim any spaces around it) #}
+{{ markdown_url }}
