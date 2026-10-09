@@ -7,7 +7,7 @@
  #   4. Git edit link suppressed via ?edit_link=false or ?hidegitlink=true URL params (search: PLUGIN CHANGE 4)
  #   5. Strip leading user/ from file_path after prefix removal — skeleton repos have pages/ at root,
  #      not user/pages/; JS in helios.js updates this link on HTMX navigation (PLUGIN CHANGE 5)
- #   6. Plain text version link with optional icon, linking to /llms-full.txt; hidden on reader-list page.
+ #   6. Plain text version link with optional icon, linking to /llms-full.txt; shown on each publication's home page.
  #      Links to that reader's own file on multi-publication sites, or Sitemap's site-wide file on
  #      single-publication sites when its "Serve llms-full.txt" setting is enabled (PLUGIN ADDITION)
  #   7. "This page as Markdown" link to the page's own Markdown (page address + .md), updated by helios.js on HTMX
@@ -61,7 +61,9 @@
         {% set llms_available = llms_full_available %}
         {% set llms_url = base_url_absolute ~ '/llms-full.txt' %}
     {% endif %}
-    {% if llms_available and show_plain_text_link and not chromeless and page.template != 'reader-list' %}
+    {# shown only on each publication's home page (its Section List page), where readers think about the whole
+       publication; reading pages have the "This page as Markdown" link instead #}
+    {% if llms_available and show_plain_text_link and not chromeless and page.template == 'section-list' %}
     {% set show_oer = show_oer_attribution and reader_attribution %}
     <aside class="mt-4 {{ not show_oer ? 'mb-4' : '' }} text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ plain_text_link_label }}">
         <a href="{{ llms_url }}" class="plain-text-link inline-flex items-center gap-1 hover:underline">
@@ -75,7 +77,13 @@
     {% if show_oer_attribution and reader_attribution and not chromeless %}
     <div class="hor-attribution mt-4 mb-4 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>{{ reader_attribution|raw }}</p>
-        {% if reader_license %}
+        {# the license on its own line, unless the attribution text already names it (as in "licensed under
+           CC BY 4.0"), so it isn't shown twice - the same as in Grav Open Publishing Space #}
+        {% set show_license_line = reader_license %}
+        {% if reader_license and reader_license in reader_attribution %}
+            {% set show_license_line = false %}
+        {% endif %}
+        {% if show_license_line %}
         <p class="mt-2">
             {% if reader_license_url %}
             <a href="{{ reader_license_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">

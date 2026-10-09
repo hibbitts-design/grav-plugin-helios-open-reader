@@ -32,7 +32,7 @@ Once enabled, both endpoints are immediately available at your site's root URL.
 
 ## Footer Link
 
-Helios Open Reader can show a **Plain text version** link in the page footer, pointing visitors at `/llms-full.txt`. Go to **Admin → Plugins → Helios Open Reader → Plain Text Version Link** to turn it on:
+Helios Open Reader can show a **Full text** link in the footer of each publication's home page, pointing visitors at `/llms-full.txt`. Go to **Admin → Plugins → Helios Open Reader → Plain Text Version Link** to turn it on:
 
 - **Show Plain Text Version Link in Footer** — disabled by default; turn it on to show the link (also requires **Serve Per-Publication llms-full.txt** on multi-publication sites, or the Sitemap plugin's **Serve llms-full.txt** setting on single-publication sites)
 - **Plain Text Version Link Label** and **Plain Text Version Link Icon** — customise the link's text and icon

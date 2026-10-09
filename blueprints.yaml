@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 1.2.0
+version: 1.2.1
 description: Adds reader sections, reading progress, Keep My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -248,7 +248,7 @@ form:
     show_plain_text_link:
       type: toggle
       label: 'Show Plain Text Version Link in Footer'
-      help: 'Show a "Full text" link in the footer to /llms-full.txt – each reader''s own file on multi-publication sites (requires Serve Per-Publication llms-full.txt above), or Sitemap''s site-wide file on single-publication sites (requires its "Serve llms-full.txt" setting).'
+      help: 'Show a "Full text" link in the footer of each publication''s home page, to /llms-full.txt – each reader''s own file on multi-publication sites (requires Serve Per-Publication llms-full.txt above), or Sitemap''s site-wide file on single-publication sites (requires its "Serve llms-full.txt" setting).'
       highlight: 0
       default: 0
       options:
