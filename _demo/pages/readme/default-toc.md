@@ -32,6 +32,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - No build pipeline – edit in the browser and changes go live immediately; nothing to install locally
 - CMS and Git together – browser-based editing and automatic Git Sync; no need to choose between them
 - Content you own – your content lives as portable Markdown files, fully independent of any platform or service
+- Reuse as Markdown – a "This page as Markdown (.md)" link on reading pages gives readers just that page's Markdown, ready to adapt and reuse, with no Git setup needed
 - Bring existing content – the companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) turns a Pressbooks export into a ready-to-use Open Reader in minutes
 - Support open source – your Grav Premium Helios theme purchase directly supports ongoing development of the open-source Grav CMS
 
@@ -60,7 +61,7 @@ Helios Open Reader provides a ready-built site for open educational content – 
 - **Feedback Requested** – `[feedback-requested]...[/feedback-requested]` (purple); flags content awaiting review — useful in student projects and draft OER alike
 - **Process Note** – `[process-note]...[/process-note]` (blue); documents iterations, decisions, or pivots during a project
 - All callouts accept an optional `title="..."` parameter and support Markdown content
-- Five built-in GitHub-style callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
+- Five built-in GitHub-style callouts via the github-markdown-alerts plugin: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
 - **Keep My Place** – records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
@@ -94,9 +95,9 @@ Append `?embedded=true` to any page URL to display only the page content – no 
 
 ### Authoring & Customization
 - Git Sync plugin included for syncing reader content with GitHub, Codeberg, or similar Git hosting
-- Automatic "Edit this Page" link via the Helios theme, defaulting to **View Page Markdown** for open access to reader content; optionally configurable to direct editing for contributors with repository access
+- Automatic "Edit this page" link via the Helios theme, opening the page's Markdown source file in your repository for open access to reader content; Git Link Mode can switch it to direct editing for contributors with repository access
 - OER attribution block – display a CC license statement in the footer, drawn from reader home page frontmatter
-- Plain text version link – a "Plain text version" footer link pointing to `/llms-full.txt`, Grav's native full-content Markdown export, for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools. Turning on Serve Per-Publication llms-full.txt gives each reader its own `/<publication>/llms-full.txt` on multi-publication sites (requires Grav 2.1+); single-publication sites use Sitemap's site-wide file (shown when its "Serve llms-full.txt" setting is enabled)
+- Full text link (off by default) – an optional link on each publication's home page to `/llms-full.txt`, Grav 2.1's full-content Markdown export, for open access to all reader content in a portable, format-neutral form; useful for ebook generation (e.g. Pandoc), search and indexing tools, and AI-compatible tools
 - Customize CSS and JavaScript via the bundled plugin assets
 - Print stylesheet with page break control, absolute link URLs displayed inline, and consistent page margins across browsers
 
@@ -159,7 +160,7 @@ Global settings for section label, Prev/Next position, and OER attribution are s
 |-------|-------------|
 | `title` | Publications list title displayed in the header |
 | `subtitle` | Optional collection tagline displayed below the title |
-| `prev_next_position` | Prev/Next position on section pages: `both` (default), `top`, or `bottom` |
+| `prev_next_position` | Prev/Next position on section pages: `both` (default), `top`, `bottom`, or `none` (hidden) |
 | `show_oer_attribution` | Show CC license footer on all pages |
 | `section_label` | Section label for all publications (e.g. `Chapter`). Overridable per publication. |
 | `license` | CC license label |
@@ -189,6 +190,8 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `start_button_text` | Start Reading button label. Leave empty to hide. |
 | `section_label` | Override the section label for this publication only |
 | `prev_next_position` | Override Prev/Next position for this publication |
+| `keep_my_place` | Remember the last page each reader visited (in their own browser) and show a "Continue reading" bar on the publication home (`true` by default) |
+| `show_reading_progress` | Show the reading progress (e.g. "Page 3 of 8") with the Prev/Next navigation on section pages (`true` by default) |
 | `show_oer_attribution` | Override OER attribution display for this publication |
 | `cards_per_row` | Section cards per row (1–3); default is 1 |
 | `card_icon` | Default icon for section cards |
@@ -276,7 +279,9 @@ The `section-list.md` frontmatter controls the publication identity and card lay
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |
 | `cover_image` | Filename of a cover image uploaded to the reader home media folder |
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
-| `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
+| `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, `bottom`, or `none` (hidden) |
+| `keep_my_place` | Remember the last page each reader visited (in their own browser) and show a "Continue reading" bar on the reader home (`true` by default) |
+| `show_reading_progress` | Show the reading progress (e.g. "Page 3 of 8") with the Prev/Next navigation on section pages (`true` by default) |
 | `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |
 | `section_label` | Label used for sections throughout the reader (e.g. `Chapter`, `Unit`). Leave empty to use the language default (`Section`). |
 | `part_label` | Label used for part headings on the reader home page when using the `part-N-section-M` folder naming pattern (e.g. `Theme`, `Project`). Leave empty to use the default (`Part`). |
@@ -374,12 +379,22 @@ The browser tab title is automatically formatted as:
 
 The Reader Title is drawn from the reader home page title. The Site Title comes from `site.title` in `user/config/site.yaml`. Set the Site Title to your institution or author name – it serves as the top-level identifier in the browser tab.
 
+## Moving from Grav Open Publishing Space
+
+Guides from [Grav Open Publishing Space](https://github.com/hibbitts-design/grav-skeleton-open-publishing-space) use the same core page types and settings as Open Reader – `section-list.md`, `section.md` and `section-page.md` – so a guide's folder can be copied into Open Reader's `pages` folder as a publication. Cover images, subtitle, authors, edition, license, attribution, section labels, cards per row, the Start button, Prev/Next position, Keep My Place, Show Reading Progress, hidden Prev/Next buttons (`hide_next_prev_page_buttons`) and badges carry across unchanged.
+
+A few Open Publishing Space settings aren't used by Open Reader and are simply ignored:
+
+- `show_search_box` – Open Reader has site-wide search (⌘K) instead
+- `hide_page_title`
+- `part` – group sections into parts with `part-N-section-M` folder names or a `parts` list instead (see Grouping Sections into Parts above)
+
 ## Git Sync & Open Editing
 
 The skeleton includes the [Git Sync plugin](https://github.com/trilbymedia/grav-plugin-git-sync), which keeps your site content automatically in sync with a GitHub or Codeberg repository. This enables a full open-authoring workflow:
 
 - Content editors can work directly in the Grav Admin or commit changes via Git
-- The Helios Theme's **"Edit this Page"** option defaults to a 'View Page Markdown' link on each page, taking readers directly to the Markdown source file in your repository (configurable to link directly to file editing via the Helios Open Reader plugin settings)
+- The Helios theme's **Edit this page** link on each page takes readers directly to the page's Markdown source file in your repository (it opens the file for viewing by default; set Git Link Mode in the Helios Open Reader plugin settings to link straight to editing)
 
 If you prefer not to write Markdown directly, the optional [Grav Premium Editor Pro](https://getgrav.org/premium/editor-pro) provides a visual block editor for editing pages.
 
@@ -410,6 +425,7 @@ Custom CSS, JavaScript, shortcodes, callout blocks, and Helios-inspired Admin Pa
 All callouts accept an optional `title="..."` parameter and support Markdown content.
 
 - [raw]`[objectives]...[/objectives]`[/raw] – Learning Objectives block (green)
+- [raw]`[objectives title="By the end of this section..."]...[/objectives]`[/raw] – With custom title
 - [raw]`[key-takeaways]...[/key-takeaways]`[/raw] – Key Takeaways block (blue)
 - [raw]`[example]...[/example]`[/raw] – Example block (purple)
 - [raw]`[exercise]...[/exercise]`[/raw] – Exercise block (amber)
@@ -423,11 +439,18 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - [raw]`[process-note]...[/process-note]`[/raw] – Process Note block (blue); documents iterations, decisions, or pivots during a project
 - [raw]`[excerpt]...[/excerpt]`[/raw] – For long multi-paragraph quoted passages; renders with a subtler grey left border and italic text than the standard Markdown blockquote, closer to how long quotations appear in print
 - [raw]`[iframe url="..."]`[/raw] – Responsive iframe embed, 16:9 by default
+- [raw]`[iframe url="..." ratio="4:3"]`[/raw] – Responsive iframe embed at 4:3 ratio
+- [raw]`[iframe url="..." title="..."]`[/raw] – Responsive iframe embed with accessible title (recommended for accessibility)
 - [raw]`[googleslides url="..."]`[/raw] – Responsive Google Slides embed, 16:9 by default
+- [raw]`[googleslides url="..." ratio="4:3"]`[/raw] – Responsive Google Slides embed at 4:3 ratio
+- [raw]`[googleslides url="..." title="..."]`[/raw] – Responsive Google Slides embed with accessible title (recommended for accessibility)
 - [raw]`[pdf url="..."]`[/raw] – PDF viewer via Google Docs, 16:9 by default
+- [raw]`[pdf url="..." ratio="4:3"]`[/raw] – PDF viewer at 4:3 ratio
 - [raw]`[pdf url="..." ratio="portrait"]`[/raw] – PDF viewer at portrait ratio (letter/A4)
+- [raw]`[pdf url="..." title="..."]`[/raw] – PDF viewer with accessible title (recommended for accessibility)
 - [raw]`[h5p url="..."]`[/raw] – H5P interactive content via full embed URL
 - [raw]`[h5p id="..."]`[/raw] – H5P interactive content via Content ID (requires H5P Content Embed Source URL to be set in plugin settings)
+- [raw]`[h5p url="..." title="..."]`[/raw] – H5P embed with accessible title (recommended for accessibility)
 - [raw]`[embedly url="..."]`[/raw] – Embedly card with dark mode support
 - [raw]`[linkpreviewcard url="..."]`[/raw] – Self-hosted link preview card (image, title, description) scraped directly from the page; an alternative to [raw]`[embedly]`[/raw] that doesn't rely on the [embed.ly](https://embed.ly/) service
 
@@ -451,9 +474,12 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |
 | Repository Host | [raw]`github.com`[/raw] | Repository hosting service for the Helios GitHub Integration ([raw]`github.com`[/raw] or [raw]`codeberg.org`[/raw]) |
 | H5P Content Embed Source URL | `https://h5p.org/h5p/embed/` | Base URL for H5P embeds via Content ID (used with [raw]`[h5p id="..."]`[/raw]) |
+| Show This Page as Markdown Link in Footer | Enabled | Show a link to just the current page's Markdown (`<page>.md`) in the page footer. Requires Grav 2.1+ with its Serve Pages as Markdown setting on; not shown on the readers list or reader home pages, or on embedded pages |
+| This Page as Markdown Link Label | `This page as Markdown (.md)` | Label for the "This page as Markdown" footer link |
+| This Page as Markdown Link Icon | [raw]`tabler/markdown.svg`[/raw] | Tabler icon path shown before the "This page as Markdown" link label. Leave empty for no icon |
 | Serve Per-Publication llms-full.txt | Disabled | On multi-publication sites, answers each reader's own `/<publication>/llms-full.txt` with that reader's full Markdown (requires Grav 2.1+ with Markdown Output enabled). Has no effect on single-publication sites, which use the Sitemap plugin's site-wide file instead |
-| Show Plain Text Version Link in Footer | Disabled | Show a plain text version link in the page footer, pointing at `/llms-full.txt`. On multi-publication sites, requires Serve Per-Publication llms-full.txt above; on single-publication sites, uses the Sitemap plugin's site-wide file when its "Serve llms-full.txt" setting is enabled; not shown on the readers list page |
-| Plain Text Version Link Label | `Plain text version` | Label for the plain text version footer link |
+| Show Plain Text Version Link in Footer | Disabled | Show a plain text version link in the page footer, pointing at `/llms-full.txt`. On multi-publication sites, requires Serve Per-Publication llms-full.txt above; on single-publication sites, uses the Sitemap plugin's site-wide file when its "Serve llms-full.txt" setting is enabled; shown on each publication's home page (its Section List page) |
+| Plain Text Version Link Label | `Full text (llms-full.txt)` | Label for the plain text version footer link (the whole publication) |
 | Plain Text Version Link Icon | [raw]`tabler/book.svg`[/raw] | Tabler icon path shown before the plain text version link label. Leave empty for no icon |
 
 > **Note:** The Helios-inspired Admin Panel 1.7 colour scheme (zinc nav, accessible blue links, muted purple accents) is pre-configured in this skeleton.
