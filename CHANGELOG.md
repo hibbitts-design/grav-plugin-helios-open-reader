@@ -1,3 +1,12 @@
+# v1.1.12
+## 10/09/2026
+
+1. [](#new)
+    * "This page as Markdown (.md)" link: an optional footer link to the current page's own Markdown, as in Grav Open Publishing Space
+1. [](#improved)
+    * The full-publication plain text link's default label is now "Full text (llms-full.txt)", to tell it apart from the single-page link
+    * The footer links and credits are left out of each page's Markdown, which keeps its content and attribution
+
 # v1.1.11
 ## 10/08/2026
 
