@@ -1,3 +1,11 @@
+# v1.2.1
+## 10/09/2026
+
+1. [](#improved)
+    * The "Full text (llms-full.txt)" link now shows only on each publication's home page, where readers think about the whole publication
+1. [](#bugfix)
+    * The license is no longer shown twice when the attribution text already names it
+
 # v1.2.0
 ## 10/09/2026
 
