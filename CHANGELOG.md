@@ -1,3 +1,10 @@
+# v1.2.2
+## XX/XX/2026
+
+1. [](#improved)
+    * Describe the "Edit this page" link as it works: it opens the page's source file in the repository, or its editor with Git Link Mode
+    * Bring the demo ReadMe pages up to date with the README, including the "This page as Markdown" and "Full text" links
+
 # v1.2.1
 ## 10/09/2026
 
