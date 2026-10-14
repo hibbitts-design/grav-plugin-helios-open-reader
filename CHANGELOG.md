@@ -1,3 +1,9 @@
+# v1.2.4
+## 10/14/2026
+
+1. [](#bugfix)
+    * Embedded and chromeless pages stay embedded when a page redirects, such as a section without text of its own opening its first page
+
 # v1.2.3
 ## 10/14/2026
 
