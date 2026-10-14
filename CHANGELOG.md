@@ -1,3 +1,9 @@
+# v1.2.3
+## 10/14/2026
+
+1. [](#bugfix)
+    * Printed section pages no longer start with a blank page: the "Section N" label stays with the title
+
 # v1.2.2
 ## 10/09/2026
 
