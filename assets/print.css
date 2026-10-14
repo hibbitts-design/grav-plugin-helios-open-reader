@@ -82,8 +82,18 @@
         break-after: avoid;
     }
 
-    /* Page break before each reader page's h1 when printing multiple pages */
+    /* Page break before each reader page's title when printing multiple pages. On section pages the
+       break goes before the header, so the "Section N" label stays with the title (a break before the
+       h1 itself left the label alone on a blank first page) */
     article h1 {
+        break-before: page;
+    }
+
+    article header h1 {
+        break-before: auto;
+    }
+
+    article header {
         break-before: page;
     }
 
