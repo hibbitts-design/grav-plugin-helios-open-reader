@@ -1,5 +1,5 @@
 # v1.2.6
-## XX/XX/2026
+## 10/16/2026
 
 1. [](#new)
     * Cover Image Alt Text setting on a publication's home page, to describe the cover for screen readers and link previews (without it, the alt text is still "<title> cover"), as in the free Open Publishing Space themes
