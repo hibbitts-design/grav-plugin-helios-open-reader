@@ -295,6 +295,7 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `title` | Publication title |
 | `subtitle` | Optional subtitle shown below the title; also used as the description on the publication card in the readers list |
 | `cover_image` | Cover image filename for this publication |
+| `cover_image_alt` | Optional description of the cover image for screen readers and link previews (without it, "<title> cover") |
 | `authors` | Author name(s); also shown on the publication card in the readers list |
 | `edition` | Optional edition label; also shown on the publication card in the readers list |
 | `last_updated` | Optional date displayed on the publication card in the readers list. Set via the **Last Updated** field in the Admin panel. |
@@ -323,6 +324,7 @@ The `section-list.md` frontmatter controls the publication identity and card lay
 | `license_url` | URL for the license badge link |
 | `attribution_text` | Full attribution statement shown in the footer when OER attribution is enabled |
 | `cover_image` | Filename of a cover image uploaded to the reader home media folder |
+| `cover_image_alt` | Optional description of the cover image for screen readers and link previews (without it, "<title> cover") |
 | `start_button_text` | Label for the button linking to the first section (e.g. `Start Reading`, `Browse Projects`, `View Guides`). Leave empty to hide. |
 | `prev_next_position` | Where to display Prev/Next navigation on section pages: `both` (default), `top`, or `bottom` |
 | `show_oer_attribution` | Display the CC license and attribution text in the footer of every page (`true` or `false`) |

@@ -28,6 +28,11 @@ form:
               label: Cover Image
               toggleable: true
               help: 'Optional cover image displayed on the reader home page.'
+            header.cover_image_alt:
+              type: text
+              label: Cover Image Alt Text
+              toggleable: true
+              help: 'Describes the cover image for screen readers and link previews.'
             header.cover_image_layout:
               type: select
               label: Cover Image Layout

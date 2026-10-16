@@ -3,12 +3,14 @@
 {% block content %}
     {% set cover = page.header.cover_image ? page.media[page.header.cover_image] : null %}
     {% set use_sidebar = page.header.cover_image_layout == 'sidebar' and cover %}
+    {# the Cover Image Alt Text setting describes the picture for screen readers; without it, "<title> cover" - hibbittsdesign.org #}
+    {% set cover_alt = page.header.cover_image_alt ?: page.title ~ ' cover' %}
 
     {% if use_sidebar %}
     {# Sidebar layout: fixed-width image column left, content + cards right #}
     <div class="hor-cover-sidebar">
         <aside class="hor-cover-sidebar__image">
-            <img src="{{ cover.url }}" alt="{{ page.title }} cover">
+            <img src="{{ cover.url }}" alt="{{ cover_alt }}">
             {% if page.header.authors %}
             <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
                 {{ page.header.authors }}
@@ -35,7 +37,7 @@
             {# Cover image — shown side-by-side on wider screens when set #}
             {% if cover %}
             <div class="flex-shrink-0 mb-6 sm:mb-0">
-                <img src="{{ cover.url }}" alt="{{ page.title }} cover" class="w-32 sm:w-40 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                <img src="{{ cover.url }}" alt="{{ cover_alt }}" class="w-32 sm:w-40 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
             </div>
             {% endif %}
         {% endif %}

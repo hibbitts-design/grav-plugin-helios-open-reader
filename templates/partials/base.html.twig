@@ -102,6 +102,10 @@
         {% set og_image_url = og_cover.url(true) %}
         {% set og_origin = grav.uri.scheme ~ grav.uri.host ~ (grav.uri.port ? ':' ~ grav.uri.port : '') %}
         <meta property="og:image" content="{{ og_image_url starts with 'http' ? og_image_url : og_origin ~ og_image_url }}">
+        {# the Cover Image Alt Text setting also describes the picture in link previews - hibbittsdesign.org #}
+        {% if page.header.cover_image_alt %}
+        <meta property="og:image:alt" content="{{ page.header.cover_image_alt }}">
+        {% endif %}
         {% endif %}
     {% endif %}
 
