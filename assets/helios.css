@@ -163,37 +163,59 @@
     color: var(--color-primary-text);
 }
 
-/* Topics shortcode - alphabetical index */
-.topics-index {
+/* [topics] shortcode: the A-Z index and its letter headings - hibbittsdesign.org
+   (color-mix() with currentColor makes the borders and backgrounds suit light and dark modes alike) */
+.prose .topics-index {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.4;
-    margin-bottom: 1rem;
+    gap: 0.3rem;
+    margin: 0 0 1.5rem;
 }
 
-.topics-index a {
-    color: var(--color-primary);
-    padding: 0 2px;
-}
-
-.topics-index-inactive {
-    opacity: 0.35;
-    padding: 0 2px;
-}
-
-/* Topics shortcode - letter section labels */
-.topics-letter {
-    display: block;
-    width: 2em;
-    font-size: 1.125rem;
+/* each letter is a box about 36px square - comfortably above the 24px minimum target size (WCAG 2.2),
+   so it's easy to tap on a phone or click with less precise pointing. The letters are large and bold
+   (about 19px), which counts as large text, so the theme's link colour has enough contrast (3:1) */
+.prose .topics-index a,
+.prose .topics-index .topics-index-inactive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+    padding: 0 0.4rem;
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-radius: 0.375rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-top: 1.5rem;
-    padding: 0.1em 0.25em;
+    text-decoration: none;
+}
+
+.prose .topics-index a {
+    color: var(--color-primary);
+}
+
+/* a clear outline around the letter that has keyboard focus */
+.prose .topics-index a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+/* a letter with no topics */
+.prose .topics-index .topics-index-inactive {
+    opacity: 0.35;
+}
+
+/* each letter heading, as a soft label; after jumping to it from the index, it stops below the header */
+.prose h2.topics-letter {
+    display: inline-block;
+    min-width: 2.25em;
+    padding: 0.2em 0.6em;
+    margin: 1.5rem 0 0.5rem;
+    border-radius: 0.375rem;
     background: color-mix(in srgb, currentColor 10%, transparent);
-    scroll-margin-top: 4rem;
+    font-size: 1.25rem;
+    text-align: center;
+    scroll-margin-top: 5rem;
 }
 
 /* Increase "Edit this page" link size */

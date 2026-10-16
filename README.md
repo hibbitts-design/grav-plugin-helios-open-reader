@@ -431,6 +431,10 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - Standard Markdown blockquote (`> text`) – short pull quotes with the default bold accent border
 - `[excerpt]...[/excerpt]` – for longer multi-paragraph passages; renders with a subtler grey left border and italic text, closer to how long quotations appear in print
 
+### Topics Index
+
+- `[topics]...[/topics]` – Alphabetical topics index made from `## A`, `## B`, ... headings, with auto-generated A–Z navigation, linked letters, and styled letter section labels
+
 ### Embedding
 
 - `[iframe url="..."]` – Responsive iframe embed, 16:9 by default
