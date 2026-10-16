@@ -1,3 +1,12 @@
+# v1.2.5
+## 10/16/2026
+
+1. [](#new)
+    * On reader pages, the left and right arrow keys go to the previous and next page, and on a publication's home page the right arrow key follows Start Reading – handy when presenting by screen sharing (not while typing or scrolling a wide table)
+    * [topics]...[/topics] shortcode: an A–Z topics index made from ## A, ## B, ... headings, the same as in Grav Helios Course Hub, with large, keyboard-friendly letter links
+1. [](#improved)
+    * README: the arrow keys and the Topics shortcode
+
 # v1.2.4
 ## 10/14/2026
 
