@@ -206,3 +206,46 @@
   });
 
 })();
+
+// On reader pages, the left and right arrow keys go to the previous and next page - as when presenting slides,
+// for example by screen sharing. On a publication's home page, the right arrow key follows its Start Reading button.
+// The links are clicked rather than opened, so pages load just as they would for a reader clicking them.
+(function () {
+
+  // true when an element is a box that scrolls sideways (such as a wide table or code block) and is wider than its space,
+  // where the arrow keys should scroll it instead
+  function scrollsSideways(element) {
+    var overflowX = window.getComputedStyle(element).overflowX;
+    var canScroll = overflowX === 'auto' || overflowX === 'scroll';
+    return canScroll && element.scrollWidth > element.clientWidth;
+  }
+
+  document.addEventListener('keydown', function (event) {
+    // leave the keys alone with a modifier key held, so browser shortcuts still work
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
+    // and while typing (including in the search dialog), or in a box that scrolls sideways
+    var target = event.target;
+    var typingTags = ['INPUT', 'TEXTAREA', 'SELECT'];
+    if (target.isContentEditable || typingTags.indexOf(target.tagName) !== -1) {
+      return;
+    }
+    if (target !== document.body && scrollsSideways(target)) {
+      return;
+    }
+
+    // the page's own Previous/Next buttons (at the top or bottom of the page)
+    var link = null;
+    if (event.key === 'ArrowLeft') {
+      link = document.querySelector('.prev-next-nav .nav-button.prev');
+    }
+    if (event.key === 'ArrowRight') {
+      link = document.querySelector('.prev-next-nav .nav-button.next, .hor-start-reading');
+    }
+    if (link) {
+      link.click();
+    }
+  });
+
+})();
