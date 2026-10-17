@@ -1,3 +1,17 @@
+# v1.2.7
+## 10/17/2026
+
+1. [](#new)
+    * [hideifembedded]...[/hideifembedded] and [showifembedded]...[/showifembedded] shortcodes: content shown only on the site, or only when a page is embedded (for example in an LMS), the same as in Grav Helios Course Hub and Grav Open Publishing Space, so guides using them move across unchanged
+    * Captions for images in plain Markdown: an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML, as in Grav Open Publishing Space
+1. [](#improved)
+    * Images in page text are no taller than a little over half the screen, so an image and the text around it fit on screen together, when reading or presenting (figure, card and cover images are unchanged)
+    * README: the Site Only or Embedded Only shortcodes and image captions
+1. [](#bugfix)
+    * A readers list group named with just a number (such as `group: 2026`) shows its own heading, instead of "0"
+    * License badges (such as "CC BY 4.0" on the readers list and publication cards) are grey (plain), as intended, instead of the primary colour
+    * Default badges (Badge Color Default, or [badge] without a colour) have enough contrast in Light mode: their text is a darker shade of the primary colour, so it stays readable whatever primary colour a site uses
+
 # v1.2.6
 ## 10/16/2026
 
