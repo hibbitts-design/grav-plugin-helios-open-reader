@@ -45,12 +45,17 @@
     {% set gridClasses = 'section-card-grid grid gap-4 mb-8 ' ~ (colClass[cpr] ?? 'grid-cols-1') ~ ' ' ~ (cpr == 2 ? 'section-card-grid--cols-2' : (cpr == 3 ? 'section-card-grid--cols-3' : '')) %}
 
     {# Build groups: ungrouped publications first, then named groups in encounter order #}
+    {# (group_order keeps the names; each key starts with "g:", since Twig would renumber a group name that is a number, such as 2026) #}
     {% set ungrouped_pubs = [] %}
     {% set named_groups = {} %}
+    {% set group_order = [] %}
     {% for publication_page in publication_pages %}
         {% set g = publication_page.header.group|default('') %}
         {% if g %}
-            {% set named_groups = named_groups|merge({(g): (named_groups[g]|default([]))|merge([publication_page])}) %}
+            {% if g not in group_order %}
+                {% set group_order = group_order|merge([g]) %}
+            {% endif %}
+            {% set named_groups = named_groups|merge({('g:' ~ g): (named_groups['g:' ~ g]|default([]))|merge([publication_page])}) %}
         {% else %}
             {% set ungrouped_pubs = ungrouped_pubs|merge([publication_page]) %}
         {% endif %}
@@ -83,7 +88,8 @@
     {% endif %}
 
     {# Named groups — each with a heading above its card grid #}
-    {% for group_label, group_pubs in named_groups %}
+    {% for group_label in group_order %}
+    {% set group_pubs = named_groups['g:' ~ group_label] %}
     <div class="hor-part-heading">
         <h2>{{ group_label }}</h2>
     </div>
