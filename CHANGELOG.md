@@ -1,3 +1,11 @@
+# v1.2.8
+## 10/17/2026
+
+1. [](#improved)
+    * README: unpublished publications are left out of search
+1. [](#bugfix)
+    * Search leaves out the pages of an unpublished publication (and any other pages inside an unpublished page), such as the skeleton's second demo publication, which ships turned off
+
 # v1.2.7
 ## 10/17/2026
 
