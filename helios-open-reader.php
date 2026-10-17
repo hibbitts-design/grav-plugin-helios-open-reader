@@ -404,6 +404,11 @@ class HeliosOpenReaderPlugin extends Plugin
         // URL parameter handling
         $uri = $this->grav['uri'];
         $twig->twig_vars['chromeless']    = (bool) $uri->query('embedded') || (bool) $uri->query('chromeless');
+        // On embedded pages, hide [hideifembedded] content and show [showifembedded] content. This is CSS added to
+        // the page rather than a change to the content, because a page's content is cached once for both addresses.
+        if ($twig->twig_vars['chromeless']) {
+            $this->grav['assets']->addInlineCss('.hor-hide-if-embedded{display:none}.hor-show-if-embedded{display:block}');
+        }
         $tocParam                          = $uri->query('toc_position') ?: $uri->query('toc') ?: null;
         $twig->twig_vars['toc_url_param'] = ($tocParam !== null && $tocParam !== false) ? $tocParam : null;
         $twig->twig_vars['hide_git_link'] = $uri->query('edit_link') === 'false' || $uri->query('hidegitlink') === 'true';

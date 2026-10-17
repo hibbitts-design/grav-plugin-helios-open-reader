@@ -635,3 +635,56 @@ footer {
 .dark .prose figcaption {
     color: var(--color-gray-400);
 }
+
+/* Images in page text are no taller than a little over half the screen, so an image and the text around it fit on
+   screen together - when reading, and when presenting by screen sharing. A shortened image keeps its shape. Only
+   images in the page's own text (inside a paragraph) are limited, not cards or figures - as in Grav Open Course Hub
+   and Grav Open Publishing Space - hibbittsdesign.org */
+.prose p > img {
+    max-height: 55vh;
+    width: auto;
+    max-width: 100%;
+}
+
+/* A caption in plain Markdown: an italic line right after an image on its own, such as ![A photo](photo.jpg)
+   followed by *Photo by …* - shown like the figure captions above (smaller and softer, just below the image), so
+   authors need no HTML. It works with the italic line in its own paragraph (after a blank line) or on the line just
+   below the image (the same paragraph), as in Grav Open Course Hub and Grav Open Publishing Space.
+   (":only-child" here looks at elements only, so text beside them still counts) */
+.prose p:has(> img:only-child):has(+ p > em:only-child) {
+    margin-bottom: 0;
+}
+
+.prose p:has(> img:only-child):has(+ p > em:only-child) > img,
+.prose p > img:first-child:has(+ em:last-child) {
+    display: block;
+    margin-bottom: 0.375rem;
+}
+
+.prose p:has(> img:only-child) + p:has(> em:only-child),
+.prose p > img:first-child + em:last-child {
+    display: block;
+    margin-top: 0;
+    font-size: 0.8125rem;
+    color: var(--color-gray-500);
+}
+
+.dark .prose p:has(> img:only-child) + p:has(> em:only-child),
+.dark .prose p > img:first-child + em:last-child {
+    color: var(--color-gray-400);
+}
+
+/* [showifembedded] content is hidden on normal pages; on embedded pages the plugin swaps these
+   (see onTwigSiteVariables), hiding [hideifembedded] content and showing [showifembedded] content */
+.hor-show-if-embedded {
+    display: none;
+}
+
+/* Default (primary colour) badges, such as on section and publication cards and from [badge]: the Helios theme
+   shows them in the primary colour on a light tint of it, which is under 4.5:1 contrast with the default blue
+   (about 3.1:1). In Light mode their text is a darker shade of the primary colour, so it stays readable whatever
+   primary colour a site uses; coloured badges (Blue, Green and so on) and Dark mode already have enough contrast.
+   (html:not(.dark) is Light mode; the :not(...) list leaves out the coloured badges) - hibbittsdesign.org */
+html:not(.dark) .doc-badge:not(.doc-badge-blue, .doc-badge-green, .doc-badge-yellow, .doc-badge-red, .doc-badge-purple, .doc-badge-plain) {
+    color: color-mix(in oklab, var(--color-primary) 70%, black);
+}

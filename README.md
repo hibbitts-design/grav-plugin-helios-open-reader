@@ -150,6 +150,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
 - **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
 - Search across the full reader via the simplesearch plugin
+- **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
 
 ### LMS Embedding
 
@@ -159,6 +160,7 @@ Append `?embedded=true` (or `?chromeless=true`) to any page URL to display only 
 - Combine with `?toc_position=hidden` to also hide the Table of Contents
 - Combine with `?toc_position=left` or `?toc_position=right` to reposition the Table of Contents to suit surrounding LMS navigation
 - Combine with `?edit_link=false` (or `?hidegitlink=true`) to hide the "Edit this Page" link
+- Use `[hideifembedded]` and `[showifembedded]` to show some content only on the site, or only when embedded (see [Site Only or Embedded Only](#site-only-or-embedded-only))
 
 **Example iframe:**
 
@@ -454,6 +456,13 @@ All callouts accept an optional `title="..."` parameter and support Markdown con
 - `[h5p url="..." title="..."]` – H5P embed with accessible title (recommended for accessibility)
 - `[embedly url="..."]` – Embedly card with dark mode support
 - `[linkpreviewcard url="..."]` – Self-hosted link preview card (image, title, description) scraped directly from the page; an alternative to `[embedly]` that doesn't rely on the [embed.ly](https://embed.ly/) service
+
+### Site Only or Embedded Only
+
+- `[hideifembedded]...[/hideifembedded]` – content shown on the site, but hidden when the page is embedded (`?embedded=true` or `?chromeless=true`), for example links that would take readers out of an LMS
+- `[showifembedded]...[/showifembedded]` – content shown only when the page is embedded, for example a note for students reading in the LMS
+
+They work on whole paragraphs, lists or lines, not on words within a sentence, and use the same names as Grav Helios Course Hub and Grav Open Publishing Space, so content moves between them unchanged.
 
 ## Plugin Settings
 
