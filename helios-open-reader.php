@@ -73,6 +73,8 @@ class HeliosOpenReaderPlugin extends Plugin
             'onShortcodeHandlers' => ['onShortcodeHandlers', -10],
             // first, before anything opens the page (Grav makes a page's redirect when it opens it)
             'onPagesInitialized'  => ['onEmbeddedRedirect', 1000],
+            // before SimpleSearch looks for the search words: leave out pages of unpublished publications
+            'onSimpleSearchCollection' => ['onSimpleSearchCollection', 0],
         ]);
 
         if ($this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false)) {
@@ -328,6 +330,45 @@ class HeliosOpenReaderPlugin extends Plugin
         }
         $twig = $this->grav['twig'];
         array_unshift($twig->twig_paths, __DIR__ . '/templates');
+    }
+
+    /**
+     * Before SimpleSearch looks for the search words: leave out the pages inside an unpublished page, such as the
+     * sections of a publication that is turned off (like the skeleton's second demo publication). Grav still counts
+     * pages inside an unpublished page as published, so without this they would be found by search - as in Grav Open
+     * Publishing Space - hibbittsdesign.org
+     */
+    public function onSimpleSearchCollection(Event $event)
+    {
+        $collection = $event['collection'];
+
+        // First find the pages to leave out, then remove them (removing pages while looping over them can skip some)
+        $pagesToRemove = [];
+        foreach ($collection as $page) {
+            if ($this->isInsideUnpublishedPage($page)) {
+                $pagesToRemove[] = $page;
+            }
+        }
+        foreach ($pagesToRemove as $page) {
+            $collection->remove($page);
+        }
+    }
+
+    /**
+     * Is the page inside an unpublished page? It looks at each page above it, up to (not including) the site's hidden
+     * root page, the only page without a parent of its own.
+     */
+    protected function isInsideUnpublishedPage($page)
+    {
+        $parent = $page->parent();
+        while ($parent && $parent->parent()) {
+            if (!$parent->published()) {
+                return true;
+            }
+            $parent = $parent->parent();
+        }
+
+        return false;
     }
 
     public function onShortcodeHandlers()

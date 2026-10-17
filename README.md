@@ -149,7 +149,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **Arrow keys** – ← and → go to the previous and next page (→ on a publication's home page starts reading), handy when presenting by screen sharing
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
 - **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
-- Search across the full reader via the simplesearch plugin
+- Search across the full reader via the simplesearch plugin; unpublished publications (and the pages inside them) are left out of the results
 - **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
 
 ### LMS Embedding
