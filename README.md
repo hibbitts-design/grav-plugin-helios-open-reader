@@ -143,10 +143,10 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - Five built-in GitHub-style callouts via the github-markdown-alerts plugin: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`
 
 ### Navigation & Reading Experience
-- **Keep My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read
+- **Keep My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read, at the part of the page the reader had reached (its last heading)
 - **Reading progress indicator** — shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** — configurable position: top, bottom, or both
-- **Arrow keys** – ← and → go to the previous and next page (→ on a publication's home page starts reading), handy when presenting by screen sharing
+- **Arrow keys** – ← and → go to the previous and next page (→ on a publication's home page starts reading), handy when presenting by screen sharing, and **/** opens search, as Ctrl/Cmd+K does
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
 - **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
 - Search across the full reader via the simplesearch plugin; unpublished publications (and the pages inside them) are left out of the results

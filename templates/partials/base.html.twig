@@ -142,8 +142,11 @@
 </head>
 
 {% set shortcut_key = theme_config.search.shortcut_key|default('k') %}
+{# Ctrl/Cmd + the shortcut key (K) opens the search box, and so does the / key on its own (as on GitHub and many
+   documentation sites) - but not while typing in a box (so a / can still be typed), with Ctrl, Alt or Cmd held, or
+   while the search box is already open #}
 <body class="min-h-screen bg-white dark:bg-gray-950/93 text-gray-900 dark:text-gray-100 {{ theme_config.body_classes }}"
-      @keydown.window="if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === '{{ shortcut_key }}') { event.preventDefault(); searchOpen = true; }"
+      @keydown.window="if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === '{{ shortcut_key }}') { event.preventDefault(); searchOpen = true; } else if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !searchOpen && !(event.target.closest && event.target.closest('input, textarea, select, [contenteditable]'))) { event.preventDefault(); searchOpen = true; }"
       @keydown.window.escape="searchOpen = false; mobileNavOpen = false">
 
     {# Skip to content link for accessibility #}

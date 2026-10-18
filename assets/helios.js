@@ -58,7 +58,8 @@
 
   // -------------------------------------------------------------------------
   // Save My Place / Resume Reading
-  // On section-page: saves current URL + title to localStorage.
+  // On section-page: saves current URL + title to localStorage, and the section being read on it (the last heading
+  // scrolled up to near the top of the window), so "Continue reading" goes back to that section.
   // On reader home: reads localStorage and shows a "Continue reading" strip.
   // Runs on initial load and re-runs on each HTMX content swap.
   // -------------------------------------------------------------------------
@@ -69,19 +70,75 @@
     return 'hor-last-page|' + window.location.origin + '|' + (publicationPath || '');
   }
 
+  // The page being read (its storage key and details), while on a section-page with Keep My Place on, and its
+  // headings (with an id to link to, as in the table of contents); null elsewhere
+  var horPlace = null;
+  var horPlaceHeadings = [];
+
+  function horSavePlace() {
+    try {
+      localStorage.setItem(horPlace.key, JSON.stringify(horPlace.details));
+    } catch (e) {}
+  }
+
+  // The section being read: the last heading that has scrolled up to near the top of the window (below the header,
+  // the same point as the table of contents uses), or the last one at the very end of the page. Before the first
+  // heading, no section is saved (the top of the page). Saved only when it changes.
+  function horRememberSection() {
+    if (!horPlace || horPlaceHeadings.length === 0) return;
+    var section = '';
+    for (var i = 0; i < horPlaceHeadings.length; i++) {
+      if (horPlaceHeadings[i].getBoundingClientRect().top <= 100) {
+        section = horPlaceHeadings[i].id;
+      }
+    }
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      section = horPlaceHeadings[horPlaceHeadings.length - 1].id;
+    }
+    if (section !== (horPlace.details.section || '')) {
+      horPlace.details.section = section;
+      horSavePlace();
+    }
+  }
+
+  // checked at most twice a second while scrolling ("passive" tells the browser this never stops scrolling)
+  var horSectionCheckPending = false;
+  window.addEventListener('scroll', function () {
+    if (!horPlace || horSectionCheckPending) return;
+    horSectionCheckPending = true;
+    setTimeout(function () {
+      horSectionCheckPending = false;
+      horRememberSection();
+    }, 500);
+  }, { passive: true });
+
   function horInitSavePlace(root) {
     // Save current page when on a section-page
     var savePlaceEl = root.querySelector('[data-hor-save-page]');
+    // (a page without the marker, such as the reader home, isn't a place to remember)
+    horPlace = null;
+    horPlaceHeadings = [];
     if (savePlaceEl) {
       var pubPath = savePlaceEl.dataset.horPublicationPath || '';
       // Only save the page when the Keep My Place setting is on (data-hor-keep-place is "false" when it's off)
       if (savePlaceEl.dataset.horKeepPlace !== 'false') {
+        horPlace = {
+          key: horPageKey(pubPath),
+          details: { url: savePlaceEl.dataset.horUrl, title: savePlaceEl.dataset.horTitle }
+        };
+        horPlaceHeadings = Array.prototype.slice.call(document.querySelectorAll('article h2[id], article h3[id]'));
+        // A page opened at one of its headings (from "Continue reading" or a link ending in # and the heading's id)
+        // starts with that section, as the page loads before the browser has scrolled to it
+        var linkedHeading = null;
         try {
-          localStorage.setItem(horPageKey(pubPath), JSON.stringify({
-            url: savePlaceEl.dataset.horUrl,
-            title: savePlaceEl.dataset.horTitle
-          }));
-        } catch (e) {}
+          linkedHeading = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+        } catch (e) {
+          // a # part that isn't valid (such as a stray %) is left alone
+        }
+        if (linkedHeading && horPlaceHeadings.indexOf(linkedHeading) !== -1) {
+          horPlace.details.section = linkedHeading.id;
+        }
+        horSavePlace();
       }
 
       // Update footer git link — footer is rendered from the section landing page and
@@ -103,7 +160,15 @@
           var pageData = JSON.parse(saved);
           var resumeBtn   = root.querySelector('#hor-resume-btn');
           var resumeTitle = root.querySelector('#hor-resume-title');
-          if (resumeBtn)   resumeBtn.href = pageData.url;
+          // the saved page, at the section being read when there is one (# and the heading's id)
+          if (resumeBtn) {
+            resumeBtn.href = pageData.url + (pageData.section ? '#' + encodeURIComponent(pageData.section) : '');
+            if (pageData.section) {
+              resumeBtn.setAttribute('data-hor-full-load', '');
+            } else {
+              resumeBtn.removeAttribute('data-hor-full-load');
+            }
+          }
           if (resumeTitle) resumeTitle.textContent = pageData.title;
           resumeStrip.removeAttribute('hidden');
 
@@ -120,6 +185,18 @@
   }
 
   horInitSavePlace(document);
+
+  // "Continue reading" to a section loads the page in full rather than swapping it in with HTMX, which scrolls a
+  // swapped-in page to its top - a full load lets the browser go straight to the section. (Caught in the capture
+  // phase, before HTMX's own click handler on the link.)
+  document.addEventListener('click', function (evt) {
+    if (evt.defaultPrevented || evt.button !== 0 || evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey) return;
+    var link = evt.target.closest('a[data-hor-full-load]');
+    if (!link) return;
+    evt.preventDefault();
+    evt.stopPropagation();
+    window.location.href = link.href;
+  }, true);
 
   // "This page as Markdown" link in the footer: the footer isn't re-rendered on HTMX navigation, so update the
   // link from the new page's data-hor-markdown-url marker, and hide it where the page has none
