@@ -1,3 +1,12 @@
+# v1.2.10
+## 10/18/2026
+
+1. [](#new)
+    * The / key opens search, as Ctrl/Cmd+K does (as on GitHub and many documentation sites), except while typing in a box
+    * Keep My Place also remembers the part of the page you were reading (its last heading), so Continue reading goes back to it rather than the top of the page, as in Grav Open Publishing Space
+1. [](#improved)
+    * README: the / key for search, and Keep My Place going back to the part of the page you were reading
+
 # v1.2.9
 ## 10/18/2026
 
