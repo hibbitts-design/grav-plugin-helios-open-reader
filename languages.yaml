@@ -11,6 +11,8 @@ en:
     UPDATED_LABEL: "Updated"
     PAGE_PROGRESS: "Page %s of %s"
     SKIP_TO_CONTENT: "Skip to content"
+    SEARCH_THESE_PAGES: "Search these pages…"
+    SEARCH_THESE_PAGES_LABEL: "Search these pages"
     DATE_FORMAT: "M j, Y"
 
 fr:
@@ -26,4 +28,6 @@ fr:
     UPDATED_LABEL: "Mis à jour"
     PAGE_PROGRESS: "Page %s sur %s"
     SKIP_TO_CONTENT: "Aller au contenu"
+    SEARCH_THESE_PAGES: "Rechercher dans ces pages…"
+    SEARCH_THESE_PAGES_LABEL: "Rechercher dans ces pages"
     DATE_FORMAT: "d/m/Y"

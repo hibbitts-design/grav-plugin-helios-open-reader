@@ -17,7 +17,8 @@
  #   5. versioningEnabled forced to false and fetch uses referrerPolicy: 'no-referrer' to prevent the
  #      Helios theme's onSimpleSearchCollection from scoping results to the current section (PLUGIN CHANGE 5)
  #   6. When in a specific publication (multi-publication mode), results are filtered client-side to only pages
- #      whose URL contains the current publication's path or part prefix; placeholder updated to name the publication (PLUGIN CHANGE 6)
+ #      whose URL contains the current publication's path or part prefix; the placeholder then says "Search these pages…" (a
+ #      translatable text, the same as in Grav Open Publishing Space), with the same words, without the "…", for screen readers (PLUGIN CHANGE 6)
  #}
 {% set theme_config = config.themes.helios %}
 {% set search_config = theme_config.search %}
@@ -54,8 +55,8 @@
                    x-ref="searchInput"
                    x-model="query"
                    @input.debounce.150ms="search()"
-                   placeholder="{{ current_publication_part is defined and current_publication_part ? 'Search ' ~ (publication_home_title ?? 'this guide') ~ '...' : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
-                   aria-label="{{ current_publication_part is defined and current_publication_part ? 'Search ' ~ (publication_home_title ?? 'this guide') : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
+                   placeholder="{{ current_publication_part is defined and current_publication_part ? 'PLUGIN_HELIOS_OPEN_READER.SEARCH_THESE_PAGES'|t : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
+                   aria-label="{{ current_publication_part is defined and current_publication_part ? 'PLUGIN_HELIOS_OPEN_READER.SEARCH_THESE_PAGES_LABEL'|t : (search_config.placeholder ?: 'THEME_HELIOS.SEARCH_DOCS'|t) }}"
                    autocomplete="off"
                    autocorrect="off"
                    autocapitalize="off"
