@@ -15,7 +15,7 @@
 <div class="hor-progress">
     <div class="hor-progress-bar"
          role="progressbar"
-         aria-label="Reading progress"
+         aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.READING_PROGRESS'|t|e('html_attr') }}"
          aria-valuenow="{{ section_progress_current }}"
          aria-valuemin="0"
          aria-valuemax="{{ section_progress_total }}"
@@ -27,7 +27,7 @@
 {% endif %}
 
 {% if prev or next %}
-<nav class="prev-next-nav" aria-label="Page navigation">
+<nav class="prev-next-nav" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_NAVIGATION'|t|e('html_attr') }}">
     {% if prev %}
     <a href="{{ prev.url }}" class="nav-button prev group">
         <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">

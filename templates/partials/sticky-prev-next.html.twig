@@ -7,7 +7,7 @@
 {% set next = doc_next|default(null) %}
 {% if prev or next %}
 <div class="hor-sticky-nav not-prose" id="hor-sticky-nav" aria-hidden="true" inert>
-    <nav class="prev-next-nav" aria-label="Page navigation, sticky">
+    <nav class="prev-next-nav" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_NAVIGATION_BAR'|t|e('html_attr') }}">
         {% if prev %}
         <a href="{{ prev.url }}" class="nav-button prev group" tabindex="-1">
             <svg class="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">

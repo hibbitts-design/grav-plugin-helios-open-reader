@@ -3,7 +3,7 @@
 {% set next = doc_next|default(null) %}
 
 {% if (prev or next) and not chromeless %}
-<nav class="prev-next-nav prev-next-nav--top" aria-label="Page navigation, top">
+<nav class="prev-next-nav prev-next-nav--top" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_NAVIGATION_TOP'|t|e('html_attr') }}">
     {% if prev %}
     <a href="{{ prev.url }}" class="nav-button prev group">
         <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">

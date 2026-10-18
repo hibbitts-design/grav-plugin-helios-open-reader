@@ -26,13 +26,13 @@
     {% endif %}
     {% if file_path starts with 'user/' %}{% set file_path = file_path[5:] %}{% endif %}{# PLUGIN CHANGE 5 #}
     {% set git_path_prefix = (github_server == 'github.com') ? (github_link_mode == 'edit' ? 'edit' : 'blob') : (github_link_mode == 'edit' ? '_edit' : 'src/branch') %}{# PLUGIN CHANGE 1 #}
-    <aside class="mb-4 text-center" aria-label="Page source">
+    <aside class="mb-4 text-center" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_SOURCE'|t|e('html_attr') }}">
         <a href="https://{{ github_server }}/{{ theme_config.github.repo|trim('/') }}/{{ git_path_prefix }}/{{ theme_config.github.branch }}/{{ file_path }}"
            target="_blank"
            rel="noopener noreferrer"
            class="edit-page-link inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary">
             <span aria-hidden="true">{{ svg_icon(github_link_icon ?: 'tabler/file-text.svg', 'w-4 h-4')|raw }}</span>
-            {{ theme_config.github.edit_text ?: 'THEME_HELIOS.EDIT_PAGE'|t }}<span class="sr-only"> (opens in new tab)</span>
+            {{ theme_config.github.edit_text ?: 'THEME_HELIOS.EDIT_PAGE'|t }}<span class="sr-only"> {{ 'PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t }}</span>
         </a>
     </aside>
     {% endif %}
@@ -45,7 +45,7 @@
     {% set hor_markdown_url = include('partials/markdown-url.html.twig')|trim %}
     <aside class="hor-markdown-link-wrap mb-4 text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ markdown_link_label }}"{% if not hor_markdown_url %} hidden{% endif %}>
         {# the hover text shares a tip: any page's Markdown is at its address with .md added #}
-        <a href="{{ hor_markdown_url }}" title="Add .md to any page's address to get its Markdown" class="page-markdown-link plain-text-link inline-flex items-center gap-1 hover:underline">
+        <a href="{{ hor_markdown_url }}" title="{{ 'PLUGIN_HELIOS_OPEN_READER.MARKDOWN_LINK_TITLE'|t|e('html_attr') }}" class="page-markdown-link plain-text-link inline-flex items-center gap-1 hover:underline">
             {% if markdown_link_icon %}<span aria-hidden="true">{{ svg_icon(markdown_link_icon, 'w-4 h-4')|raw }}</span>{% endif %}
             {{ markdown_link_label }}
         </a>
@@ -87,7 +87,7 @@
         <p class="mt-2">
             {% if reader_license_url %}
             <a href="{{ reader_license_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                {{ reader_license }}<span class="sr-only"> (opens in new tab)</span>
+                {{ reader_license }}<span class="sr-only"> {{ 'PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t }}</span>
             </a>
             {% else %}
             {{ reader_license }}
@@ -99,6 +99,11 @@
 
     {# Plugin credits #}{# PLUGIN CHANGE 3 #}
     {% if show_plugin_credits and not chromeless %}
-    <aside class="text-center text-sm text-gray-500 dark:text-gray-400" aria-label="Credits">Built with <a href="https://getgrav.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav<span class="sr-only"> (opens in new tab)</span></a> · <a href="https://getgrav.org/premium/helios" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav Premium Helios<span class="sr-only"> (opens in new tab)</span></a> theme · <a href="https://github.com/hibbitts-design/grav-plugin-helios-open-reader" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Helios Open Reader<span class="sr-only"> (opens in new tab)</span></a> by <a href="https://hibbittsdesign.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">hibbittsdesign.org<span class="sr-only"> (opens in new tab)</span></a></aside>
+    {# the credit line, as one translatable sentence (FOOTER_CREDITS in languages.yaml), with its four links filled in as %1$s to %4$s #}
+    {% set credit_grav = '<a href="https://getgrav.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav<span class="sr-only"> ' ~ ('PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t) ~ '</span></a>' %}
+    {% set credit_helios = '<a href="https://getgrav.org/premium/helios" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Grav Premium Helios<span class="sr-only"> ' ~ ('PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t) ~ '</span></a>' %}
+    {% set credit_open_reader = '<a href="https://github.com/hibbitts-design/grav-plugin-helios-open-reader" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">Helios Open Reader<span class="sr-only"> ' ~ ('PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t) ~ '</span></a>' %}
+    {% set credit_author = '<a href="https://hibbittsdesign.org" target="_blank" rel="nofollow noopener noreferrer" class="hover:underline">hibbittsdesign.org<span class="sr-only"> ' ~ ('PLUGIN_HELIOS_OPEN_READER.OPENS_IN_NEW_TAB'|t) ~ '</span></a>' %}
+    <aside class="text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.CREDITS'|t|e('html_attr') }}">{{ 'PLUGIN_HELIOS_OPEN_READER.FOOTER_CREDITS'|t(credit_grav, credit_helios, credit_open_reader, credit_author)|raw }}</aside>
     {% endif %}
 </footer>
