@@ -1,3 +1,9 @@
+# v1.2.9
+## XX/XX/2026
+
+1. [](#improved)
+    * Search, when it is limited to one publication: the box says "Search these pages…" (the same as in Grav Open Publishing Space), in translatable texts (English and French), and screen readers hear the same words without the "…"
+
 # v1.2.8
 ## 10/17/2026
 
