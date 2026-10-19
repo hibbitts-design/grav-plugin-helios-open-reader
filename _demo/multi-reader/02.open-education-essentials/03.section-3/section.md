@@ -31,7 +31,7 @@ A single link serves two audiences:
 
 For publicly accessible readers, **view mode** is the safer default on all platforms. GitHub's edit mode is the exception – it handles unauthenticated visitors gracefully, making it well-suited for open authoring workflows.
 
-## Inviting Contributions
+## Asking Readers to Help
 
 The simplest invitation is a single sentence at the top of your reader home page:
 
