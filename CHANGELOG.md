@@ -1,5 +1,5 @@
 # v1.2.12
-## XX/XX/2026
+## 10/19/2026
 
 1. [](#new)
     * Tap or click an image in a page that's shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones), as in Grav Open Publishing Space; Escape, the Close button or a tap closes it
