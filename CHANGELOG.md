@@ -1,5 +1,5 @@
 # v1.2.11
-## XX/XX/2026
+## 10/18/2026
 
 1. [](#improved)
     * French and German translations are complete for the plugin's own texts (German is new), so French and German sites match the Helios theme's translations
