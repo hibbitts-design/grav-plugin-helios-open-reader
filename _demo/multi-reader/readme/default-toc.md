@@ -233,8 +233,8 @@ The readers list stays available at `/readers`, and the site keeps its multi-pub
 If you only need a single publication and prefer a simpler root-level folder structure, you can convert the skeleton to single-publication mode:
 
 1. Remove the `00.readers/` folder
-2. Move your publication folder's contents (`section-list.md` and section folders) to root level
-3. Update `home.alias` in `user/config/system.yaml` to point to your reader home (e.g. `/open-reader-guide`)
+2. Move the section folders to the top of `user/pages`, and keep `section-list.md` (with its cover image) in a folder of its own, such as `00.my-publication/` – Grav doesn't read a Markdown file placed directly in `user/pages`
+3. Update `home.alias` in `user/config/system.yaml` to point to your reader home (e.g. `/my-publication`)
 
 ```
 user/pages/
