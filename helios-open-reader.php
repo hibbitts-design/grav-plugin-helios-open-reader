@@ -407,6 +407,14 @@ class HeliosOpenReaderPlugin extends Plugin
         $assets->addCss("$path/section-list.css");
         $assets->addCss("$path/print.css", ['media' => 'print']);
         $assets->addJs("$path/helios.js", ['group' => 'bottom', 'loading' => 'defer']);
+        // Tap or click an image in a page to see it larger; its button labels, in the site's language, are read by the script
+        $assets->addJs("$path/image-zoom.js", ['group' => 'bottom', 'loading' => 'defer']);
+        $language = $this->grav['language'];
+        $zoomLabels = [
+            'larger' => $language->translate('PLUGIN_HELIOS_OPEN_READER.IMAGE_LARGER'),
+            'close'  => $language->translate('PLUGIN_HELIOS_OPEN_READER.IMAGE_CLOSE'),
+        ];
+        $assets->addInlineJs('window.heliosImageZoomLabels = ' . json_encode($zoomLabels) . ';', ['group' => 'bottom']);
 
 
         $twig = $this->grav['twig'];

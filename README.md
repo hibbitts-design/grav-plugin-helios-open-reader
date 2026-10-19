@@ -75,9 +75,7 @@ The `_demo` folder in this plugin contains a default Helios Open Reader site tha
 - `02.open-education-essentials/` – Publication 2: Open Education Essentials (with `section-list.md` home and three sections)
 - `readme/` – In-site README page
 
-A single-publication demo is also included in `_demo/single-publication/` for reference.
-
-To use the demo content, copy the contents of `_demo/pages/` into your Grav `user/pages/` folder.
+To use the demo content, copy the contents of `_demo/multi-reader/` into your Grav `user/pages/` folder. `_demo/pages/` holds a single-publication version, for reference.
 
 ## Helios Theme Configuration
 
@@ -146,11 +144,12 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **Keep My Place** — records the last section page visited in localStorage; a dismissable "Continue reading" strip appears on the publication home page on return, linking directly to the last section read, at the part of the page the reader had reached (its last heading)
 - **Reading progress indicator** — shows current page position (e.g. Page 4 of 22) with an accessible progress bar above the Prev/Next navigation on section pages
 - **Prev/Next navigation** — configurable position: top, bottom, or both
-- **Arrow keys** – ← and → go to the previous and next page (→ on a publication's home page starts reading), handy when presenting by screen sharing, and **/** opens search, as Ctrl/Cmd+K does
+- **Arrow keys** – ← and → go to the previous and next page (→ on a publication's home page starts reading, and ← on its first page goes back to it), handy when presenting by screen sharing, and **/** opens search, as Ctrl/Cmd+K does
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
 - **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
 - Search across the full reader via the simplesearch plugin; unpublished publications (and the pages inside them) are left out of the results
 - **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
+- **Seeing an image larger** – tap or click an image shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones); Escape, the Close button or a tap closes it
 
 ### LMS Embedding
 
@@ -208,6 +207,20 @@ To add a new publication, create a numbered folder at root level with a `section
 > After adding, renaming, or removing a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel.
 
 To hide a publication from the list while keeping its URL accessible, set `visible: false` in the publication's `section-list.md` frontmatter.
+
+### Making a Publication the Homepage
+
+To send readers straight to one publication, share its address (e.g. `https://example.com/open-education-essentials`) – no setup needed.
+
+To make a publication the site's homepage instead, set the Home Page to that publication (in **Admin → Configuration → System**, or in `system.yaml`):
+
+```yaml
+# user/config/system.yaml
+home:
+  alias: /open-education-essentials
+```
+
+The readers list stays available at `/readers`, and the site keeps its multi-publication setup – unlike the Single-Publication Alternative below, no folders change.
 
 ### Single-Publication Alternative
 
@@ -360,10 +373,10 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
 | `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
-| `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
+| `badge_label` | Optional status badge label (e.g. `New`, `Draft`), shown on the section card and beside the section label on the page |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
 
-Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
+Individual content pages within a section (`section-page.md`) can also set `badge_label` and `badge_color`, shown beside the section label on the page; otherwise add content directly in the editor.
 
 ```yaml
 ---

@@ -285,8 +285,10 @@
 })();
 
 // On reader pages, the left and right arrow keys go to the previous and next page - as when presenting slides,
-// for example by screen sharing. On a publication's home page, the right arrow key follows its Start Reading button.
-// The links are clicked rather than opened, so pages load just as they would for a reader clicking them.
+// for example by screen sharing. On a publication's home page, the right arrow key follows its Start Reading button,
+// and on its first page the left arrow key goes back to its home page.
+// The links are clicked rather than opened, so pages load just as they would for a reader clicking them (the home page,
+// which has no link on the bar, is opened by its address).
 (function () {
 
   // true when an element is a box that scrolls sideways (such as a wide table or code block) and is wider than its space,
@@ -316,6 +318,14 @@
     var link = null;
     if (event.key === 'ArrowLeft') {
       link = document.querySelector('.prev-next-nav .nav-button.prev');
+      // on a publication's first page there's no Previous page, so the left arrow key goes back to the publication's
+      // home page instead (its address is on the Previous/Next bar, as data-hor-home-url), so presenting with the arrow
+      // keys works both ways
+      var homeNav = document.querySelector('.prev-next-nav[data-hor-home-url]');
+      if (!link && homeNav) {
+        window.location.href = homeNav.dataset.horHomeUrl;
+        return;
+      }
     }
     if (event.key === 'ArrowRight') {
       link = document.querySelector('.prev-next-nav .nav-button.next, .hor-start-reading');

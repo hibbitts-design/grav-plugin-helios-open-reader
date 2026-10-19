@@ -3,7 +3,9 @@
 {% set next = doc_next|default(null) %}
 
 {% if (prev or next) and not chromeless %}
-<nav class="prev-next-nav prev-next-nav--top" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_NAVIGATION_TOP'|t|e('html_attr') }}">
+{# On a publication's first page (no Previous page), data-hor-home-url is the publication's home page, where the left
+   arrow key goes (assets/helios.js), as in Grav Open Publishing Space #}
+<nav class="prev-next-nav prev-next-nav--top" aria-label="{{ 'PLUGIN_HELIOS_OPEN_READER.PAGE_NAVIGATION_TOP'|t|e('html_attr') }}"{% if not prev and page.template in ['section', 'section-page'] and (publication_home_url|default(null) or section_home_url|default(null)) %} data-hor-home-url="{{ (publication_home_url|default(null) ?: section_home_url)|e('html_attr') }}"{% endif %}>
     {% if prev %}
     <a href="{{ prev.url }}" class="nav-button prev group">
         <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" viewBox="0 0 24 24">

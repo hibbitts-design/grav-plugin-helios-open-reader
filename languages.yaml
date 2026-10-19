@@ -32,6 +32,8 @@ en:
     VIEW_ON_GITHUB: "View on GitHub"
     VIEW_ON_CODEBERG: "View on Codeberg"
     VIEW_REPOSITORY: "View Repository"
+    IMAGE_LARGER: "Show image larger"
+    IMAGE_CLOSE: "Close"
 
 fr:
   PLUGIN_HELIOS_OPEN_READER:
@@ -67,6 +69,8 @@ fr:
     VIEW_ON_GITHUB: "Voir sur GitHub"
     VIEW_ON_CODEBERG: "Voir sur Codeberg"
     VIEW_REPOSITORY: "Voir le dépôt"
+    IMAGE_LARGER: "Agrandir l'image"
+    IMAGE_CLOSE: "Fermer"
 
 de:
   PLUGIN_HELIOS_OPEN_READER:
@@ -102,3 +106,5 @@ de:
     VIEW_ON_GITHUB: "Auf GitHub ansehen"
     VIEW_ON_CODEBERG: "Auf Codeberg ansehen"
     VIEW_REPOSITORY: "Repository ansehen"
+    IMAGE_LARGER: "Bild vergrößern"
+    IMAGE_CLOSE: "Schließen"

@@ -31,15 +31,30 @@
     ? (page.parent.header.section_label ?? null)
     : (page.header.section_label ?? null) %}
 {% set page_icon = page.header.icon ?? null %}
+{# The label above the title: the section's own label, or "Section N" #}
+{% set heading_label = null %}
+{% if per_section_label is not null %}
+    {% if per_section_label and not chromeless %}
+        {% set heading_label = per_section_label %}
+    {% endif %}
+{% elseif display_section_number and not chromeless and show_section_label is not same as(false) %}
+    {% set heading_label = section_label ~ ' ' ~ display_section_number %}
+{% endif %}
+{# The page's own status badge, such as "Draft" (its Badge Label and Badge Color settings, also shown on a section's
+   card), beside the label, so readers see it on the page too, as in Grav Open Publishing Space #}
+{% set page_badge_label = page.header.badge_label ?? null %}
+{% set page_badge_color = page.header.badge_color ?? null %}
+{% set page_badge_classes = ['doc-badge', page_badge_color and page_badge_color != 'default' ? 'doc-badge-' ~ page_badge_color : '']|filter(v => v)|join(' ') %}
 <header class="mb-6">
-    {% if per_section_label is not null %}
-        {% if per_section_label and not chromeless %}
-        <p class="text-sm font-medium text-primary uppercase tracking-wider mb-1">{{ per_section_label }}</p>
+    {% if page_badge_label and not chromeless %}
+    <div class="flex flex-wrap items-center gap-2 mb-1">
+        {% if heading_label %}
+        <p class="text-sm font-medium text-primary uppercase tracking-wider">{{ heading_label }}</p>
         {% endif %}
-    {% elseif display_section_number and not chromeless and show_section_label is not same as(false) %}
-    <p class="text-sm font-medium text-primary uppercase tracking-wider mb-1">
-        {{ section_label }} {{ display_section_number }}
-    </p>
+        <span class="{{ page_badge_classes }}">{{ page_badge_label }}</span>
+    </div>
+    {% elseif heading_label %}
+    <p class="text-sm font-medium text-primary uppercase tracking-wider mb-1">{{ heading_label }}</p>
     {% endif %}
     <div class="{{ page_icon ? 'flex items-center gap-3' : '' }}">
         {% if page_icon %}

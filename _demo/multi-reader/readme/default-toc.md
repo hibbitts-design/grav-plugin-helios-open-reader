@@ -214,6 +214,20 @@ To add a section inside a publication, copy an existing section folder (e.g. `01
 > [!TIP]
 > After duplicating and renaming a section folder, clear the Grav cache via the **Clear Cache** button in the Admin panel if the new section does not appear immediately.
 
+### Making a Publication the Homepage
+
+To send readers straight to one publication, share its address (e.g. `https://example.com/open-education-essentials`) – no setup needed.
+
+To make a publication the site's homepage instead, set the Home Page to that publication (in **Admin → Configuration → System**, or in `system.yaml`):
+
+```yaml
+# user/config/system.yaml
+home:
+  alias: /open-education-essentials
+```
+
+The readers list stays available at `/readers`, and the site keeps its multi-publication setup – unlike the Single-Publication Alternative below, no folders change.
+
 ### Single-Publication Alternative
 
 If you only need a single publication and prefer a simpler root-level folder structure, you can convert the skeleton to single-publication mode:
@@ -313,10 +327,10 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
 | `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
-| `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
+| `badge_label` | Optional status badge label (e.g. `New`, `Draft`), shown on the section card and beside the section label on the page |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
 
-Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
+Individual content pages within a section (`section-page.md`) can also set `badge_label` and `badge_color`, shown beside the section label on the page; otherwise add content directly in the editor.
 
 ## Label Customization
 

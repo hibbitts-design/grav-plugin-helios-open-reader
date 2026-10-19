@@ -17,7 +17,8 @@
     #hor-resume-reading,
     #htmx-loading,
     #htmx-breadcrumbs,
-    .hor-section-list {
+    .hor-section-list,
+    .image-zoom-dialog {
         display: none !important;
     }
 

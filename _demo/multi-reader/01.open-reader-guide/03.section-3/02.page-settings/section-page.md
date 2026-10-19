@@ -68,10 +68,10 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | `image` | Filename of a card image uploaded to this page's media folder |
 | `author` | Author name(s) shown on the section card |
 | `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
-| `badge_label` | Optional status badge label (e.g. `New`, `Draft`) |
+| `badge_label` | Optional status badge label (e.g. `New`, `Draft`), shown on the section card and beside the section label on the page |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
 
-Individual content pages within a section (`section-page.md`) have no custom frontmatter — add content directly in the editor.
+Individual content pages within a section (`section-page.md`) can also set `badge_label` and `badge_color`, shown beside the section label on the page; otherwise add content directly in the editor.
 
 ```yaml
 ---
