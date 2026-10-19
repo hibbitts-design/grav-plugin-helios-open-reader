@@ -376,7 +376,7 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`), shown on the section card and beside the section label on the page |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
 
-Individual content pages within a section (`section-page.md`) can also set `badge_label` and `badge_color`, shown beside the section label on the page; otherwise add content directly in the editor.
+Individual content pages within a section (`section-page.md`) can also set `learning_objectives` (a Learning Objectives block at the top of the page), and `badge_label` and `badge_color` (shown beside the section label on the page); otherwise add content directly in the editor.
 
 ```yaml
 ---
