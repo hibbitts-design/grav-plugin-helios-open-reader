@@ -4,6 +4,7 @@
 1. [](#improved)
     * French and German translations are complete for the plugin's own texts (German is new), so French and German sites match the Helios theme's translations
     * Text that was only in English in the templates is now translatable: the theme selector, navigation and Previous/Next labels that screen readers hear, "(opens in new tab)", the Git repository link, the Markdown link's tip, and the footer's credit line (as one sentence, so translations can order its links). The search dialog is named "Search" (from the Helios theme) rather than "Search documentation"
+    * Demo content (single and multi-reader): the Open Education Essentials guide's section pages' headings no longer repeat the names of their own pages (for example LMS Embedding)
 
 # v1.2.10
 ## 10/18/2026
