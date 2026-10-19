@@ -4,12 +4,14 @@
 1. [](#new)
     * Tap or click an image in a page that's shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones), as in Grav Open Publishing Space; Escape, the Close button or a tap closes it
     * A page's Badge Label (such as "Draft") now also shows beside its section label on the page, and Reader Pages have Badge Label and Badge Color settings too, as in Grav Open Publishing Space
+    * Learning Objectives setting for Reader Pages, as Sections already have, as in Grav Open Publishing Space
 1. [](#improved)
     * On a publication's first page, the left arrow key goes back to the publication's home page, so presenting with the arrow keys works both ways, as in Grav Open Publishing Space
     * Demo content (single and multi-reader): a Creative Commons license chart, with its attribution as a caption, on the Creative Commons Licenses page (it can be tapped to see it larger)
     * README and demo pages: seeing an image larger, the left arrow key on a publication's first page, and badges on Reader Pages
     * README and Read Me pages: sharing a single publication's link or making it the site's homepage
     * README: the demo content folders (the multi-publication demo is in _demo/multi-reader/, the single-publication one in _demo/pages/)
+    * README and demo pages: Reader Pages can have learning objectives
 
 # v1.2.11
 ## 10/18/2026
