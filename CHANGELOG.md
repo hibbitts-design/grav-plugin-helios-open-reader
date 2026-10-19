@@ -1,3 +1,9 @@
+# v1.2.13
+## 10/19/2026
+
+1. [](#improved)
+    * README and demo Read Me pages: the single-publication steps keep section-list.md (with its cover image) in a folder of its own, as Grav doesn't read a Markdown file placed directly in user/pages, and the home page example matches the folder diagram
+
 # v1.2.12
 ## 10/19/2026
 
