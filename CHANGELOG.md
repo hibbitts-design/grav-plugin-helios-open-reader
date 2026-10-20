@@ -1,3 +1,11 @@
+# v1.2.14
+## 10/20/2026
+
+1. [](#new)
+    * On phones and tablets, a page with two or more sections starts with a slim "On this page" box listing them, closed until tapped, as in Grav Open Publishing Space (the On this page Box on Phones setting, on by default; wider screens are unchanged)
+1. [](#improved)
+    * README: the On this page box on phones
+
 # v1.2.13
 ## 10/19/2026
 
