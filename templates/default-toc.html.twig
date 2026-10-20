@@ -34,6 +34,10 @@
                 {% endif %}
             </header>
 
+            {# On phones and tablets, where the "On this page" column on the right is hidden, the page's sections in
+               an "On this page" box, above its content #}
+            {% include 'partials/page-sections-above.html.twig' %}
+
             <article class="prose prose-lg dark:prose-invert max-w-none">
                 {{ page.content|raw }}
             </article>

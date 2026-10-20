@@ -753,3 +753,81 @@ img.image-zoom:focus-visible {
     outline: 2px solid #fff;
     outline-offset: 2px;
 }
+
+/* On phones and tablets: the page's sections in a slim "On this page" box above its content, which opens when tapped
+   (partials/page-sections-above.html.twig), as in Grav Open Publishing Space - hibbittsdesign.org */
+.hor-page-sections-above {
+    margin: 0 0 1.5rem;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--color-gray-200);
+    border-radius: 0.5rem;
+}
+
+.dark .hor-page-sections-above {
+    border-color: var(--color-gray-700);
+}
+
+/* "On this page" with a "›" on the right, in place of the browser's triangle on the left
+   (list-style removes the triangle in most browsers, ::-webkit-details-marker in older Safari) */
+.hor-page-sections-above summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hor-page-sections-above summary::-webkit-details-marker {
+    display: none;
+}
+
+.hor-page-sections-above summary::after {
+    content: "\203A";
+    font-size: 1.4em;
+    line-height: 1;
+    opacity: 0.6;
+    transition: transform 0.15s ease;
+}
+
+/* the "›" turns to point down while the box is open */
+.hor-page-sections-above[open] summary::after {
+    transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hor-page-sections-above summary::after {
+        transition: none;
+    }
+}
+
+/* a bulleted list of links in the theme's link colour (the theme's base styles remove list bullets) */
+.hor-page-sections-above ul {
+    margin: 0.5rem 0 0.25rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+}
+
+.hor-page-sections-above li {
+    margin: 0.25rem 0;
+}
+
+.hor-page-sections-above a {
+    color: var(--color-primary);
+}
+
+/* in Dark Mode, the theme's lighter link colour, as in its own "On this page" column */
+.dark .hor-page-sections-above a {
+    color: var(--color-primary-dark);
+}
+
+.hor-page-sections-above a:hover {
+    text-decoration: underline;
+}
+
+/* Phones and tablets only: from 1024px wide, the theme can show its own "On this page" column on the right instead */
+@media (min-width: 1024px) {
+    .hor-page-sections-above {
+        display: none;
+    }
+}

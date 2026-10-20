@@ -1,0 +1,36 @@
+{#
+ # On phones and tablets: an "On this page" box above the page's content, listing its sections (closed until tapped).
+ # It's hidden from 1024px wide (see assets/helios.css), where the Helios theme's own "On this page" column can be
+ # shown on the right instead. As in Grav Open Publishing Space and Open Course Hub - hibbittsdesign.org
+ #
+ # Shown only when:
+ #   - the plugin's "On this page Box on Phones" setting is on
+ #   - the page isn't embedded (chromeless), which shows content only
+ #   - the page has two or more sections
+ #
+ # Expects: chromeless, from swap-body.html.twig
+ #}
+{# the plugin's setting (on unless turned off) #}
+{% set show_page_sections = config.plugins['helios-open-reader'].page_sections_box ?? true %}
+{% if show_page_sections and not chromeless and config.plugins['page-toc'].enabled %}
+    {# The same first heading level as the theme's "On this page" column, so the two list the same sections #}
+    {% set sections_start = theme_var('navigation.toc_start', 2) %}
+    {# toc_items(content, first heading level, number of levels): one level, to keep the box short #}
+    {% set sections = toc_items(page.content, sections_start, 1) %}
+    {# with fewer than two at that level (such as a page with one h2 and several h3s), use the next level down #}
+    {% if sections.children|length < 2 %}
+        {% set sections = toc_items(page.content, sections_start + 1, 1) %}
+    {% endif %}
+
+    {# a single section isn't worth a list #}
+    {% if sections.children|length >= 2 %}
+        <details class="hor-page-sections-above">
+            <summary>{{ 'THEME_HELIOS.ON_THIS_PAGE'|t }}</summary>
+            <ul>
+                {% for section in sections.children %}
+                    <li><a href="{{ section.uri }}">{{ section.label|raw }}</a></li>
+                {% endfor %}
+            </ul>
+        </details>
+    {% endif %}
+{% endif %}

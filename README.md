@@ -150,6 +150,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - Search across the full reader via the simplesearch plugin; unpublished publications (and the pages inside them) are left out of the results
 - **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
 - **Seeing an image larger** – tap or click an image shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones); Escape, the Close button or a tap closes it
+- **On this page on phones** – on phones and tablets, where the theme's On this page column isn't shown, a page with two or more sections starts with a slim On this page box listing them, closed until tapped (the On this page Box on Phones setting, on by default)
 
 ### LMS Embedding
 

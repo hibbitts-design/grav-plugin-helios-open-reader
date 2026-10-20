@@ -68,6 +68,9 @@
     </div>
 </header>
 
+{# On phones and tablets, the page's sections in an "On this page" box, above its content #}
+{% include 'partials/page-sections-above.html.twig' %}
+
 {# Learning objectives block — from frontmatter, rendered above body content #}
 {% if page.header.learning_objectives %}
 <div class="md-alert md-alert--tip hor-objectives mb-6" dir="auto">

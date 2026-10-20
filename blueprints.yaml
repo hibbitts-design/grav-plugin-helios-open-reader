@@ -121,6 +121,23 @@ form:
       validate:
         type: bool
 
+    reading_pages_section:
+      type: section
+      title: 'Reading Pages'
+      underline: true
+
+    page_sections_box:
+      type: toggle
+      label: 'On this page Box on Phones'
+      help: 'Lists a page''s sections above its content on phones and tablets. Defaults to Enabled.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
     footer_section:
       type: section
       title: 'Footer'
