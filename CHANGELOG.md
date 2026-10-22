@@ -1,3 +1,9 @@
+# v1.2.15
+## 10/XX/2026
+
+1. [](#improved)
+    * Demo content: a Mermaid flowchart on the Getting Started with OER page and a LaTeX Correcting a Formula example on the Maintaining an Open Reader page, matching the skeleton (drawn when the Mermaid and LaTeX Math plugins are installed)
+
 # v1.2.14
 ## 10/20/2026
 
