@@ -1,8 +1,9 @@
 # v1.2.15
-## 10/XX/2026
+## 10/23/2026
 
 1. [](#improved)
     * Demo content: a Mermaid flowchart on the Getting Started with OER page and a LaTeX Correcting a Formula example on the Maintaining an Open Reader page, matching the skeleton (drawn when the Mermaid and LaTeX Math plugins are installed)
+    * Code comments in the [badge], [button], [hideifembedded] and [showifembedded] shortcodes match the other Helios plugin, so the shortcodes stay identical apart from their settings and class names
 
 # v1.2.14
 ## 10/20/2026
