@@ -5,7 +5,7 @@ use Thunder\Shortcode\Shortcode\ShortcodeInterface;
 
 /**
  * [hideifembedded]...[/hideifembedded] – content hidden when the page is embedded (?embedded=true or ?chromeless=true),
- * as in Grav Helios Course Hub and Grav Open Publishing Space - hibbittsdesign.org
+ * as in the free Grav Open Publishing Space, Open Course Hub and Open MultiCourse Hub - hibbittsdesign.org
  * The content is only wrapped here; CSS hides it (see helios.css and onTwigSiteVariables), because a page's content
  * is cached once and shown for both the embedded and normal addresses.
  */
