@@ -1,3 +1,9 @@
+# v1.2.17
+## XX/XX/2026
+
+1. [](#new)
+    * Side Box: Markdown shown under the navigation in the sidebar, such as a call to action or a download link – set once on the publication home (`section-list.md`) for every page, replaced on any section or page, or hidden with `false` on a page (or a section and its pages). The same `side_box` setting as in Grav Open Publishing Space, so it moves with a guide
+
 # v1.2.16
 ## 10/23/2026
 
