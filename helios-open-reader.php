@@ -595,6 +595,9 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['hor_keep_my_place']      = (bool) $this->headerFallback($readerHome, $settingsFallback, 'keep_my_place', true);
             // show_reading_progress has the same name as in Grav Open Publishing Space, so a moved guide keeps its choice
             $twig->twig_vars['hor_show_reading_progress'] = (bool) $this->headerFallback($readerHome, $settingsFallback, 'show_reading_progress', true);
+            // the guide's Side Box (Markdown under the navigation): side_box has the same name as in Grav Open Publishing
+            // Space, so a moved guide keeps it
+            $twig->twig_vars['reader_side_box'] = $this->headerFallback($readerHome, $settingsFallback, 'side_box', null);
 
             // Prev/Next can be hidden: with the position set to "Hidden" (none), or with Grav Open Publishing Space's
             // hide_next_prev_page_buttons setting, so a moved guide keeps its choice. The sticky bar is hidden with them.

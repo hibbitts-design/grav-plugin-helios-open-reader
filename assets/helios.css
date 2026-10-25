@@ -849,3 +849,21 @@ img.image-zoom:focus-visible {
     --gh-alert-warning-title-color: #d29922;
     --gh-alert-caution-title-color: #f85149;
 }
+
+/* Side Box: the author's Markdown under the navigation (see partials/sidebar.html.twig), after a thin line and at the
+   navigation's text size, with the same space above and below the line (.prose too, so this size wins over the
+   theme's own .prose size whatever order the stylesheets load in) */
+.hor-side-box.prose {
+    margin-top: 0.5rem; /* with the last navigation row's own space below it, about 1rem */
+    padding: 1rem 0.75rem 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.hor-side-box > :first-child {
+    margin-top: 0;
+}
+
+.hor-side-box > :last-child {
+    margin-bottom: 0;
+}

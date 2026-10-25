@@ -151,6 +151,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
 - **Seeing an image larger** – tap or click an image shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones); Escape, the Close button or a tap closes it
 - **On this page on phones** – on phones and tablets, where the theme's On this page column isn't shown, a page with two or more sections starts with a slim On this page box listing them, closed until tapped (the On this page Box on Phones setting, on by default)
+- **Side Box** – Markdown under the navigation in the sidebar, such as a call to action: set `side_box` on the publication home for every page, change it on any section or page, or set it to `false` to hide it on a page (or a section and its pages); the same setting as in Grav Open Publishing Space, so it moves with a guide
 
 ### LMS Embedding
 
@@ -325,6 +326,7 @@ These fields apply when `section-list.md` is used as the publication home (recom
 | `card_icon` | Default icon for section cards |
 | `card_image_layout` | Card image position: `side` or `top` (default: `side`) |
 | `card_description_lines` | Max description lines per card |
+| `side_box` | Optional Markdown shown under the navigation on every page of this publication (see [Reader Section Settings](#reader-section-settings) to change it on a page) |
 
 ### Reader Home Settings
 
@@ -351,6 +353,7 @@ The `section-list.md` frontmatter controls the publication identity and card lay
 | `card_icon` | Default icon for all cards (Tabler icon path) |
 | `card_image_layout` | Card image position: `side` or `top` (default: `side`) |
 | `card_description_lines` | Maximum description lines per card (2, 3, or 0 for no limit) |
+| `side_box` | Optional Markdown shown under the navigation on every page, such as a call to action |
 
 Page content written in `section-list.md` appears above the cards by default. To also display content **below** the cards, add `===` on its own line as a delimiter:
 
@@ -376,8 +379,9 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | `learning_objectives` | Markdown list rendered as a Learning Objectives block at the top of the section landing page |
 | `badge_label` | Optional status badge label (e.g. `New`, `Draft`), shown on the section card and beside the section label on the page |
 | `badge_color` | Optional badge colour (`blue`, `green`, `yellow`, `red`, `purple`, `plain`) |
+| `side_box` | Optional Markdown shown under the navigation on this section's landing page, in place of the publication's Side Box; `false` hides it there and on the section's pages |
 
-Individual content pages within a section (`section-page.md`) can also set `learning_objectives` (a Learning Objectives block at the top of the page), and `badge_label` and `badge_color` (shown beside the section label on the page); otherwise add content directly in the editor.
+Individual content pages within a section (`section-page.md`) can also set `learning_objectives` (a Learning Objectives block at the top of the page), `side_box` (in place of the publication's Side Box, or `false` to hide it on that page), and `badge_label` and `badge_color` (shown beside the section label on the page); otherwise add content directly in the editor.
 
 ```yaml
 ---

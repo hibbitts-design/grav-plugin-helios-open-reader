@@ -9,6 +9,7 @@
  #   5. Section label shown above nav when version dropdown is hidden (search: PLUGIN ADDITION 2)
  #   6. Back to Readers list link shown above nav in multi-publication mode — uses reader_list_url (search: PLUGIN ADDITION 3)
  #   7. Back to Reader Home link shown above nav when in a section page — uses publication_home_url (search: PLUGIN ADDITION 4)
+ #   9. Side Box (side_box) shown under the navigation on the guide's pages (search: PLUGIN ADDITION 5)
  #}
 {% set theme_config = config.themes.helios %}
 {% set logo = theme_config.logo %}
@@ -246,6 +247,26 @@
                 {{ _self.nav_items(nav_tree, 0) }}
             {% endif %}
         </div>
+
+        {# PLUGIN ADDITION 5: Side Box - Markdown shown under the navigation on the guide's pages: the page's own Side Box
+           setting, or the guide home's, which shows on every page of the guide (false hides it on a page, or on a
+           section and its pages). The same setting as in Grav Open Publishing Space, so it moves with a guide #}
+        {% if page.template in ['section-list', 'section', 'section-page'] %}
+            {% set side_box = page.header.side_box is defined ? page.header.side_box : reader_side_box|default(null) %}
+            {# a section set to false hides it on its own pages too (unless a page has its own Side Box) #}
+            {% set side_box_section = page.parent %}
+            {% if page.header.side_box is not defined and side_box_section.template == 'section'
+                  and side_box_section.header.side_box is defined and (not side_box_section.header.side_box or side_box_section.header.side_box == 'false') %}
+                {% set side_box = false %}
+            {% endif %}
+            {# ("false" as text too, as Admin saves it) #}
+            {% if side_box and side_box != 'false' %}
+            <div class="hor-side-box border-t border-gray-200 dark:border-gray-800 prose dark:prose-invert max-w-none">
+                {{ side_box|markdown|shortcodes|raw }}
+            </div>
+            {% endif %}
+        {% endif %}
+        {# END PLUGIN ADDITION 5 #}
 
         {# Header menu links (mobile only - hidden on desktop where titlebar shows them) #}
         {% if theme_config.header.menu %}
