@@ -1,3 +1,9 @@
+# v1.2.18
+## XX/XX/2026
+
+1. [](#new)
+    * Collapse sidebar: on wider screens, a "Collapse sidebar" button at the bottom of the sidebar shrinks it to a slim strip with the site icon, so readers can focus on the page, and expands it again from the same place, with a short slide (none when the reader's system asks for reduced motion). The choice is remembered in the reader's browser, and phones are unchanged. It can be turned off with the new Collapse Sidebar Button setting, like the Hide sidebar button in Grav Open Publishing Space
+
 # v1.2.17
 ## 10/26/2026
 
