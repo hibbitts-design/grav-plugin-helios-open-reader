@@ -1,3 +1,9 @@
+# v1.2.19
+## 10/26/2026
+
+1. [](#improved)
+    * The sidebar button reads "Hide sidebar" and "Show sidebar" (and the setting is now Hide Sidebar Button), the same words as in the free Open Publishing themes
+
 # v1.2.18
 ## 10/26/2026
 
