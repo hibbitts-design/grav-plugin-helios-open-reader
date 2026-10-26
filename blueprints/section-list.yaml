@@ -115,12 +115,6 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Always visible on mobile; appears on tablets and larger screens when the main nav scrolls out of view.'
-            header.side_box:
-              type: textarea
-              label: Side Box
-              toggleable: true
-              rows: 5
-              help: 'Markdown shown under the navigation on every page of this guide.'
             header.show_reading_progress:
               type: toggle
               label: 'Show Reading Progress'
@@ -137,6 +131,12 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Remember the last page each reader visited (in their own browser), and show a "Continue reading" bar on this page when they return.'
+            header.side_box:
+              type: textarea
+              label: Side Box
+              toggleable: true
+              rows: 5
+              help: 'Markdown shown under the navigation on every page of this guide.'
         parts_tab:
           type: tab
           title: List Display
