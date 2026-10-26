@@ -140,8 +140,8 @@ form:
 
     collapse_sidebar_button:
       type: toggle
-      label: 'Collapse Sidebar Button'
-      help: 'Lets readers collapse the sidebar on wider screens to focus on the page. Defaults to Enabled.'
+      label: 'Hide Sidebar Button'
+      help: 'Lets readers hide the sidebar on wider screens to focus on the page. Defaults to Enabled.'
       highlight: 1
       default: 1
       options:
