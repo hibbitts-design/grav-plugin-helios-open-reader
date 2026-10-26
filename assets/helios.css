@@ -867,3 +867,100 @@ img.image-zoom:focus-visible {
 .hor-side-box > :last-child {
     margin-bottom: 0;
 }
+
+/* Collapse/expand the sidebar (see partials/sidebar.html.twig): on wider screens only (1024px, where the sidebar sits
+   beside the page), the button shows once assets/helios.js has set it up. Collapsed, the sidebar is a slim strip with
+   the site icon (still the link home) and, at the bottom, the button, in the same place; the page moves over to fill
+   the space.
+   Helios sizes the sidebar and the page's left edge with --helios-sidebar-width, so narrowing it does both */
+@media (min-width: 1024px) {
+    .hor-sidebar-toggle.is-ready {
+        display: inline-flex;
+    }
+
+    html.hor-sidebar-collapsed {
+        --helios-sidebar-width: 4rem;
+    }
+
+    /* in the strip: only the site icon and the button (the navigation and everything else are hidden) */
+    html.hor-sidebar-collapsed .hor-sidebar > div > :not(.hor-sidebar-head, .hor-sidebar-toggle-row),
+    html.hor-sidebar-collapsed .hor-sidebar-toggle-collapse {
+        display: none;
+    }
+
+    /* the site name beside the icon is hidden from view, but kept for screen readers, so the icon link home still has
+       a name (it also shows on hover, see assets/helios.js) */
+    html.hor-sidebar-collapsed .hor-sidebar-head a > span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* nothing spills past the sidebar's edge while it slides */
+    .hor-sidebar {
+        overflow-x: hidden;
+    }
+
+    html.hor-sidebar-collapsed .hor-sidebar-toggle-row {
+        display: flex;
+    }
+
+    html.hor-sidebar-collapsed .hor-sidebar-head,
+    html.hor-sidebar-collapsed .hor-sidebar-toggle-row {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    html.hor-sidebar-collapsed .hor-sidebar-head {
+        overflow: hidden;
+    }
+
+    /* the arrows point the other way (») to expand */
+    html.hor-sidebar-collapsed .hor-sidebar-toggle-icon {
+        transform: rotate(180deg);
+    }
+}
+
+/* A short slide as the sidebar collapses or expands (the sidebar's width and the page's left edge), so readers see where
+   it went; left out for readers whose system asks for reduced motion. A saved choice applied as the page loads doesn't
+   slide, as it's in place before anything is drawn */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .hor-sidebar,
+    .hor-sidebar + div {
+        transition: width 150ms ease, padding-left 150ms ease;
+    }
+}
+
+/* The button: in the navigation's text colour (good contrast in light and dark), and at least 40px tall, and 40px wide
+   when it's just the arrows in the strip, so it's an easy target to click or tap */
+.hor-sidebar-toggle {
+    min-height: 2.5rem;
+}
+
+html.hor-sidebar-collapsed .hor-sidebar-toggle {
+    min-width: 2.5rem;
+    justify-content: center;
+}
+
+/* the button's row stays at the bottom of the sidebar, also when the strip has nothing else below the site icon */
+.hor-sidebar-toggle-row {
+    margin-top: auto;
+}
+
+/* the button's words: "Collapse sidebar" shown while expanded; while collapsed, only the arrows show and "Expand sidebar"
+   is read by screen readers (and shown on hover) */
+html:not(.hor-sidebar-collapsed) .hor-sidebar-toggle-expand {
+    display: none;
+}
+
+.hor-sidebar-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}

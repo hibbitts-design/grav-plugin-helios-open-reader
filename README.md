@@ -152,6 +152,7 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **Seeing an image larger** – tap or click an image shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones); Escape, the Close button or a tap closes it
 - **On this page on phones** – on phones and tablets, where the theme's On this page column isn't shown, a page with two or more sections starts with a slim On this page box listing them, closed until tapped (the On this page Box on Phones setting, on by default)
 - **Side Box** – Markdown under the navigation in the sidebar, such as a call to action: set `side_box` on the publication home for every page, change it on any section or page, or set it to `false` to hide it on a page (or a section and its pages); the same setting as in Grav Open Publishing Space, so it moves with a guide
+- **Collapse sidebar** – on wider screens, readers can collapse the sidebar to a slim strip (keeping the site icon) to focus on the page, and expand it again from the same button at the bottom of the sidebar; their choice is remembered (the Collapse Sidebar Button setting, on by default)
 
 ### LMS Embedding
 
@@ -494,6 +495,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 | Site Logo Icon | `tabler/notebook.svg` | Tabler icon path for the site logo icon square. Only applies when Show Site Logo Icon is enabled |
 | Single Publication Site Logo Link | `single_publication` (default) | When only one publication is listed, the site logo links directly to that publication's home page. Set to **Readers Home Page** to always link to the readers list instead. |
 | Show Plugin Credits | Enabled | Show or hide the "Built with Grav · Helios · Helios Open Reader" attribution line in the footer |
+| Collapse Sidebar Button | Enabled | Let readers collapse the sidebar to a slim strip on wider screens to focus on the page, with a button at the bottom of the sidebar; their choice is remembered in their browser |
 | Show Repository Host Icon Link in Header | Enabled | Show a GitHub or Codeberg icon link to the reader repository in the site header (requires GitHub Integration enabled in the Helios theme) |
 | Git Link Icon | `tabler/file-text.svg` | Tabler icon path for the Git link icon shown in the page footer |
 | Git Link Mode | View file | Whether the Git link opens the file for **viewing** (default, for open access) or **editing** (for contributors with repository access) |

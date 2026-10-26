@@ -1,12 +1,14 @@
 {#
  # Plugin override of partials/base.html.twig (based on Helios theme v2.1.3)
- # Changes from theme (6) — numbered in file order:
+ # Changes from theme (7) — numbered in file order:
  #   PLUGIN CHANGE 1 — suppress mobile nav overlay/panel when chromeless=true
  #   PLUGIN CHANGE 2 — suppress sidebar and remove left-padding offset when chromeless=true
  #   PLUGIN CHANGE 3 — suppress header when chromeless=true
  #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (in partials/swap-body.html.twig)
  #   PLUGIN CHANGE 5 — propagate chromeless/embedded param to all internal links (including post-HTMX-swap)
  #   PLUGIN CHANGE 6 — override TOC position/visibility via ?toc_position=hidden|left|right (or ?toc=) URL param
+ #   PLUGIN CHANGE 7 – Collapse/expand the sidebar: the reader's saved choice applied before the page draws, and the
+ #                     sidebar named for it (button in partials/sidebar.html.twig, script in assets/helios.js)
  #}
 {% set theme_config = config.themes.helios %}
 {% set appearance = theme_config.appearance %}
@@ -38,6 +40,18 @@
             if (isDark) document.documentElement.classList.add('dark');
         })();
     </script>
+    {# (only with the plugin's Collapse Sidebar Button setting on) #}
+    {% if not chromeless and config.plugins['helios-open-reader'].collapse_sidebar_button is not same as(false) %}
+    <script>
+        // PLUGIN CHANGE 7 – the reader's saved choice to collapse the sidebar to a slim strip (see assets/helios.js),
+        // applied before the page is drawn, so the sidebar doesn't appear full width and then shrink
+        try {
+            if (localStorage.getItem('hor-sidebar-collapsed') === '1') {
+                document.documentElement.classList.add('hor-sidebar-collapsed');
+            }
+        } catch (error) {}
+    </script>
+    {% endif %}
     <script>
         // Protect Phiki code blocks from browser extensions (e.g., 1Password) that re-highlight code
         (function() {
@@ -206,7 +220,7 @@
         {# PLUGIN CHANGE 2 — suppress sidebar when chromeless #}
         {% if not chromeless %}
         {# Sidebar navigation (desktop) #}
-        <aside class="hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-30 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 w-[var(--helios-sidebar-width)]">
+        <aside id="hor-sidebar" class="hor-sidebar hidden lg:flex lg:flex-col lg:fixed lg:inset-y-0 lg:z-30 border-r border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 w-[var(--helios-sidebar-width)]">
             {% include 'partials/sidebar.html.twig' %}
         </aside>
         {% endif %}{# end PLUGIN CHANGE 2 #}

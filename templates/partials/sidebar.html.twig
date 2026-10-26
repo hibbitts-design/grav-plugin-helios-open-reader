@@ -10,6 +10,7 @@
  #   6. Back to Readers list link shown above nav in multi-publication mode — uses reader_list_url (search: PLUGIN ADDITION 3)
  #   7. Back to Reader Home link shown above nav when in a section page — uses publication_home_url (search: PLUGIN ADDITION 4)
  #   9. Side Box (side_box) shown under the navigation on the guide's pages (search: PLUGIN ADDITION 5)
+ #  10. Button that collapses the sidebar to a slim strip, or expands it (search: PLUGIN ADDITION 6)
  #}
 {% set theme_config = config.themes.helios %}
 {% set logo = theme_config.logo %}
@@ -17,7 +18,7 @@
 
 <div class="flex flex-col h-full">
     {# Sidebar header with logo #}
-    <div class="flex items-center h-16 px-4 border-b border-gray-200 dark:border-gray-800 shrink-0">
+    <div class="hor-sidebar-head flex items-center h-16 px-4 border-b border-gray-200 dark:border-gray-800 shrink-0">
         <a href="{{ logo_url }}" class="flex items-center gap-3" @click="mobileNavOpen = false">{# PLUGIN CHANGE 3: logo_url links to reader/publication home page #}
             {% if logo.image %}
                 {% set logo_file = logo.image|first %}
@@ -296,6 +297,27 @@
         </p>
     </div>
     {% endif %}
+
+    {# PLUGIN ADDITION 6: on wider screens, a button that collapses the sidebar to a slim strip, so readers can focus on
+       the page, or expands it again. At the bottom of the sidebar, so it's in the same place either way and doesn't get
+       lost among the navigation. Hidden until assets/helios.js sets it up; not in the phone menu, which has its own
+       close button #}
+    {# (only with the plugin's Collapse Sidebar Button setting on) #}
+    {% if not mobile and config.plugins['helios-open-reader'].collapse_sidebar_button is not same as(false) %}
+    <div class="hor-sidebar-toggle-row shrink-0 mt-auto px-3 py-2 border-t border-gray-200 dark:border-gray-800">
+        <button type="button"
+                class="hor-sidebar-toggle hidden items-center gap-2 px-2 rounded-md text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                aria-controls="hor-sidebar"
+                aria-expanded="true">
+            <svg class="hor-sidebar-toggle-icon w-5 h-5 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/>
+            </svg>
+            <span class="hor-sidebar-toggle-collapse">{{ 'PLUGIN_HELIOS_OPEN_READER.COLLAPSE_SIDEBAR'|t }}</span>
+            <span class="hor-sidebar-toggle-expand sr-only">{{ 'PLUGIN_HELIOS_OPEN_READER.EXPAND_SIDEBAR'|t }}</span>
+        </button>
+    </div>
+    {% endif %}
+    {# END PLUGIN ADDITION 6 #}
 </div>
 
 {# Recursive navigation macro #}

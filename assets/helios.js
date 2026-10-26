@@ -336,3 +336,52 @@
   });
 
 })();
+
+// Collapse/expand the sidebar: on wider screens, a button below the site icon collapses the sidebar to a slim strip, so
+// readers can focus on the page, or expands it again. The choice is remembered in the reader's browser (localStorage) for
+// the whole site, and applied before the page is drawn (see partials/base.html.twig). Phones use the menu button as
+// before - hibbittsdesign.org
+(function () {
+  var button = document.querySelector(".hor-sidebar-toggle");
+  var sidebar = document.getElementById("hor-sidebar");
+  if (!button || !sidebar) {
+    return;
+  }
+  var root = document.documentElement;
+  var expandLabel = button.querySelector(".hor-sidebar-toggle-expand");
+  var homeLink = sidebar.querySelector(".hor-sidebar-head a");
+  var siteName = homeLink ? homeLink.textContent.trim() : "";
+
+  // collapse or expand, and tell screen readers whether the sidebar is expanded (aria-expanded); collapsed, the button
+  // shows only its arrows, so its name also shows on hover (title)
+  function setCollapsed(collapsed) {
+    root.classList.toggle("hor-sidebar-collapsed", collapsed);
+    button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    if (collapsed) {
+      button.setAttribute("title", expandLabel.textContent.trim());
+    } else {
+      button.removeAttribute("title");
+    }
+    // collapsed, only the site icon shows, so the site name also shows on hover
+    if (homeLink && siteName) {
+      if (collapsed) {
+        homeLink.setAttribute("title", siteName);
+      } else {
+        homeLink.removeAttribute("title");
+      }
+    }
+  }
+
+  setCollapsed(root.classList.contains("hor-sidebar-collapsed"));
+  button.classList.add("is-ready");
+
+  button.addEventListener("click", function () {
+    var collapsed = !root.classList.contains("hor-sidebar-collapsed");
+    setCollapsed(collapsed);
+    try {
+      localStorage.setItem("hor-sidebar-collapsed", collapsed ? "1" : "0");
+    } catch (error) {
+      // without storage the choice still works on this page, it just isn't remembered
+    }
+  });
+})();

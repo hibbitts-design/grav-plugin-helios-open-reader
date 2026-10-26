@@ -1,6 +1,6 @@
 name: Helios Open Reader
 type: plugin
-version: 1.2.17
+version: 1.2.18
 description: Adds reader sections, reading progress, Keep My Place, shortcodes, and Admin Panel enhancements to the Helios Grav Premium theme for open textbooks and readers.
 icon: newspaper-o
 author:
@@ -130,6 +130,18 @@ form:
       type: toggle
       label: 'On this page Box on Phones'
       help: 'Lists a page''s sections above its content on phones and tablets. Defaults to Enabled.'
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    collapse_sidebar_button:
+      type: toggle
+      label: 'Collapse Sidebar Button'
+      help: 'Lets readers collapse the sidebar on wider screens to focus on the page. Defaults to Enabled.'
       highlight: 1
       default: 1
       options:
