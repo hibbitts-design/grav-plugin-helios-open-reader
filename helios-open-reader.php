@@ -553,7 +553,8 @@ class HeliosOpenReaderPlugin extends Plugin
                 // Nested mode: set Back to Book Home link only when not already on the book home.
                 if ($page->url() !== $readerHome->url()) {
                     $twig->twig_vars['publication_home_url']   = $readerHome->url();
-                    $twig->twig_vars['publication_home_title'] = $readerHome->title();
+                    // the menu label when it has one (a shorter name for a long title), otherwise the title
+                    $twig->twig_vars['publication_home_title'] = $readerHome->menu();
                 }
                 $partKey = trim((string) ($readerHome->header()->part_key ?? ''));
                 if ($partKey !== '') {
@@ -568,7 +569,7 @@ class HeliosOpenReaderPlugin extends Plugin
                     foreach ($publicationPages as $publicationPage) {
                         if (($publicationPage->header()->part_key ?? null) === $currentPart) {
                             $twig->twig_vars['publication_home_url']   = $publicationPage->url();
-                            $twig->twig_vars['publication_home_title'] = $publicationPage->title();
+                            $twig->twig_vars['publication_home_title'] = $publicationPage->menu();
                             break;
                         }
                     }
