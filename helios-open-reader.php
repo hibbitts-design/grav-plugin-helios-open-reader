@@ -694,7 +694,32 @@ class HeliosOpenReaderPlugin extends Plugin
                     $nCurrentUrl  = $page->url();
                     $nSubItems    = $this->buildNavTree($nSectionRoot->children()->visible(), $nCurrentUrl);
                     $nRootActive  = ($nSectionRoot->url() === $nCurrentUrl);
-                    if (!($readerHome->header()->nested_section_nav ?? false)) {
+                    // Helios's section dropdown (when on) already lists every section
+                    $nDropdownShown = $this->grav['config']->get('themes.helios.versioning.enabled', false)
+                        && $this->grav['config']->get('themes.helios.versioning.show_dropdown', true);
+                    if (empty($nSubItems) && !$nDropdownShown) {
+                        // The section has no pages of its own, so its list would be empty:
+                        // list the guide's sections instead, with this one marked as current
+                        $nSectionItems = [];
+                        foreach ($readerHome->children()->visible() as $sp) {
+                            if (!$sp->routable() || !$sp->published()) {
+                                continue;
+                            }
+                            $nSectionItems[] = [
+                                'url'           => $sp->url(),
+                                'title'         => $sp->title(),
+                                'route'         => $sp->route(),
+                                'active'        => ($sp->url() === $nCurrentUrl),
+                                'parent_active' => false,
+                                'children'      => [],
+                                'icon'          => $sp->header()->icon ?? null,
+                                'api'           => [],
+                            ];
+                        }
+                        $twig->twig_vars['nav_tree'] = $nSectionItems;
+                        // tells the sidebar to leave out the section name above the list (the list already shows it)
+                        $twig->twig_vars['nav_lists_sections'] = true;
+                    } elseif (!($readerHome->header()->nested_section_nav ?? false)) {
                         // Flat mode: list chapters directly without the section home as a parent nav item
                         $twig->twig_vars['nav_tree'] = $nSubItems;
                     } else {
