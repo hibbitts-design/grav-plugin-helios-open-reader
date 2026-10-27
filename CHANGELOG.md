@@ -1,3 +1,9 @@
+# v1.2.21
+## XX/XX/2026
+
+1. [](#improved)
+    * Sidebar: the link back to the publication home uses the publication's menu label when it has one, so a long title (such as a book converted from Pressbooks) no longer fills several lines, as in Quark Open Publishing and Quark 2 Open Publishing
+
 # v1.2.20
 ## 10/26/2026
 
