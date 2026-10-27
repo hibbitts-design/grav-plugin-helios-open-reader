@@ -1,3 +1,9 @@
+# v1.2.20
+## 10/26/2026
+
+1. [](#improved)
+    * Sidebar: a section with no pages of its own (such as a guide whose sections are single pages) now lists the publication's sections in the sidebar, with the current one highlighted, instead of an empty list – when Helios's section dropdown is off, as in the Helios Open Reader skeleton
+
 # v1.2.19
 ## 10/26/2026
 
