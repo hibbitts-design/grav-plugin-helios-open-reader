@@ -1,3 +1,9 @@
+# v1.2.23
+## 10/28/2026
+
+1. [](#bugfix)
+    * Description: pages now get a description tag – the page's, its metadata's, or the site's
+
 # v1.2.22
 ## 10/28/2026
 
