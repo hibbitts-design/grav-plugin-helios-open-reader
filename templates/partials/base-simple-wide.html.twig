@@ -42,9 +42,7 @@
 
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
 
-    {% if page.description %}
-    <meta name="description" content="{{ page.description }}">
-    {% endif %}
+    {% include 'partials/meta-description.html.twig' %}
 
     {% if page.robots %}
     <meta name="robots" content="{{ page.robots }}">
@@ -54,7 +52,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ page.url(true) }}">
     <meta property="og:title" content="{{ page.title }}{% if site.title %} | {{ site.title }}{% endif %}">
-    {% set og_description = page.header.subtitle|default(page.header.description)|default(page.description) %}
+    {% set og_description = page.header.subtitle|default(page.header.description)|default(site.metadata.description|default('')) %}
     {% if og_description %}
     <meta property="og:description" content="{{ og_description|striptags }}">
     {% endif %}

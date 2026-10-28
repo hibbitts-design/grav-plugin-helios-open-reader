@@ -1,0 +1,11 @@
+{# Page description for search engines and link previews: the page's, its Metadata's, or the site's #}
+{% set meta_description = page.header.description %}
+{% if not meta_description %}
+    {% set meta_description = page.header.metadata.description %}
+{% endif %}
+{% if not meta_description %}
+    {% set meta_description = site.metadata.description %}
+{% endif %}
+{% if meta_description %}
+<meta name="description" content="{{ meta_description|striptags|e }}">
+{% endif %}
