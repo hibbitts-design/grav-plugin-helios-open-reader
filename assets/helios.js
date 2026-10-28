@@ -177,6 +177,12 @@
             dismissBtn.addEventListener('click', function () {
               try { localStorage.removeItem(horPageKey(stripPubPath)); } catch (e) {}
               resumeStrip.setAttribute('hidden', '');
+              // keyboard focus moves to the page's heading, as the button it was on is now hidden
+              var heading = document.querySelector('#main-content h1');
+              if (heading) {
+                heading.setAttribute('tabindex', '-1');
+                heading.focus();
+              }
             });
           }
         }
@@ -311,6 +317,10 @@
       return;
     }
     if (target !== document.body && scrollsSideways(target)) {
+      return;
+    }
+    // and while an image is shown larger (tap to see it larger), where the reader is looking at the image
+    if (document.querySelector('dialog[open]')) {
       return;
     }
 
