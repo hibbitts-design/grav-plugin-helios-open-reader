@@ -1,3 +1,10 @@
+# v1.2.22
+## XX/XX/2026
+
+1. [](#bugfix)
+    * Arrow keys: with an image shown larger (tapped to see it larger), the left and right arrow keys no longer leave the page – they go to the previous or next page again once the image is closed
+    * Continue reading: the strip's link and close button are easier to read and tap, show a focus outline, and closing the strip moves keyboard focus to the page heading
+
 # v1.2.21
 ## 10/27/2026
 
