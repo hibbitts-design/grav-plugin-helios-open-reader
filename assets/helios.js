@@ -395,3 +395,17 @@
     }
   });
 })();
+
+// Side Box: HTMX doesn't redraw the sidebar, so copy in the new page's Side Box after each swap (both sidebars:
+// beside the page and in the phone menu) - hibbittsdesign.org
+window.addEventListener('helios:content-loaded', function () {
+  var template = document.getElementById('hor-side-box-template');
+  if (!template) {
+    return;
+  }
+  var html = template.innerHTML.trim();
+  document.querySelectorAll('.hor-side-box').forEach(function (box) {
+    box.innerHTML = html;
+    box.hidden = html === '';
+  });
+});

@@ -4,6 +4,7 @@
  #   PLUGIN CHANGE 4 — suppress prev/next pagination when chromeless=true (search: PLUGIN CHANGE 4)
  #   PLUGIN ADDITION — section and section-page template dispatch to partials/content/section-page.html.twig
  #   PLUGIN ADDITION – data-hor-markdown-url marker for the footer's "This page as Markdown" link
+ #   PLUGIN ADDITION – the page's Side Box, for the sidebar after an HTMX page swap (search: hor-side-box-template)
  #}
 
 {# Shared swap-target body — rendered both by base.html.twig (full page) and
@@ -94,6 +95,9 @@
 <div id="htmx-toc-template" style="display:none" x-ignore aria-hidden="true">
     {{ toc_html|raw }}
 </div>
+
+{# PLUGIN ADDITION – the page's Side Box, copied into the sidebar by helios.js (HTMX doesn't redraw the sidebar) #}
+<template id="hor-side-box-template">{{ include('partials/side-box.html.twig')|trim|raw }}</template>
 
 {# Navigation state for client-side updates — width logic stays in Twig and the JS
    just reads the computed values. #}
