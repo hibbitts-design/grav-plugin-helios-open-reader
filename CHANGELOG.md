@@ -1,3 +1,9 @@
+# v1.2.24
+## XX/XX/2026
+
+1. [](#bugfix)
+    * Side Box: with HTMX turned on, the Side Box now changes with each page, as in Grav Helios Course Hub
+
 # v1.2.23
 ## 10/28/2026
 
