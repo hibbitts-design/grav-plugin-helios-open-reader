@@ -1,5 +1,5 @@
 # v1.2.26
-## XX/XX/2026
+## 10/30/2026
 
 1. [](#improved)
     * Cards side by side line up: titles of one or two lines and the author and date line align across each row
