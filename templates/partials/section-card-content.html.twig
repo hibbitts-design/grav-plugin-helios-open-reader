@@ -1,4 +1,6 @@
 {# Inner content for section-card - section number, icon, title, arrow, description, author, edition, lastmod, badge, license #}
+{# the label and title, then the details below them, each in one block, so a row of cards can line them up (see helios.css) #}
+<div class="section-card-head">
 {% if section_label_override is not null %}
     {% if section_label_override %}
     <p class="text-xs font-medium text-primary uppercase tracking-wider mb-2">{{ section_label_override }}</p>
@@ -19,6 +21,9 @@
     </svg>
     {% endif %}
 </div>
+</div>
+{% if description or content or author or edition or lastmod or badge_label or license %}
+<div class="section-card-details">
 {% if description or content %}
 {% set clamp_class = description and card_description_lines > 0 ? 'section-card-description--clamp-' ~ card_description_lines : '' %}
 <div class="section-card-description mt-3 text-sm text-gray-600 dark:text-gray-400 {{ clamp_class }}">
@@ -43,5 +48,7 @@
     {% if license %}
     <span class="doc-badge doc-badge-plain">{{ license }}</span>
     {% endif %}
+</div>
+{% endif %}
 </div>
 {% endif %}

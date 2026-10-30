@@ -272,6 +272,49 @@ footer .edit-page-link svg {
     grid-auto-rows: 1fr;
 }
 
+/* Cards side by side line up (2 or 3 per row): each card's image, label and title, and details share rows with the
+   other cards in its row, so a one-line title leaves space to match a two-line title next to it (subgrid; older
+   browsers keep each card's own heights). Only in grids without side-image cards, which have their own layout. */
+@supports (grid-template-rows: subgrid) and selector(:has(*)) {
+    /* every card takes the same three rows, so the cards stay in order (title-only cards keep their centred layout) */
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card {
+        grid-row: span 3;
+    }
+
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card:not(.section-card-title-only) {
+        display: grid;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+    }
+
+    /* with an image: the image, then the padded block holding the label and title, and the details */
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .section-card-has-image > .section-card-image-container {
+        grid-row: 1;
+    }
+
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .section-card-has-image > .p-6 {
+        grid-row: 2 / span 2;
+        display: grid;
+        grid-template-rows: subgrid;
+        row-gap: 0;
+    }
+
+    /* each part keeps its own row, even when a card has no image */
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card:not(.section-card-has-image):not(.section-card-title-only) > .section-card-head { grid-row: 2; }
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card:not(.section-card-has-image):not(.section-card-title-only) > .section-card-details { grid-row: 3; }
+}
+
+/* the author, date and badges sit at the bottom of the card, so they line up even when descriptions differ in length
+   (any spare space goes below the description; the next line keeps its own small gap above it) */
+.section-card-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-card-details > .section-card-description {
+    margin-bottom: auto;
+}
+
 /* Course card side image layout */
 .section-card-side-layout {
     display: flex;
