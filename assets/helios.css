@@ -302,6 +302,25 @@ footer .edit-page-link svg {
     /* each part keeps its own row, even when a card has no image */
     :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card:not(.section-card-has-image):not(.section-card-title-only) > .section-card-head { grid-row: 2; }
     :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card:not(.section-card-has-image):not(.section-card-title-only) > .section-card-details { grid-row: 3; }
+
+    /* titles start at the top of their row, under the image, with any spare space below a shorter title rather than
+       above and below it; the icon and arrow stay with the title's first line */
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card .section-card-head {
+        align-self: start;
+    }
+
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card .section-card-head > div {
+        align-items: flex-start;
+    }
+
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .doc-card .section-card-head > div > svg:last-child {
+        margin-top: 4px;
+    }
+
+    /* a little less padding inside cards shown 2 or 3 per row */
+    :is(.section-card-grid--cols-2, .section-card-grid--cols-3):not(:has(.section-card-side-layout)) > .section-card-has-image > .p-6 {
+        padding: 1rem;
+    }
 }
 
 /* the author, date and badges sit at the bottom of the card, so they line up even when descriptions differ in length
@@ -313,6 +332,16 @@ footer .edit-page-link svg {
 
 .section-card-details > .section-card-description {
     margin-bottom: auto;
+}
+
+/* a little less space between a card's title and its description (4px, rather than mt-3's 12px), and the small
+   gap above the line after the description that its mt-2 class was meant to give (Helios's styles have no mt-2) */
+.section-card-details > .section-card-description {
+    margin-top: 0.25rem;
+}
+
+.section-card-details > .mt-2 {
+    margin-top: 0.5rem;
 }
 
 /* Course card side image layout */
