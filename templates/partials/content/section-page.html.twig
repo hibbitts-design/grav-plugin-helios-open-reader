@@ -27,6 +27,21 @@
    Falls back to the page's own section_number for section landing pages, which
    have no parent with a section_number. #}
 {% set display_section_number = page.parent.header.section_number ?? page.header.section_number ?? null %}
+{# Without a Section Number, use the section's position, counted the same way as its card on the publication
+   home page (section-list.html.twig): across all sections in nested multi-publication mode, within each part
+   in parts mode, otherwise across all sections - so a section's pages show the same "Section N" as its card #}
+{% if display_section_number is null and doc_version_info is defined %}
+    {% set _section = page.template == 'section-page' ? page.parent : page %}
+    {% set _nested = is_nested_publication is defined and is_nested_publication %}
+    {% set _groups = (not _nested and has_parts|default(false)) ? part_groups : [doc_version_info.versions] %}
+    {% for _group in _groups %}
+        {% for _version in _group %}
+            {% if _version.id == _section.slug %}
+                {% set display_section_number = loop.index %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
 {% set per_section_label = page.template == 'section-page'
     ? (page.parent.header.section_label ?? null)
     : (page.header.section_label ?? null) %}
