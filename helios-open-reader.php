@@ -12,9 +12,6 @@ class HeliosOpenReaderPlugin extends Plugin
     // reader pages
     const READER_TEMPLATES = ['section-list', 'section', 'section-page'];
 
-    // header settings added to pages before conversion, by page path, to remove again afterwards
-    protected $addedHeaderSettings = [];
-
     /** @var bool Whether the Helios theme is missing or inactive */
     protected $themeMissing       = false;
     protected $themeInstalledOnly = false;
@@ -356,126 +353,32 @@ class HeliosOpenReaderPlugin extends Plugin
     }
 
     /**
-     * Before a page's Markdown is converted: list a Glossary page's terms, and on reader pages turn on Markdown Extra
-     * (for footnotes) - hibbittsdesign.org
+     * Guide pages' content, shared with Grav Open Publishing Space (classes/GuideContent.php): a Glossary page's list, Markdown
+     * Extra and accessible footnotes, figure and table numbers, and skipping the content cache - hibbittsdesign.org
      */
     public function onPageContentRaw(Event $event)
     {
-        $page = $event['page'];
-        $header = $page->header();
-
-        // a Glossary page (a section, or a standard page in the reader) lists its terms at the end, unless
-        // [glossary] places them
-        if (is_array($header->glossary ?? null)) {
-            $content = (string) $page->getRawContent();
-            if (!preg_match('/\[glossary\s*\/?\]/', $content)) {
-                $page->setRawContent(rtrim($content) . "\n\n[glossary]\n");
-            }
-        }
-
-        if (!in_array($page->template(), self::READER_TEMPLATES, true)) {
-            return;
-        }
-
-        // Markdown Extra, unless the page sets markdown: extra: itself
-        $markdown = (array) ($header->markdown ?? []);
-        if (!array_key_exists('extra', $markdown)) {
-            $markdown['extra'] = true;
-            $header->markdown = $markdown;
-            $this->addedHeaderSettings[$page->path()][] = 'markdown_extra';
-        }
+        $this->guideContent()::beforeConversion($event['page'], self::READER_TEMPLATES);
     }
 
-    /**
-     * After conversion: accessible footnotes, and captions and numbers for tables and figures - hibbittsdesign.org
-     */
     public function onPageContentProcessed(Event $event)
     {
-        $page = $event['page'];
-        $this->removeAddedHeaderSettings($page);
-        if (!in_array($page->template(), self::READER_TEMPLATES, true)) {
-            return;
-        }
-
-        $content = $this->accessibleFootnotes($page->getRawContent());
-
-        if (!class_exists('HibbittsDesign\FigureNumbers')) {
-            require_once __DIR__ . '/classes/FigureNumbers.php';
-        }
-        $language = $this->grav['language'];
-        $content = \HibbittsDesign\FigureNumbers::process($page, $content, [
-            'figure' => $language->translate('PLUGIN_HELIOS_OPEN_READER.FIGURE_NUMBER'),
-            'table' => $language->translate('PLUGIN_HELIOS_OPEN_READER.TABLE_NUMBER'),
-        ]);
-
-        $page->setRawContent($content);
+        $this->guideContent()::afterConversion($event['page'], self::READER_TEMPLATES, 'PLUGIN_HELIOS_OPEN_READER');
     }
 
-    // footnote links with names and roles that screen readers understand
-    protected function accessibleFootnotes(string $content): string
-    {
-        if (strpos($content, 'footnote-ref') === false) {
-            return $content;
-        }
-
-        // <a href="#fn:1" class="footnote-ref">1</a> gets role="doc-noteref" aria-label="Footnote 1"
-        $content = preg_replace_callback('/(<a href="#fn:[^"]*" class="footnote-ref")>(\d+)<\/a>/', function ($match) {
-            $label = $this->translateAttribute(['PLUGIN_HELIOS_OPEN_READER.FOOTNOTE_REF', $match[2]]);
-            return $match[1] . ' role="doc-noteref" aria-label="' . $label . '">' . $match[2] . '</a>';
-        }, $content) ?? $content;
-
-        $content = str_replace('class="footnote-backref"', 'class="footnote-backref" role="doc-backlink" aria-label="'
-            . $this->translateAttribute('PLUGIN_HELIOS_OPEN_READER.FOOTNOTE_BACK') . '"', $content);
-        $content = str_replace('<div class="footnotes">', '<div class="footnotes" role="doc-endnotes" aria-label="'
-            . $this->translateAttribute('PLUGIN_HELIOS_OPEN_READER.FOOTNOTES') . '">', $content);
-
-        return $content;
-    }
-
-    // a translated string, escaped for an HTML attribute
-    protected function translateAttribute($key): string
-    {
-        return htmlspecialchars($this->grav['language']->translate($key), ENT_QUOTES, 'UTF-8');
-    }
-
-    /**
-     * A page's figure numbers depend on the pages before it, but Grav's content cache only notices changes to the
-     * page itself, so pages in a numbered guide skip it (unless the page sets cache_enable itself) - hibbittsdesign.org
-     */
     public function skipCacheForNumberedPages(Event $event)
     {
-        $page = $event['page'];
-        if (!$page || !in_array($page->template(), self::READER_TEMPLATES, true) || isset($page->header()->cache_enable)) {
-            return;
-        }
-        if (!class_exists('HibbittsDesign\FigureNumbers')) {
-            require_once __DIR__ . '/classes/FigureNumbers.php';
-        }
-        if (\HibbittsDesign\FigureNumbers::numberingOn($page)) {
-            $page->header()->cache_enable = false;
-            $this->addedHeaderSettings[$page->path()][] = 'cache_enable';
-        }
+        $this->guideContent()::skipCacheIfNumbered($event['page'], self::READER_TEMPLATES);
     }
 
-    // remove the header settings added before conversion, so they can't be saved into the page's file
-    protected function removeAddedHeaderSettings($page): void
+    // the shared GuideContent class (loaded once, even with two copies installed)
+    protected function guideContent(): string
     {
-        $header = $page->header();
-        foreach ($this->addedHeaderSettings[$page->path()] ?? [] as $setting) {
-            if ($setting === 'cache_enable') {
-                unset($header->cache_enable);
-            }
-            if ($setting === 'markdown_extra') {
-                $markdown = (array) ($header->markdown ?? []);
-                unset($markdown['extra']);
-                if ($markdown) {
-                    $header->markdown = $markdown;
-                } else {
-                    unset($header->markdown);
-                }
-            }
+        if (!class_exists('HibbittsDesign\GuideContent')) {
+            require_once __DIR__ . '/classes/GuideContent.php';
         }
-        unset($this->addedHeaderSettings[$page->path()]);
+
+        return \HibbittsDesign\GuideContent::class;
     }
 
     /**
