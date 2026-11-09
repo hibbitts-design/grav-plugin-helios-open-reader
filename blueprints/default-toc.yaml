@@ -1,0 +1,7 @@
+title: Default with Table of Contents
+'@extends':
+    type: default
+    context: plugin://helios-open-reader/blueprints
+
+# The default-toc template (a standard page with a table of contents) gets the same settings as a standard page,
+# including the Glossary setting - hibbittsdesign.org
