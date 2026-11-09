@@ -1,3 +1,9 @@
+# v1.3.1
+## 11/09/2026
+
+1. [](#new)
+    * A Glossary can be a standard page in the publication (including one with a table of contents), in an unnumbered folder beside pages like Topics and Resources, instead of a section: its Glossary setting is on the Options tab, and its terms are listed automatically
+
 # v1.3.0
 ## 11/08/2026
 
