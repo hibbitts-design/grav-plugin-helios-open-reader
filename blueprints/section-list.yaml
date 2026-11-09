@@ -131,6 +131,14 @@ form:
                 1: PLUGIN_ADMIN.YES
                 0: PLUGIN_ADMIN.NO
               help: 'Remember the last page each reader visited (in their own browser), and show a "Continue reading" bar on this page when they return.'
+            header.number_figures:
+              type: toggle
+              label: 'Number Figures and Tables'
+              default: false
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              help: 'Number captioned figures and tables by section (Figure 3.2 is the second figure in Section 3). A caption is an italic line just below an image, or a Table: line just above or below a table. Captions that already start with a number are left as they are.'
             header.side_box:
               type: textarea
               label: Side Box

@@ -1050,3 +1050,26 @@ html:not(.hor-sidebar-collapsed) .hor-sidebar-toggle-expand {
     --glossary-popover-border: 1px solid #3f3f46;
     --glossary-popover-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
 }
+
+/* a table's caption (from a "Table:" line), like a figure's caption; and the number on figures and tables */
+.prose table caption {
+    margin-bottom: 0.375rem;
+    font-size: 0.8125rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--color-gray-500);
+}
+
+.dark .prose table caption {
+    color: var(--color-gray-400);
+}
+
+.prose table caption.caption-bottom {
+    caption-side: bottom;
+    margin: 0.375rem 0 0;
+}
+
+.prose .figure-number {
+    font-style: normal;
+    font-weight: 600;
+}
