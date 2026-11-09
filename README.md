@@ -148,6 +148,8 @@ Helios Open Reader provides a ready-built site for open educational content — 
 - **TOC scroll spy** — active heading highlighted in the Table of Contents as the reader scrolls
 - **Start button** — on the reader home; links directly to the first section. Button text is configurable (e.g. `Start Reading`, `Browse Projects`, `View Guides`)
 - Search across the full reader via the simplesearch plugin; unpublished publications (and the pages inside them) are left out of the results
+- **Footnotes** – footnotes (`[^1]`, as the Pressbooks Converter writes them) work on reader pages without turning on Markdown Extra for the whole site, as in Grav Open Publishing Space; a page can turn it off with `extra: false` under `markdown:` in its front matter
+- **Glossary** – add terms and definitions to a section's **Glossary** setting (often an unnumbered section at the end): they're listed in alphabetical order at the end of its text, or where you add `[glossary]`. In the publication's text, `[term]OER[/term]` (or the editor's **Glossary Term** button) shows the term's definition when hovered over or tapped, with a link to the Glossary (`[term name="OER"]open educational resources[/term]` when the text differs). Keyboard and screen reader users can open, read and close the definition too, and without JavaScript, in print and in a page's Markdown, a term is a link to its glossary entry. The box matches Helios cards, in light and dark modes. As in Grav Open Publishing Space
 - **Image captions in plain Markdown** – an italic line right after an image on its own line (such as `*Photo by …*`) shows as a caption, styled like figure captions, so photo credits need no HTML; images in page text are no taller than a little over half the screen, so an image and its text fit on screen together
 - **Seeing an image larger** – tap or click an image shown smaller than its full size to see it larger, filling the screen (handy for diagrams and screenshots on phones); Escape, the Close button or a tap closes it
 - **On this page on phones** – on phones and tablets, where the theme's On this page column isn't shown, a page with two or more sections starts with a slim On this page box listing them, closed until tapped (the On this page Box on Phones setting, on by default)
@@ -258,7 +260,7 @@ Parts grouping applies in single-publication mode. To group sections into parts 
 04.part-2-section-2/    ← Part 2, Section 2 (section.md)
 ```
 
-Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only.
+Parts are detected automatically — no additional configuration required. Part headings ("Part 1", "Part 2") appear above each group of section cards on the reader home page, Prev/Next navigation stops at part boundaries, and the reading progress indicator counts pages within the current part only. Section numbers continue across parts (1, 2, 3...), as in Grav Open Publishing Space.
 
 > [!TIP]
 > After switching to the `part-N-section-M` folder naming pattern, update `versioning.labels` in `user/config/themes/helios.yaml` (or via **Admin → Themes → Helios → Versioning → Version Labels**) to add the new folder names as keys — this ensures section labels display correctly in the sidebar and browser tab title.
@@ -375,6 +377,8 @@ The `section.md` frontmatter controls each section's landing page and card appea
 | Field | Description |
 |-------|-------------|
 | `section_number` | Section number shown in the page header; inherits to all sub-pages within the section |
+| `numbered` | `false` for an Introduction, Preface or Appendix: the section has no number, and the sections after it keep theirs (1, 2, 3...); add `section_label` (such as `Introduction`) to show a label instead |
+| `glossary` | A list of `term` and `definition` pairs that makes this the publication's Glossary page, listed at the end of its text (or where `[glossary]` is); and `[term]...[/term]` in other pages shows a definition |
 | `description` | Description shown on the section card |
 | `icon` | Tabler icon path for the section card |
 | `image` | Filename of a card image uploaded to this page's media folder |

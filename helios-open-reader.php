@@ -9,6 +9,12 @@ use RocketTheme\Toolbox\Event\Event;
 
 class HeliosOpenReaderPlugin extends Plugin
 {
+    // reader pages
+    const READER_TEMPLATES = ['section-list', 'section', 'section-page'];
+
+    // pages given markdown.extra before conversion, to remove it again afterwards
+    protected $addedMarkdownExtra = [];
+
     /** @var bool Whether the Helios theme is missing or inactive */
     protected $themeMissing       = false;
     protected $themeInstalledOnly = false;
@@ -75,6 +81,9 @@ class HeliosOpenReaderPlugin extends Plugin
             'onPagesInitialized'  => ['onEmbeddedRedirect', 1000],
             // before SimpleSearch looks for the search words: leave out pages of unpublished publications
             'onSimpleSearchCollection' => ['onSimpleSearchCollection', 0],
+            // Markdown Extra, glossary list and accessible footnotes on reader pages
+            'onPageContentRaw' => ['onPageContentRaw', 0],
+            'onPageContentProcessed' => ['onPageContentProcessed', 0],
         ]);
 
         if ($this->config->get('plugins.helios-open-reader.publication_llms_full_enabled', false)) {
@@ -286,6 +295,10 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         $assets->addJs("$path/admin.js");
+        // Glossary Term editor button
+        if ($this->config->get('plugins.shortcode-core.enabled')) {
+            $assets->addJs("$path/editor-term.js");
+        }
 
         $this->injectHeliosPreset();
         $this->injectLoginCss();
@@ -338,6 +351,86 @@ class HeliosOpenReaderPlugin extends Plugin
         }
         $twig = $this->grav['twig'];
         array_unshift($twig->twig_paths, __DIR__ . '/templates');
+    }
+
+    /**
+     * Before a reader page's Markdown is converted: turn on Markdown Extra (for footnotes) and list a Glossary
+     * page's terms - hibbittsdesign.org
+     */
+    public function onPageContentRaw(Event $event)
+    {
+        $page = $event['page'];
+        if (!in_array($page->template(), self::READER_TEMPLATES, true)) {
+            return;
+        }
+
+        // Markdown Extra, unless the page sets markdown: extra: itself
+        $header = $page->header();
+        $markdown = (array) ($header->markdown ?? []);
+        if (!array_key_exists('extra', $markdown)) {
+            $markdown['extra'] = true;
+            $header->markdown = $markdown;
+            $this->addedMarkdownExtra[$page->path()] = true;
+        }
+
+        // a Glossary page lists its terms at the end, unless [glossary] places them
+        $content = (string) $page->getRawContent();
+        if (is_array($header->glossary ?? null) && !preg_match('/\[glossary\s*\/?\]/', $content)) {
+            $page->setRawContent(rtrim($content) . "\n\n[glossary]\n");
+        }
+    }
+
+    /**
+     * After conversion: give footnote links names and roles that screen readers understand - hibbittsdesign.org
+     */
+    public function onPageContentProcessed(Event $event)
+    {
+        $page = $event['page'];
+        $this->removeAddedMarkdownExtra($page);
+        if (!in_array($page->template(), self::READER_TEMPLATES, true)) {
+            return;
+        }
+        $content = $page->getRawContent();
+        if (strpos($content, 'footnote-ref') === false) {
+            return;
+        }
+
+        // <a href="#fn:1" class="footnote-ref">1</a> gets role="doc-noteref" aria-label="Footnote 1"
+        $content = preg_replace_callback('/(<a href="#fn:[^"]*" class="footnote-ref")>(\d+)<\/a>/', function ($match) {
+            $label = $this->translateAttribute(['PLUGIN_HELIOS_OPEN_READER.FOOTNOTE_REF', $match[2]]);
+            return $match[1] . ' role="doc-noteref" aria-label="' . $label . '">' . $match[2] . '</a>';
+        }, $content) ?? $content;
+
+        $content = str_replace('class="footnote-backref"', 'class="footnote-backref" role="doc-backlink" aria-label="'
+            . $this->translateAttribute('PLUGIN_HELIOS_OPEN_READER.FOOTNOTE_BACK') . '"', $content);
+        $content = str_replace('<div class="footnotes">', '<div class="footnotes" role="doc-endnotes" aria-label="'
+            . $this->translateAttribute('PLUGIN_HELIOS_OPEN_READER.FOOTNOTES') . '">', $content);
+
+        $page->setRawContent($content);
+    }
+
+    // a translated string, escaped for an HTML attribute
+    protected function translateAttribute($key): string
+    {
+        return htmlspecialchars($this->grav['language']->translate($key), ENT_QUOTES, 'UTF-8');
+    }
+
+    // remove the Markdown Extra setting added before conversion, so it can't be saved into the page's file
+    protected function removeAddedMarkdownExtra($page): void
+    {
+        if (!isset($this->addedMarkdownExtra[$page->path()])) {
+            return;
+        }
+        unset($this->addedMarkdownExtra[$page->path()]);
+
+        $header = $page->header();
+        $markdown = (array) ($header->markdown ?? []);
+        unset($markdown['extra']);
+        if ($markdown) {
+            $header->markdown = $markdown;
+        } else {
+            unset($header->markdown);
+        }
     }
 
     /**
@@ -415,6 +508,9 @@ class HeliosOpenReaderPlugin extends Plugin
         $assets->addCss("$path/section-list.css");
         $assets->addCss("$path/print.css", ['media' => 'print']);
         $assets->addJs("$path/helios.js", ['group' => 'bottom', 'loading' => 'defer']);
+        // glossary (see shortcodes/GlossaryShortcode.php)
+        $assets->addCss("$path/glossary.css");
+        $assets->addJs("$path/glossary.js", ['group' => 'bottom', 'loading' => 'defer']);
         // Tap or click an image in a page to see it larger; its button labels, in the site's language, are read by the script
         $assets->addJs("$path/image-zoom.js", ['group' => 'bottom', 'loading' => 'defer']);
         $language = $this->grav['language'];

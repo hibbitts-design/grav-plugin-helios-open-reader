@@ -116,13 +116,17 @@
         {% set section_pages = page.children.visible %}
         {% if section_pages|length > 0 %}
         <div class="{{ gridClasses }}">
+            {# unnumbered sections (numbered: false) get no number and aren't counted #}
+            {% set section_count = 0 %}
             {% for child_page in section_pages %}
+                {% set is_numbered = child_page.header.numbered is not same as(false) %}
+                {% if is_numbered %}{% set section_count = section_count + 1 %}{% endif %}
                 {% set card_image = child_page.header.image ? child_page.media[child_page.header.image] : null %}
                 {% include 'partials/section-card.html.twig' with {
                     title: child_page.title,
                     link: child_page.url,
                     icon: child_page.header.icon|default(page.header.card_icon),
-                    section_number: child_page.header.section_number|default(loop.index),
+                    section_number: is_numbered ? (child_page.header.section_number|default(section_count)) : null,
                     section_label: section_label,
                     show_section_label: show_section_label,
                     section_label_override: child_page.header.section_label is defined ? child_page.header.section_label : null,
@@ -154,7 +158,9 @@
     {% set first_version = doc_version_info.versions|first %}
 
     {% if has_parts %}
-        {# Parts mode — render a labelled heading + card grid for each part #}
+        {# Parts mode — render a labelled heading + card grid for each part.
+           Numbers continue across parts; unnumbered sections (numbered: false) aren't counted #}
+        {% set section_count = 0 %}
         {% for part_key, part_versions in part_groups %}
             {% if part_key != '__ungrouped__' %}
             <div class="hor-part-heading">
@@ -165,12 +171,14 @@
                 {% for version in part_versions %}
                     {% set card_page = pages.find('/' ~ version.id) %}
                     {% if card_page %}
+                        {% set is_numbered = card_page.header.numbered is not same as(false) %}
+                        {% if is_numbered %}{% set section_count = section_count + 1 %}{% endif %}
                         {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}
                         {% include 'partials/section-card.html.twig' with {
                             title: version.label,
                             link: card_page.url,
                             icon: card_page.header.icon|default(page.header.card_icon),
-                            section_number: card_page.header.section_number|default(loop.index),
+                            section_number: is_numbered ? (card_page.header.section_number|default(section_count)) : null,
                             section_label: section_label,
                             show_section_label: show_section_label,
                             section_label_override: card_page.header.section_label is defined ? card_page.header.section_label : null,
@@ -187,17 +195,20 @@
             </div>
         {% endfor %}
     {% else %}
-        {# Flat mode — single grid for all sections (original behaviour) #}
+        {# Flat mode — single grid for all sections (original behaviour); unnumbered sections aren't counted #}
+        {% set section_count = 0 %}
         <div class="{{ gridClasses }}">
             {% for version in doc_version_info.versions %}
                 {% set card_page = pages.find('/' ~ version.id) %}
                 {% if card_page %}
+                    {% set is_numbered = card_page.header.numbered is not same as(false) %}
+                    {% if is_numbered %}{% set section_count = section_count + 1 %}{% endif %}
                     {% set card_image = card_page.header.image ? card_page.media[card_page.header.image] : null %}
                     {% include 'partials/section-card.html.twig' with {
                         title: version.label,
                         link: card_page.url,
                         icon: card_page.header.icon|default(page.header.card_icon),
-                        section_number: card_page.header.section_number|default(loop.index),
+                        section_number: is_numbered ? (card_page.header.section_number|default(section_count)) : null,
                         section_label: section_label,
                         show_section_label: show_section_label,
                         section_label_override: card_page.header.section_label is defined ? card_page.header.section_label : null,

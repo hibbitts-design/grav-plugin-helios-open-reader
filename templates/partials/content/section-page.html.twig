@@ -27,17 +27,24 @@
    Falls back to the page's own section_number for section landing pages, which
    have no parent with a section_number. #}
 {% set display_section_number = page.parent.header.section_number ?? page.header.section_number ?? null %}
-{# Without a Section Number, use the section's position, counted the same way as its card on the publication
-   home page (section-list.html.twig): across all sections in nested multi-publication mode, within each part
-   in parts mode, otherwise across all sections - so a section's pages show the same "Section N" as its card #}
-{% if display_section_number is null and doc_version_info is defined %}
-    {% set _section = page.template == 'section-page' ? page.parent : page %}
+{# Unnumbered sections (numbered: false) have no number. Without a Section Number, count the section's position
+   the same way as its card (section-list.html.twig), so its pages show the same number #}
+{% set _section = page.template == 'section-page' ? page.parent : page %}
+{% if _section.header.numbered is same as(false) %}
+    {% set display_section_number = null %}
+{% elseif display_section_number is null and doc_version_info is defined %}
     {% set _nested = is_nested_publication is defined and is_nested_publication %}
     {% set _groups = (not _nested and has_parts|default(false)) ? part_groups : [doc_version_info.versions] %}
+    {% set _base = publication_base_path|default('') %}
+    {% set _count = 0 %}
     {% for _group in _groups %}
         {% for _version in _group %}
-            {% if _version.id == _section.slug %}
-                {% set display_section_number = loop.index %}
+            {% set _version_page = pages.find(_base ~ '/' ~ _version.id) %}
+            {% if _version_page and _version_page.header.numbered is not same as(false) %}
+                {% set _count = _count + 1 %}
+                {% if _version.id == _section.slug %}
+                    {% set display_section_number = _count %}
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% endfor %}
