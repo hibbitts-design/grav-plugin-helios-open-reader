@@ -230,6 +230,17 @@ home:
 
 The readers list stays available at `/readers`, and the site keeps its multi-publication setup – unlike the Single-Publication Alternative below, no folders change.
 
+### Give a Publication Its Own Address
+
+Want a publication to open at its own address – for a talk, a workshop or a class? Point a second domain or subdomain at this site's folder (your web host's control panel can do this), then create `user/env/<that address>/config/system.yaml` with:
+
+```yaml
+home:
+  alias: '/my-publication'
+```
+
+The site's main address still opens as before, and both addresses share the same pages. A `site.yaml` beside it can also give that address its own description and share image – see Grav's [Environment Configuration](https://learn.getgrav.org/2/advanced/environment-config).
+
 ### Single-Publication Alternative
 
 If you only need a single publication and prefer a simpler root-level folder structure, you can convert the skeleton to single-publication mode:
