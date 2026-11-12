@@ -1,6 +1,6 @@
 {# Side Box (side_box), as in Grav Open Publishing Space: the page's own, else the guide home's (shown on every page of
    the guide); none on the pages of a section set to false. Used by sidebar.html.twig and swap-body.html.twig #}
-{% if page.template in ['section-list', 'section', 'section-page'] %}
+{% if page.template in ['section-list', 'guide', 'section', 'section-page'] %}
 
     {% if page.header.side_box is defined %}
         {% set side_box = page.header.side_box %}

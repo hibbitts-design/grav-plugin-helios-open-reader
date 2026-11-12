@@ -63,7 +63,7 @@
     {% endif %}
     {# shown only on each publication's home page (its Section List page), where readers think about the whole
        publication; reading pages have the "This page as Markdown" link instead #}
-    {% if llms_available and show_plain_text_link and not chromeless and page.template == 'section-list' %}
+    {% if llms_available and show_plain_text_link and not chromeless and page.template in ['section-list', 'guide'] %}
     {% set show_oer = show_oer_attribution and reader_attribution %}
     <aside class="mt-4 {{ not show_oer ? 'mb-4' : '' }} text-center text-sm text-gray-500 dark:text-gray-400" aria-label="{{ plain_text_link_label }}">
         <a href="{{ llms_url }}" class="plain-text-link inline-flex items-center gap-1 hover:underline">

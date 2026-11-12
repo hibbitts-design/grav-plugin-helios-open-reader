@@ -10,7 +10,12 @@ use RocketTheme\Toolbox\Event\Event;
 class HeliosOpenReaderPlugin extends Plugin
 {
     // reader pages
-    const READER_TEMPLATES = ['section-list', 'section', 'section-page'];
+    const READER_TEMPLATES = ['section-list', 'guide', 'section', 'section-page'];
+
+    // a publication's home page and the publications page: the names used so far, and the new ones
+    // (guide.md and guide-list.md)
+    const GUIDE_HOME_TEMPLATES = ['section-list', 'guide'];
+    const GUIDE_LIST_TEMPLATES = ['reader-list', 'guide-list'];
 
     /** @var bool Whether the Helios theme is missing or inactive */
     protected $themeMissing       = false;
@@ -538,7 +543,7 @@ class HeliosOpenReaderPlugin extends Plugin
         // homes (multi-pub) vs. single-publication reader homes.
         $root = $this->grav['pages']->root();
         foreach ($root->children() as $child) {
-            if ($child->template() === 'reader-list') {
+            if (in_array($child->template(), self::GUIDE_LIST_TEMPLATES, true)) {
                 $isMultiPublication  = true;
                 $publicationListPage = $child;
                 break;
@@ -549,14 +554,14 @@ class HeliosOpenReaderPlugin extends Plugin
         $candidate = $page;
         while ($candidate) {
             $tmpl = $candidate->template();
-            if ($tmpl === 'section-list') {
+            if (in_array($tmpl, self::GUIDE_HOME_TEMPLATES, true)) {
                 $readerHome = $candidate;
                 if ($isMultiPublication) {
                     $isNestedPublication = true;
                 }
                 break;
             }
-            if ($tmpl === 'reader-list') {
+            if (in_array($tmpl, self::GUIDE_LIST_TEMPLATES, true)) {
                 $readerHome = $candidate;
                 break;
             }
@@ -570,7 +575,7 @@ class HeliosOpenReaderPlugin extends Plugin
                 $readerHome = $publicationListPage;
             } else {
                 foreach ($root->children() as $child) {
-                    if ($child->template() === 'section-list') {
+                    if (in_array($child->template(), self::GUIDE_HOME_TEMPLATES, true)) {
                         $readerHome = $child;
                         break;
                     }
@@ -580,7 +585,7 @@ class HeliosOpenReaderPlugin extends Plugin
 
         // Base path for page lookups: empty for flat/root-level sections, publication route for nested.
         $nestedTmpl          = $readerHome ? $readerHome->template() : '';
-        $publicationBasePath = ($isNestedPublication && $nestedTmpl === 'section-list')
+        $publicationBasePath = ($isNestedPublication && in_array($nestedTmpl, self::GUIDE_HOME_TEMPLATES, true))
             ? $readerHome->route()
             : '';
 
@@ -596,12 +601,12 @@ class HeliosOpenReaderPlugin extends Plugin
         $publicationPages = [];
         if ($isMultiPublication) {
             foreach ($root->children() as $child) {
-                if ($child->template() === 'section-list' && $child->visible() && $child->published()) {
+                if (in_array($child->template(), self::GUIDE_HOME_TEMPLATES, true) && $child->visible() && $child->published()) {
                     $publicationPages[] = $child;
                 }
             }
 
-            if ($isNestedPublication && $readerHome && $readerHome->template() === 'section-list') {
+            if ($isNestedPublication && $readerHome && in_array($readerHome->template(), self::GUIDE_HOME_TEMPLATES, true)) {
                 // Nested mode: set Back to Book Home link only when not already on the book home.
                 if ($page->url() !== $readerHome->url()) {
                     $twig->twig_vars['publication_home_url']   = $readerHome->url();
@@ -690,7 +695,7 @@ class HeliosOpenReaderPlugin extends Plugin
             $twig->twig_vars['logo_url'] = $logoTarget->url();
 
             // Build browser title for non-home section pages
-            if ($page->template() !== 'section-list' && $page->template() !== 'reader-list') {
+            if (!in_array($page->template(), array_merge(self::GUIDE_HOME_TEMPLATES, self::GUIDE_LIST_TEMPLATES), true)) {
                 $readerTitle = $readerHome->title();
                 $pageTitle   = $page->title();
                 $siteTitle   = $this->grav['config']->get('site.title', '');
@@ -714,7 +719,7 @@ class HeliosOpenReaderPlugin extends Plugin
         // and nav_tree from the publication's section hierarchy instead.
         if ($isNestedPublication
             && $readerHome
-            && $readerHome->template() === 'section-list'
+            && in_array($readerHome->template(), self::GUIDE_HOME_TEMPLATES, true)
             && in_array($page->template(), ['section', 'section-page'], true)
         ) {
             $nSegs        = explode('/', trim($page->route(), '/'));
@@ -1224,7 +1229,7 @@ class HeliosOpenReaderPlugin extends Plugin
         }
 
         $page = $this->grav['pages']->find($pubRoute);
-        if (!$page || $page->template() !== 'section-list' || $page->home()) {
+        if (!$page || !in_array($page->template(), self::GUIDE_HOME_TEMPLATES, true) || $page->home()) {
             return;
         }
 

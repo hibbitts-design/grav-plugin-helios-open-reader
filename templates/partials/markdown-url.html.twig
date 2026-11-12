@@ -16,7 +16,7 @@
 {% endif %}
 
 {# the readers list, reader home and error pages don't get the link #}
-{% if page.template in ['reader-list', 'section-list', 'error'] %}
+{% if page.template in ['reader-list', 'guide-list', 'section-list', 'guide', 'error'] %}
     {% set show_link = false %}
 {% endif %}
 
