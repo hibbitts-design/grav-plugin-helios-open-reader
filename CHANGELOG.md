@@ -1,6 +1,8 @@
 # v1.3.2
 ## XX/XX/2026
 
+1. [](#new)
+    * New names guide.md (publication home) and guide-list.md (publications page), as in Quark 2 Open Publishing; the old names still work
 1. [](#improved)
     * README and demo Read Me pages: how to give a publication its own address (such as a subdomain for a talk or class), with Grav's environment configuration
 
