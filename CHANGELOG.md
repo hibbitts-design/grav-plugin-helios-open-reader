@@ -1,10 +1,12 @@
 # v1.3.2
-## XX/XX/2026
+## 11/14/2026
 
 1. [](#new)
     * New names guide.md (publication home) and guide-list.md (publications page), as in Quark 2 Open Publishing; the old names still work
 1. [](#improved)
     * README and demo Read Me pages: how to give a publication its own address (such as a subdomain for a talk or class), with Grav's environment configuration
+1. [](#bugfix)
+    * PDF shortcode: the PDF now shows in the browser's own PDF viewer, instead of Google's viewer, which sometimes started a "gview" download that failed with "File wasn't available on site"
 
 # v1.3.1
 ## 11/09/2026
