@@ -28,7 +28,9 @@ class PDFShortcode extends Shortcode
 
             if ($pdfurl) {
                 $pdfurl = htmlspecialchars(html_entity_decode($pdfurl, ENT_QUOTES, 'UTF-8'), ENT_QUOTES, 'UTF-8');
-                $output = '<div class="responsive-container' . $ratioClass . '"><iframe src="https://docs.google.com/gview?url=' . $pdfurl . '&amp;embedded=true" title="' . $title . '"></iframe></div>';
+                // the PDF itself, shown by the browser's own PDF viewer (Google's viewer, used before, sometimes sent an empty reply that
+                // browsers saved as a "gview" download)
+                $output = '<div class="responsive-container' . $ratioClass . '"><iframe src="' . $pdfurl . '" title="' . $title . '"></iframe></div>';
 
                 return $output;
             }
