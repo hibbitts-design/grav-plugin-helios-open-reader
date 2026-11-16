@@ -1,3 +1,10 @@
+# v1.3.3
+## 11/16/2026
+
+1. [](#improved)
+    * README: Helios's own components, code blocks and search work alongside the plugin
+    * README: removed the outdated note that math needs a separate MathJax plugin
+
 # v1.3.2
 ## 11/14/2026
 

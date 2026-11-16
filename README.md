@@ -24,6 +24,7 @@ A free, open-source plugin that transforms the [Grav Premium Helios theme](https
 - **Plain text version link for open access** — an optional link on each publication's home page to `/llms-full.txt`, Grav 2.1 and the Sitemap plugin's native full-content Markdown export, ready for search indexing, ebook pipelines, and any tool that can read a URL. On multi-publication sites, each reader can get its own scoped file instead of one file merging every reader together.
 - **This page as Markdown, for reuse** – an optional footer link to just the current page's Markdown (the page address with `.md`, from Grav 2.1's Markdown output), ready to adapt and reuse, with no Git setup needed. The same link as in Grav Open Publishing Space.
 - **Bring your Pressbooks content with you** – the companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes: sections, chapters, learning objectives, cover image, license, and OER attribution all carried across automatically.
+- **Everything Helios offers, too** – Helios's own components (cards and grids, tabs, steps, file trees, collapsible details, tooltips, keyboard keys, buttons and badges), Codesh code blocks, ⌘K search and dark mode work on every page, alongside the open education features
 
 ## When is Grav Helios Open Reader a Good Candidate?
 
@@ -38,7 +39,6 @@ Grav Helios Open Reader is a strong fit when you:
 Other publishing tools might be better candidates when you:
 
 - Need packaged export formats (PDF, ePub, DOCX) for offline distribution — browser print-to-PDF works, but no dedicated export pipeline is included
-- Need built-in math/LaTeX rendering for STEM content (requires a separate Grav MathJax plugin)
 - Need social annotation or inline commenting features (e.g. Hypothesis integration)
 - Need zero-server, instant publishing directly from GitHub without any hosting setup
 - Prefer a large ecosystem of themes and plugins beyond what Grav currently offers
