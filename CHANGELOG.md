@@ -1,3 +1,9 @@
+# v1.3.5
+## XX/XX/2026
+
+1. [](#improved)
+    * A long glossary (more than 26 terms) gets an A–Z index and letter headings, like a Topics page, so readers can jump to a letter (its "On this page" list is left out, as the A–Z index does the same job)
+
 # v1.3.4
 ## 11/18/2026
 
