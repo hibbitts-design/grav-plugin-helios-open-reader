@@ -534,6 +534,10 @@ The following settings are available in the Admin panel under **Plugins → Heli
 - Grav CMS >= 1.7.0
 - [Grav Premium Helios Theme](https://getgrav.org/premium/helios) – one license per site ([Standard or Team](https://getgrav.org/premium/license))
 
+## Moving from Grav Open Publishing Space
+
+Moving guides from [Grav Open Publishing Space](https://github.com/hibbitts-design/grav-skeleton-open-publishing-space)? What to copy, and the few settings Open Reader doesn't use, are in the [Helios Open Reader skeleton's README](https://github.com/hibbitts-design/grav-skeleton-helios-open-reader#moving-from-grav-open-publishing-space).
+
 ## Bring Your Pressbooks Content With You
 
 The companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
