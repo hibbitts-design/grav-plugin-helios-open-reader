@@ -17,7 +17,8 @@
      # when page-toc is disabled or the page has no matching headings.
      #}
     {% set toc_output %}{% include 'partials/toc.html.twig' %}{% endset %}
-    {% set has_toc = toc_output|trim is not empty %}
+    {# (a page with an A–Z index, such as a long glossary, doesn't need the column: the index links to each letter) #}
+    {% set has_toc = toc_output|trim is not empty and 'topics-index' not in page.content %}
 
     <div class="flex gap-8">
 

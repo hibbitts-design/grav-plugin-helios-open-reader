@@ -12,7 +12,8 @@
  #}
 {# the plugin's setting (on unless turned off) #}
 {% set show_page_sections = config.plugins['helios-open-reader'].page_sections_box ?? true %}
-{% if show_page_sections and not chromeless and config.plugins['page-toc'].enabled %}
+{# (a page with an A–Z index, such as a long glossary, doesn't need it: the index already links to each letter) #}
+{% if show_page_sections and not chromeless and config.plugins['page-toc'].enabled and 'topics-index' not in page.content %}
     {# The same first heading level as the theme's "On this page" column, so the two list the same sections #}
     {% set sections_start = theme_var('navigation.toc_start', 2) %}
     {# toc_items(content, first heading level, number of levels): one level, to keep the box short #}
