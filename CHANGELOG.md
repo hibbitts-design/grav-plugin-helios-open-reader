@@ -1,3 +1,9 @@
+# v1.3.4
+## 11/18/2026
+
+1. [](#improved)
+    * README: Moving from Grav Open Publishing Space points to the skeleton's guide
+
 # v1.3.3
 ## 11/16/2026
 
