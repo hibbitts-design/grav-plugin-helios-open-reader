@@ -33,7 +33,7 @@ Helios Open Reader gives you a modern, open, and fully controlled web reading ex
 - CMS and Git together – browser-based editing and automatic Git Sync; no need to choose between them
 - Content you own – your content lives as portable Markdown files, fully independent of any platform or service
 - Reuse as Markdown – a "This page as Markdown (.md)" link on reading pages gives readers just that page's Markdown, ready to adapt and reuse, with no Git setup needed
-- Bring existing content – the companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) turns a Pressbooks export into a ready-to-use Open Reader in minutes
+- Bring existing content – the companion [Pressbooks Converter](https://grav-pressbooks-converter.hibbittsdesign.org/) (Beta) turns a Pressbooks export into a ready-to-use Open Reader in minutes
 - Support open source – your Grav Premium Helios theme purchase directly supports ongoing development of the open-source Grav CMS
 
 ## Features
@@ -516,7 +516,7 @@ The following settings are available in the Admin panel under **Plugins → Heli
 
 ## Bring Your Pressbooks Content With You
 
-The companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
+The companion [Pressbooks Converter](https://grav-pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
 
 ## Support
 

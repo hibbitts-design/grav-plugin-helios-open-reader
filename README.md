@@ -23,7 +23,7 @@ A free, open-source plugin that transforms the [Grav Premium Helios theme](https
 - **A CMS and Git, not a choice between them** — most platforms give you one or the other: a browser editor that locks content in a database, or a Git workflow that requires technical setup. Helios Open Reader gives you both: browser-based editing and automatic Git Sync with GitHub or Codeberg.
 - **Plain text version link for open access** — an optional link on each publication's home page to `/llms-full.txt`, Grav 2.1 and the Sitemap plugin's native full-content Markdown export, ready for search indexing, ebook pipelines, and any tool that can read a URL. On multi-publication sites, each reader can get its own scoped file instead of one file merging every reader together.
 - **This page as Markdown, for reuse** – an optional footer link to just the current page's Markdown (the page address with `.md`, from Grav 2.1's Markdown output), ready to adapt and reuse, with no Git setup needed. The same link as in Grav Open Publishing Space.
-- **Bring your Pressbooks content with you** – the companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes: sections, chapters, learning objectives, cover image, license, and OER attribution all carried across automatically.
+- **Bring your Pressbooks content with you** – the companion [Pressbooks Converter](https://grav-pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes: sections, chapters, learning objectives, cover image, license, and OER attribution all carried across automatically.
 - **Everything Helios offers, too** – Helios's own components (cards and grids, tabs, steps, file trees, collapsible details, tooltips, keyboard keys, buttons and badges), Codesh code blocks, ⌘K search and dark mode work on every page, alongside the open education features
 
 ## When is Grav Helios Open Reader a Good Candidate?
@@ -540,7 +540,7 @@ Moving guides from [Grav Open Publishing Space](https://github.com/hibbitts-desi
 
 ## Bring Your Pressbooks Content With You
 
-The companion [Pressbooks Converter](https://pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
+The companion [Pressbooks Converter](https://grav-pressbooks-converter.hibbittsdesign.org/) (Beta) transforms a Pressbooks XHTML export into a complete Open Reader in minutes – sections, chapters, learning objectives, H5P activity links, cover image, license, and OER attribution all carried across automatically. Because Pressbooks exports follow a single, consistent format, conversions are typically a close, faithful match to the original book. Upload your export and browse the resulting Markdown files directly – no Grav or Helios installation needed to see what carries over.
 
 ## Support
 
