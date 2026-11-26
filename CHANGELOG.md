@@ -1,3 +1,9 @@
+# v1.3.6
+## XX/XX/2026
+
+1. [](#improved)
+    * Guides List and section cards show a portrait image, such as a book cover, whole instead of cropped, as a guide's own cover is
+
 # v1.3.5
 ## 11/18/2026
 
