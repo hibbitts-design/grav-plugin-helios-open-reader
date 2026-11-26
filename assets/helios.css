@@ -441,6 +441,20 @@ footer .edit-page-link svg {
     transform: scale(1.05);
 }
 
+/* A portrait card image, such as a book cover (top or side): shown whole at its own shape, centred on a light band in
+   its usual space, instead of cropped to fill it (see partials/section-card.html.twig) */
+.section-card-image--portrait {
+    background: var(--color-gray-100);
+}
+
+.dark .section-card-image--portrait {
+    background: var(--color-gray-800);
+}
+
+.section-card-image--portrait img {
+    object-fit: contain;
+}
+
 /* Course card description (scoped to course cards only) */
 .section-card-description {
     text-wrap: pretty;
